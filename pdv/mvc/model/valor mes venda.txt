@@ -1,0 +1,23 @@
+SELECT idpedido as 'ID', numeropedido as 'Pedido', cliente as 'Cliente', SUM(valor*quantidade) as 'Valor Total Venda', 
+CASE pgto 
+WHEN 'Cartão Debito' THEN (SUM(valor * quantidade) - (SUM(valor * quantidade) * 0.0199))
+WHEN 'Cartão Credito' THEN (SUM(valor * quantidade) - (SUM(valor * quantidade) * 0.0499))
+ELSE (SUM(valor*quantidade)) END AS 'Valor Real Receber',
+pgto as 'Tipo de Pagamento', DATE_FORMAT(data, "%d/%m/%Y") as 'Dia venda', DATE_FORMAT(data, "%M") as 'Mes venda'
+FROM `pedido`
+GROUP by numeropedido  
+ORDER BY `pedido`.`idpedido`  DESC;
+
+
+SELECT idpedido as 'ID', numeropedido as 'Pedido', cliente as 'Cliente', format(SUM(valor*quantidade),2) as 'Valor Total Venda', 
+CASE pgto 
+WHEN 'Cartão Debito' THEN format(SUM(valor * quantidade) - (SUM(valor * quantidade) * 0.0199),2)
+WHEN 'Cartão Credito' THEN format(SUM(valor * quantidade) - (SUM(valor * quantidade) * 0.0499),2)
+ELSE  format(SUM(valor*quantidade), 2) END AS 'Valor Real Receber',
+pgto as 'Tipo de Pagamento', DATE_FORMAT(data, "%d/%m/%Y") as 'Dia venda', DATE_FORMAT(data, "%M") as 'Mes venda'
+FROM `pedido`
+GROUP by numeropedido  
+ORDER BY `pedido`.`idpedido`  DESC;
+
+
+

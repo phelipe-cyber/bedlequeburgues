@@ -1,0 +1,73 @@
+version: '3'
+services:
+
+  #PHP Service
+  app:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    container_name: app_pastel
+    restart: unless-stopped
+    ports:
+      - "9191:80"
+      - "448:443"
+    environment:
+      SERVICE_NAME: app
+      SERVICE_TAGS: dev
+      LUMEN_HOST: http://app
+    working_dir: /var/www/html
+    volumes:
+      - ./../:/var/www/html
+      - ./php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    networks:
+      - app-network
+    depends_on:
+      - db
+
+  #MySQL Service
+  db:
+    image: mariadb:10.5.11
+    container_name: db_pastel
+    restart: unless-stopped
+    ports:
+      - "3391:3306"
+    environment:
+      MYSQL_ROOT_USER: "root"
+      MYSQL_ROOT_PASSWORD: "#tr0caf0ne#"
+      MYSQL_USER: "root"
+      MYSQL_PASSWORD: "#tr0caf0ne#"
+      MYSQL_DATABASE: "pdv"
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    volumes:
+      - ./mysql/my.cnf:/etc/mysql/my.cnf
+      - ./mysql/dump.sql:/docker-entrypoint-initdb.d/dump.sql
+    networks:
+      - app-network
+  db_sql:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - "8191:80"
+    environment:
+      MYSQL_ROOT_USER: "root"
+      MYSQL_ROOT_PASSWORD: "#tr0caf0ne#"
+      MYSQL_USER: "root"
+      MYSQL_PASSWORD: "#tr0caf0ne#"
+      MYSQL_DATABASE: "pdv"
+    environment:
+      - PMA_HOST=db
+      - UPLOAD_LIMIT=300M
+    depends_on:
+      - db
+    networks:
+      - app-network
+
+#Docker Networks
+networks:
+  app-network:
+    driver: bridge
+
+#Volumes
+volumes:
+  dbdata:
+    driver: local
