@@ -6,7 +6,7 @@ services:
     build:
       context: ..
       dockerfile: Dockerfile
-    container_name: app_pastel
+    container_name: app_bedleque
     restart: unless-stopped
     ports:
       - "9191:80"
@@ -49,14 +49,8 @@ services:
     ports:
       - "8191:80"
     environment:
-      MYSQL_ROOT_USER: "root"
-      MYSQL_ROOT_PASSWORD: "#tr0caf0ne#"
-      MYSQL_USER: "root"
-      MYSQL_PASSWORD: "#tr0caf0ne#"
-      MYSQL_DATABASE: "pdv"
-    environment:
       - PMA_HOST=db
-      - UPLOAD_LIMIT=300M
+      - UPLOAD_LIMIT=1024M
     depends_on:
       - db
     networks:

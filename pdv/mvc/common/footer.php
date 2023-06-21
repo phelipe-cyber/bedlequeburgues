@@ -12,7 +12,7 @@
           <div class="copyright text-center my-auto">
             <span>Copyright &copy; </span>
             
-              <a href="https://SeuSiteSC.com.br" class="text-decoration-none">SeuSiteSC 2019</a>
+              <a href="" class="text-decoration-none">bedlequebugues 2023</a>
             
           </div>
         </div>

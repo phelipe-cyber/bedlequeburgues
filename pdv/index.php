@@ -36,12 +36,12 @@ if($_SESSION['login'] == 0){?>
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Pastel das Coleguinhas</title>
+  <title>Bedleque - Burgues</title>
 
   <link href="mvc/common/css/animate.min.css" rel="stylesheet"/><!--ESTE COMANDO CRIA A NOTIFICAÇÃO ANIMADA  -->
   <link href="mvc/common/css/bootstrap-datepicker.css" rel="stylesheet"/>
 
-  <link rel="shortcut icon"  href="mvc/common/img/icon.ico"><!--este comando muda o icone da janela-->
+  <link rel="shortcut icon"  href="mvc/common/img/bedleque.ico"><!--este comando muda o icone da janela-->
 
   <!-- Custom fonts for this template-->
   <link href="mvc/common/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -72,8 +72,8 @@ if($_SESSION['login'] == 0){?>
               <div class="col-lg-12">
                 <div class="p-5">
                   <div class="text-center">
-                    <h1 style="color: red;">Pastel das Coleguinhas</h1>
-                    <img src="mvc/common/img/logo.png" width="200px" height="150px" >
+                    <h1 style="color: red;">Bedleque - Burgues</h1>
+                    <img src="mvc/common/img/beer.png" width="200px" height="150px" >
                     <h1 class="h4 text-gray-900 mb-4">Bem-Vindo!</h1>
                     <h6 style="padding: 15px;">Digite sua senha e seu login para ter acesso ao sistema !</h6>
                   </div>

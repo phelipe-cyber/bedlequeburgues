@@ -16,13 +16,13 @@ $usuario = $_SESSION['user'];
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Pastel das Coleguinhas</title>
+  <title>Bedleque - Burgues</title>
 
   <link href="mvc/common/css/animate.min.css" rel="stylesheet" />
   <!--ESTE COMANDO CRIA A NOTIFICAÇÃO ANIMADA  -->
   <link href="mvc/common/css/bootstrap-datepicker.css" rel="stylesheet" />
 
-  <link rel="shortcut icon" href="mvc/common/img/icon.ico">
+  <link rel="shortcut icon" href="mvc/common/img/bedleque.ico">
   <!--este comando muda o icone da janela-->
 
   <!-- Custom fonts for this template-->
@@ -176,11 +176,11 @@ $usuario = $_SESSION['user'];
           <i class="fas fa-fw fa-user"></i>
           <span>Clientes</span></a>
       </li>
-      <li class="nav-item active">
+      <!-- <li class="nav-item active">
         <a class="nav-link" href="/pdv/?view=cnpjPix">
           <i class="fas fa-fw fa-user"></i>
           <span>CNPJ - PIX</span></a>
-      </li>
+      </li> -->
 
 
 
