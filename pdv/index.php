@@ -36,7 +36,7 @@ if($_SESSION['login'] == 0){?>
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Bedleque - Burgues</title>
+  <title>Bedlek Burgue's</title>
 
   <link href="mvc/common/css/animate.min.css" rel="stylesheet"/><!--ESTE COMANDO CRIA A NOTIFICAÇÃO ANIMADA  -->
   <link href="mvc/common/css/bootstrap-datepicker.css" rel="stylesheet"/>
@@ -72,7 +72,7 @@ if($_SESSION['login'] == 0){?>
               <div class="col-lg-12">
                 <div class="p-5">
                   <div class="text-center">
-                    <h1 style="color: red;">Bedleque - Burgues</h1>
+                    <h1 style="color: red;">Bedlek Burgue's</h1>
                     <img src="mvc/common/img/beer.png" width="200px" height="150px" >
                     <h1 class="h4 text-gray-900 mb-4">Bem-Vindo!</h1>
                     <h6 style="padding: 15px;">Digite sua senha e seu login para ter acesso ao sistema !</h6>

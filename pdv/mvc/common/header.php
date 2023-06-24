@@ -16,7 +16,7 @@ $usuario = $_SESSION['user'];
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Bedleque - Burgues</title>
+  <title>Bedlek Burgue's</title>
 
   <link href="mvc/common/css/animate.min.css" rel="stylesheet" />
   <!--ESTE COMANDO CRIA A NOTIFICAÇÃO ANIMADA  -->
