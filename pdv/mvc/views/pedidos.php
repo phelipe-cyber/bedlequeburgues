@@ -12,7 +12,12 @@
 
     include_once "../model/conexao.php";
 
-    $tab_mesas = "SELECT * FROM pedido where `status` <> 4 group by numeropedido";
+    // $tab_mesas = "SELECT * FROM pedido where `status` <> 4 group by numeropedido";
+    $tab_mesas = "SELECT * FROM pedido p  
+    left JOIN clientes c on c.id = p.cliente
+    where p.`status` <> 4
+    group by p.numeropedido
+    ORDER BY `p`.`numeropedido` ASC";
 
     $mesas = mysqli_query($conn, $tab_mesas);
 
@@ -37,7 +42,11 @@
             
                 // }
 
-            $nome = ($rows_mesas['cliente']);
+            $nome = ($rows_mesas['nome']);
+
+            if( empty($nome) ){
+                $nome = ($rows_mesas['cliente']);
+            }
             $id_mesa = $rows_mesas['numeropedido'];
 
 

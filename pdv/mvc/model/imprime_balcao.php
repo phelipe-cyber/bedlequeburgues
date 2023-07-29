@@ -1,39 +1,62 @@
-<html lang="pt-br">
-<title>Pedido - Balcão</title>
 <?php
-    date_default_timezone_set('America/Sao_Paulo');
+session_start();
+?>
+<html lang="pt-br">
+<!-- <title>Pedido - Balcão</title> -->
+<?php
+date_default_timezone_set('America/Sao_Paulo');
 // $data_hora = date('d/m/Y - H:i:s');
 $hora_pedido = date('H:i');
 include "conexao.php";
 
-    // print_r($_POST);
-    // exit();
-    $id = $_POST['id'];
-    $cliente = $_POST['cliente'];
-   
-    $pgto = $_POST['pgto'];
+print_r($_POST);
+
+
+$id = $_POST['id'];
+$cliente = $_POST['cliente'];
+$pgto = $_POST['pgto'];
+
+if( empty($id) ){
+    
+    $id = $_SESSION['novoIdInserido'];
+    $cliente = $_SESSION['cliente'];
+}
+
+
     // $data_pedido = $_POST['data_pedido'];
 
+    
 
-     $select_DB = "SELECT * FROM pedido WHERE numeropedido LIKE '$id'";
+    //  $select_DB = "SELECT * FROM pedido WHERE numeropedido LIKE '$id'";
+
+     $select_DB = "SELECT * FROM pedido p  
+left JOIN clientes c on c.id = p.cliente
+where numeropedido = '$id'";
 
      $Result_pedido = mysqli_query($conn, $select_DB) or die(mysqli_error($conn));
 
      while ($rows_Result_pedido = mysqli_fetch_assoc($Result_pedido)) {
-        //  $data_hora = $rows_Result_pedido['data'];
+          print_r($rows_Result_pedido);
      $data_hora = date('d/m/Y H:i:s', strtotime( $rows_Result_pedido['data']));
+     $pgto = $rows_Result_pedido['pgto'];
+     $cliente = $rows_Result_pedido['nome'];
+     
+          if( empty($cliente) ){
+             $cliente = ($rows_Result_pedido['cliente']);
+         }
+
 
      }
      
      ?>
 <div style="text-align: center;">
-    <label for="">PASTEL DAS COLEGUINHAS</label>
+    <label for="">Bedlek Burgue's</label>
     <br>
-    <label for="">CNPJ - 45.533.274/0001-84</label>
+    <label for="">CNPJ - </label>
     <br>
-    <label for="">R. das Ostras, 300 - Jardim Paraiso Barueri - SP</label>
+    <label for="">R. Nicolau Maevsky, 1410 - Vale do Sol Jandira - SP</label>
     <br>
-    <label for="">06412-250</label>
+    <label for="">06622-005</label>
 </div>
 
 <h1 class="text-center col-lg-1"><b>Pedido #<?php echo $id ?></b> </h1>
@@ -71,12 +94,13 @@ include "conexao.php";
         $i = 0;
         $index = 1;
 
-        $tab_cliente = "SELECT * FROM pedido WHERE numeropedido LIKE '$id'";
+        // $tab_cliente = "SELECT * FROM pedido WHERE numeropedido LIKE '$id'";
+        $tab_cliente = "SELECT * FROM pedido p  left JOIN clientes c on c.id = p.cliente where numeropedido = '$id'";
 
         $pedido = mysqli_query($conn, $tab_cliente) or die(mysqli_error($conn));
 
         while ($rows_clientes = mysqli_fetch_assoc($pedido)) {
-
+                // print_r($rows_clientes);
             if ($idpedido != $rows_clientes['idpedido']) {
                 $idpedido = $rows_clientes['idpedido'];
                 $total = 0;
@@ -85,7 +109,7 @@ include "conexao.php";
             $produto = ($rows_clientes['produto']);
             $quantidade = $rows_clientes['quantidade'];
             $valor = $rows_clientes['valor'];
-            $cliente = $rows_clientes['cliente'];
+            $cliente = $rows_clientes['nome'];
             $obs = $rows_clientes['observacao'];
             $numeropedido = $rows_clientes['numeropedido'];
             $totalValor = $rows_clientes['totalValor'];
@@ -154,21 +178,28 @@ include "conexao.php";
 
 </div>
 
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
+
+<label for="">Bedlek Burgue's</label>
+    <br>
+    <label for="">CNPJ - </label>
+    <br>
+    <label for="">R. Nicolau Maevsky, 1410 - Vale do Sol Jandira - SP</label>
+    <br>
+    <label for="">06622-005</label>
 
 </body>
 
 
-<script>
+<!-- <script>
     window.print();
     window.addEventListener("afterprint", function(event) { window.close(); });
     window.onafterprint();
-</script>
+    window.location.href = '/pdv/?views=todosPedidoBalcao';
+</script> -->
 
+<?php
+    // echo "<META http-equiv='refresh' content='0;URL=/pdv/?views=todosPedidoBalcao' target='_blank'>";
+
+?>
 
 </html>

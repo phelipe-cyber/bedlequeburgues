@@ -4,17 +4,25 @@ include "./mvc/model/conexao.php";
 $id = $_POST['id'];
 
 //  $tab_pedidos = "SELECT * FROM pedido WHERE numeropedido = $id";
-$tab_pedidos = "SELECT * FROM pedido WHERE numeropedido = $id";
+$tab_pedidos = "SELECT * FROM pedido p  
+left JOIN clientes c on c.id = p.cliente
+where numeropedido = '$id'";
 
 $pedidos = mysqli_query($conn, $tab_pedidos);
 
-$tab_mesas = "SELECT * FROM pedido WHERE numeropedido = $id";
+$tab_mesas = "SELECT * FROM pedido p  
+left JOIN clientes c on c.id = p.cliente
+where numeropedido = '$id'";
 
 $mesas = mysqli_query($conn, $tab_mesas);
 
 $mesas = mysqli_fetch_assoc($mesas);
 
-$cliente = $mesas['cliente'];
+$cliente = $mesas['nome'];
+
+if( empty($cliente) ){
+    $cliente = ($mesas['cliente']);
+}
 
 $status = $mesas['status'];
 

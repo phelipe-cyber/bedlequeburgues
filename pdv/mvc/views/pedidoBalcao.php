@@ -54,12 +54,14 @@ $cliente = $_POST['cliente'];
 
         <?php
 
+$tab_clientes = "SELECT * FROM clientes";
+
+$clientes = mysqli_query($conn, $tab_clientes);
+
+
 $tab_produtos = "SELECT * FROM `produtos` ORDER by id ASC" ;
 
 $produtos = mysqli_query($conn, $tab_produtos);
-
-
-
 
 if ($mesa == 'delivery') {
 ?>
@@ -82,18 +84,51 @@ if ($mesa == 'delivery') {
 } else {
 
     ?>
+  
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<script>
+    
+// In your Javascript (external .js resource or <script> tag)
+$(document).ready(function() {
+    $('.js-example-basic-single').select2({
+        width: 'resolve',
+        dropdownAutoWidth: true,
+        tags: true,
+        placeholder: "Selecionar um cliente",
+        allowClear: true,
+        theme: "classic"
+    });
+});   
+
+</script>
+
+
             <form id="Form" action="mvc/model/ad_pedido_balcao.php" method="POST">
                 <input type="hidden" name="categoria" id="categoria" value="<?php echo $categoria; ?>">
                 <input type="hidden" name="mesa" id="mesa" value="<?php echo $mesa; ?>">
                 <!-- <input type="hidden" name="cliente" id="cliente" value="<?php echo $cliente; ?>"> -->
                 <div class="row">
-                    <h4 class="col-lg-7">
+                    <h4 class="col-lg-12">
                         <label for="">* Cliente:</label>
-                        <input autofocus type="text" class="form-control" width="100%" height="100%" name="cliente"
-                            id="cliente" value="" required>
-                    </h4>
-                </div>
+                        <br>
+                        <!-- <input autofocus type="text" class="form-control" width="100%" height="100%" name="cliente" id="cliente" value="" required> -->
+                        <select style="width: 70%"  class="js-example-basic-single" name="cliente" value="" required>
+                            <?php while ($rows_clientes = mysqli_fetch_assoc($clientes)) {
+                                ?>
+                                <option value=""></option>
+                                <option value="<?php echo $rows_clientes['id']?>"> <?php echo $rows_clientes['nome']?> </option>
+                                
+                                <?php
+                                
+                            }
+                            ?>
+                            </select>
+                            </h4>
 
+                </div>
+                            <br>
                 <b>
                     <label for="">* Forma de Pagamento:</label>
                 </b>

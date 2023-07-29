@@ -96,8 +96,8 @@ foreach ($detalhes as $detalhesPedidos) {
   
 //   print_r($pedido);
 //   echo "<br>";
-//   print_r($cliente);
-//   exit();
+  // print_r($_POST['cliente']);
+  // exit();
 
  $insert_table = "INSERT INTO pedido (numeropedido, delivery,cliente, idmesa, produto, quantidade, hora_pedido, valor, observacao, pgto, usuario, `data` , gorjeta, status ) VALUES
   ('$numeropedido','','$cliente', '$id_mesa', '$pedido', '$quantidade', '$hora_pedido', '$preco_venda', '$observacoes', '$pgto','$user','$data_hora' ,'' , 2 )";
@@ -109,11 +109,22 @@ foreach ($detalhes as $detalhesPedidos) {
 
 };
 
-header("Location: /pdv/?view=todosPedidoBalcao");
-$conn->close();
+$novoIdInserido = $conn->insert_id;
 
+// header("Location: /pdv/?view=todosPedidoBalcao");
+// header("Location: /pdv/mvc/model/imprime_balcao.php");
 
-echo "<META HTTP-EQUIV=REFRESH CONTENT = '0;URL=/pdv/?view=pedidoBalcao'>";
-$_SESSION['msg'] = "<div class='alert alert-success' role='alert'> Pedido para $cliente_2 cadastrado com sucesso!<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>";
+// echo "<script language='javascript'>window.open('/pdv/mvc/model/imprime_balcao.php','_blank');</script>";
+
+echo "<META http-equiv='refresh' content='0;URL=/pdv/mvc/model/imprime_balcao.php' target='_blank'>";
+
+// $conn->close(); 
+
+$_SESSION['novoIdInserido'] = $numeropedido;
+
+$_SESSION['$cliente'] = $cliente;
+
+// echo "<META HTTP-EQUIV=REFRESH CONTENT = '0;URL=/pdv/?view=pedidoBalcao'>";
+$_SESSION['msg'] = "<div class='alert alert-success' role='alert'> Pedido para $numeropedido cadastrado com sucesso!<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>";
 
 }

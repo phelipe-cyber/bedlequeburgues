@@ -6,7 +6,7 @@ services:
     build:
       context: ..
       dockerfile: Dockerfile
-    container_name: app_bedleque
+    container_name: app_bedleke
     restart: unless-stopped
     ports:
       - "9191:80"
