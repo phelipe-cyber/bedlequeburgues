@@ -32,7 +32,7 @@ session_start();
     include_once "../model/conexao.php";
     
     
-    $selectSQL = ("SELECT * FROM `pedido_previa` where quantidade <> ''  GROUP BY id_produto order by id ASC ");
+    $selectSQL = ("SELECT * FROM `pedido_previa` where quantidade <> '' GROUP BY id_produto order by id ASC ");
     
     $recebidos = mysqli_query($conn, $selectSQL);
     $index = 1;

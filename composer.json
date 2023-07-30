@@ -1,0 +1,6 @@
+{
+    "require": {
+        "php": ">=5.3.7",
+        "mike42/escpos-php": "^3.0"
+    }
+}

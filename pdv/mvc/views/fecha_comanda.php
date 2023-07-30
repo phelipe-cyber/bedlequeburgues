@@ -84,7 +84,7 @@
   			<div class="row">
 
   				<div class="form-group col-md-6">
-  					<label for="recipient-name" class="col-xl-12 text-center" style="font-size: 25px; background: green; color: white; ">Valor Pago Cliente</label>
+  					<label for="recipient-name" class="col-xl-12 text-center" style="font-size: 25px; background: green; color: white; ">Valor Pago</label>
   					<input autofocus name="valor_pago" id="valor_pago" style="font-size: 25px" class="col-xl-12 col-md-6 mb-4 text-center" type="text" name="pagamento" value="">
   				</div>
 
@@ -141,7 +141,7 @@
   				</script>
 
   				<div class="form-group col-md-6">
-  					<label for="recipient-name" class="col-xl-12 text-center" style="font-size: 25px; background: blue; color: white; ">Valor Total Com frete</label>
+  					<label for="recipient-name" class="col-xl-12 text-center" style="font-size: 25px; background: blue; color: white; ">Valor Total</label>
   					<input autofocus name="valor_pago" id="valor_frete" style="font-size: 25px" class="col-xl-12 col-md-6 mb-4 text-center" type="text" name="pagamento" value="<?php echo number_format($total, 2); ?>">
   				</div>
 

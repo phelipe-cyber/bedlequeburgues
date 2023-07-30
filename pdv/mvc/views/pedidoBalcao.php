@@ -21,7 +21,7 @@ $cliente = $_POST['cliente'];
 <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
 <!-- Material Design Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.2/css/mdb.min.css" rel="stylesheet">
-<link href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+<!-- <link href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css" rel="stylesheet"> -->
 <!-- JQuery -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <!-- Bootstrap tooltips -->
@@ -32,7 +32,7 @@ $cliente = $_POST['cliente'];
 <!-- MDB core JavaScript -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.2/js/mdb.min.js"></script>
 <!-- <script type="text/javascript" src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script> -->
-<script type="text/javascript" src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
+<!-- <script type="text/javascript" src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script> -->
 
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.12.1/datatables.min.css" />
 
@@ -55,13 +55,14 @@ $cliente = $_POST['cliente'];
         <?php
 
 $tab_clientes = "SELECT * FROM clientes";
-
 $clientes = mysqli_query($conn, $tab_clientes);
 
-
 $tab_produtos = "SELECT * FROM `produtos` ORDER by id ASC" ;
-
 $produtos = mysqli_query($conn, $tab_produtos);
+
+$tab_pgto = "SELECT * FROM `forma_pagamento` ORDER by id ASC" ;
+$pgto = mysqli_query($conn, $tab_pgto);
+
 
 if ($mesa == 'delivery') {
 ?>
@@ -114,7 +115,7 @@ $(document).ready(function() {
                         <label for="">* Cliente:</label>
                         <br>
                         <!-- <input autofocus type="text" class="form-control" width="100%" height="100%" name="cliente" id="cliente" value="" required> -->
-                        <select style="width: 70%"  class="js-example-basic-single" name="cliente" value="" required>
+                        <select style="width: 70%"  class="js-example-basic-single" name="cliente" id="cliente" value="" required>
                             <?php while ($rows_clientes = mysqli_fetch_assoc($clientes)) {
                                 ?>
                                 <option value=""></option>
@@ -128,38 +129,63 @@ $(document).ready(function() {
                             </h4>
 
                 </div>
+
+                <div class="row">
+                    <h4 class="col-lg-12">
+                        <label for="">* Frete:</label>
+                            <div id="frete" class="alert alert-primary" role="alert">
+                                
+                            </div>    
+                    </h4>
+
+                </div>
+
+                <script>
+    $(document).ready(function() {
+      $("#cliente").change(function() {
+
+        let id_cliente = document.getElementById("cliente").value;
+            console.log(id_cliente);
+
+        $.ajax({
+          url: './mvc/model/frete.php',
+          method: "GET",
+          success: function(html) {
+            document.getElementById('frete').style = 'display:block;';
+            $('#frete').html(html);
+          },
+          error: function(err) {
+            $('#frete').html(html);
+
+          },
+
+        });
+
+      })
+
+    });
+  </script>
+
                             <br>
                 <b>
                     <label for="">* Forma de Pagamento:</label>
                 </b>
                 <div class="row">
 
+                <?php
+                    while ($rows_pgto = mysqli_fetch_assoc($pgto)) {
+                ?>
+
                     <div class="form-group col-md-2">
                         <div class="form-check">
-                            <input name="pgto" class="form-check-input" type="checkbox" value="Dinheiro" id="Dinheiro">
-                            <label class="form-check-label" for="Dinheiro">Dinheiro</label>
+                            <input name="pgto" class="form-check-input" type="checkbox" value="<?php echo ($rows_pgto['value']) ?>" id="<?php echo ($rows_pgto['tipo']) ?>">
+                            <label class="form-check-label" for="<?php echo ($rows_pgto['tipo']) ?>"><?php echo ($rows_pgto['tipo']) ?></label>
                         </div>
                     </div>
-                    <div class="form-group col-md-2">
-                        <div class="form-check">
-                            <input name="pgto" class="form-check-input" type="checkbox" value="Cartão Debito"
-                                id="Cartao_Debito">
-                            <label class="form-check-label" for="Cartao_Debito">Cartão Debito</label>
-                        </div>
-                    </div>
-                    <div class="form-group col-md-2">
-                        <div class="form-check">
-                            <input name="pgto" class="form-check-input" type="checkbox" value="Cartão Credito"
-                                id="Cartao_credito">
-                            <label class="form-check-label" for="Cartao_credito">Cartão Credito</label>
-                        </div>
-                    </div>
-                    <div class="form-group col-md-1">
-                        <div class="form-check">
-                            <input name="pgto" class="form-check-input" type="checkbox" value="Pix" id="pix">
-                            <label class="form-check-label" for="pix">Pix</label>
-                        </div>
-                    </div>
+                <?php
+                    }
+                ?>
+                    
 
                 </div>
 
