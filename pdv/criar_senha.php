@@ -23,7 +23,7 @@ if($select_table['login'] != null){
     <link href="mvc/common/css/animate.min.css" rel="stylesheet"/><!--ESTE COMANDO CRIA A NOTIFICAÇÃO ANIMADA  -->
     <link href="mvc/common/css/bootstrap-datepicker.css" rel="stylesheet"/>
 
-    <link rel="shortcut icon"  href="mvc/common/img/beer.png"><!--este comando muda o icone da janela-->
+    <link rel="shortcut icon"  href="mvc/common/img/logo_bedlek.jpeg"><!--este comando muda o icone da janela-->
 
     <!-- Custom fonts for this template-->
     <link href="mvc/common/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -113,7 +113,7 @@ if($select_table['login'] != null){
     <link href="mvc/common/css/animate.min.css" rel="stylesheet"/><!--ESTE COMANDO CRIA A NOTIFICAÇÃO ANIMADA  -->
     <link href="mvc/common/css/bootstrap-datepicker.css" rel="stylesheet"/>
 
-    <link rel="shortcut icon"  href="mvc/common/img/beer.png"><!--este comando muda o icone da janela-->
+    <link rel="shortcut icon"  href="mvc/common/img/logo_bedlek.jpeg"><!--este comando muda o icone da janela-->
 
     <!-- Custom fonts for this template-->
     <link href="mvc/common/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">

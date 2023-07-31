@@ -22,7 +22,7 @@ $usuario = $_SESSION['user'];
   <!--ESTE COMANDO CRIA A NOTIFICAÇÃO ANIMADA  -->
   <link href="mvc/common/css/bootstrap-datepicker.css" rel="stylesheet" />
 
-  <link rel="shortcut icon" href="mvc/common/img/bedleque.ico">
+  <link rel="shortcut icon" href="mvc/common/img/logo_bedlek.ico">
   <!--este comando muda o icone da janela-->
 
   <!-- Custom fonts for this template-->
