@@ -50,9 +50,23 @@ session_start();
 
     include_once "../model/conexao.php";
 
+    include_once "../model/apagar_previa.php";
+
     $tab_produtos = "SELECT * FROM produtos ";
 
     $produtos = mysqli_query($conn, $tab_produtos);
+        
+    $selectSQL = ("SELECT * FROM `pedido_previa` where quantidade <> '' GROUP BY id_produto order by id ASC ");
+    
+    $recebidos = mysqli_query($conn, $selectSQL);
+    $index = 1;
+    while ($row_usuario = mysqli_fetch_assoc($recebidos)) {
+        $valor[] = number_format($row_usuario['valor'],2);
+        
+    }
+
+    @$valor_total = array_sum( $valor );
+    $valor_real = number_format($valor_total, 2);
 
 
     $i = $_SESSION['loginapp'];
@@ -137,66 +151,257 @@ session_start();
         </div>
 
         <div class="table-responsive">
-            <!-- <div class="col-2"> -->
-            <!-- <div class="flex-center flex-column"> -->
-            <!-- <div class="card card-body"> -->
+                    <!-- <div class="col-2"> -->
+                    <!-- <div class="flex-center flex-column"> -->
+                    <!-- <div class="card card-body"> -->
 
-            <!-- <div class="table-responsive"> -->
-            <table id="dtBasicExample" class="table table-striped table-bordered table-sm reponsive" cellspacing="0"
-                width="100%">
-                <!-- <table id="dtBasicExample" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%"> -->
-                <thead>
-                    <tr>
-                        <th class="th-sm">Nome</th>
-                        <th class="th-sm">Qtde.</th>
-                        <th class="th-sm">Observação</th>
+                    <!-- <div class="table-responsive"> -->
+                    <table id="dtBasicExample" class="table table-striped table-bordered table-sm reponsive"
+                        cellspacing="0" width="100%">
+                        <!-- <table id="dtBasicExample" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%"> -->
+                        <thead>
+                            <tr>
+                                <th class="th-sm">Nome</th>
+                                <th class="th-sm">Qtde.</th>
+                                <!-- <th class="th-sm">Valor Total</th> -->
+                                <th class="th-sm">Observação</th>
 
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-            $index = 0;
-            while ($rows_produtos = mysqli_fetch_assoc($produtos)) {
-            ?>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                    $index = 0;
+                    
+                    while ($rows_produtos = mysqli_fetch_assoc($produtos)) {
+                    ?>
 
-                    <tr>
-                        <td style="color: #4D4D4D;"><?php echo ($rows_produtos['nome']); ?>
-                            <input name="detalhes[<?php echo $index ?>][pedido]" type="hidden" class="form-control"
-                                id="pedido" value="<?php echo ($rows_produtos['nome']); ?>">
-                            <p style="color: #4D4D4D;">
-                                <b>
-                                    R$ <?php echo ($rows_produtos['preco_venda']); ?>
-                                </b>
-                            </p>
-                            <input name="detalhes[<?php echo $index ?>][preco_venda]" type="hidden" class="form-control"
-                                id="preco_venda" value="<?php echo ($rows_produtos['preco_venda']); ?>">
-                        </td>
-                        <td style="text-align: center; display: flex;">
-                            <input style="background-color: green;" class="bg-gradient-success" value="+" type="button"
-                                onclick="this.parentNode.querySelector('input[type=number]').stepUp()"></input>
-                            <input class="bg-gradient-default text-center" style="width:50px;"
-                                name="detalhes[<?= $index ?>][quantidade]" min="0" maxlength="5" name="quantity"
-                                value="0" type="number">
-                            <input style="background-color: red;" class="bg-gradient-danger" value="-" type="button"
-                                onclick="this.parentNode.querySelector('input[type=number]').stepDown()"></input>
-                        </td>
+                            <tr>
+                                <?php  
+                                    if( $rows_produtos['nome'] == 'Frete' ){
 
-                        <td>
+                                    }else{
 
-                            <textarea name="detalhes[<?php echo $index ?>][observacoes]" class="form-control"
-                                id="observacoes"></textarea>
+                                    
+                                ?>
+                                <td style="color: #4D4D4D;"><?php echo ($rows_produtos['nome']); ?>
+                                    <input name="detalhes[<?php echo $index ?>][pedido]" type="hidden"
+                                        class="form-control" id="detalhes[<?php echo $index ?>][pedido]"
+                                        value="<?php echo ($rows_produtos['nome']); ?>">
+                                    <p style="color: #4D4D4D;">
+                                        <b>
+                                            R$ <?php echo ($rows_produtos['preco_venda']); ?>
+                                        </b>
+                                    </p>
+                                    <?php
+                                        
+                                    if( $rows_produtos['categoria'] == 'LANCHE' ){
+                                        echo ($rows_produtos['detalhes']);
+                                    }else{
 
-                        </td>
+                                    }
 
-                    </tr>
-
-                    <?php $index++;
-            } ?>
+                                    ?>
 
 
-                </tbody>
-            </table>
-        </div>
+                                    <input id="detalhes[<?php echo $index ?>][preco_venda]"
+                                        name="detalhes[<?php echo $index ?>][preco_venda]" type="hidden"
+                                        class="form-control" value="<?php echo ($rows_produtos['preco_venda']); ?>">
+
+                                    <input id="detalhes[<?php echo $index ?>][id]"
+                                        name="detalhes[<?php echo $index ?>][id]" type="hidden"
+                                        class="form-control" value="<?php echo ($rows_produtos['id']); ?>">
+                                </td>
+                                <td style="text-align: center; display: flex;">
+
+                                    <input id="mais<?php echo $index ?>" class="bg-gradient-success" value="+"
+                                        type="button">
+                                    </input>
+
+                                    <input readonly id="detalhes[<?php echo $index ?>][quantidade]"
+                                        class="bg-gradient-default text-center" style="width:50px;"
+                                        name="detalhes[<?php echo $index ?>][quantidade]" min="0" maxlength="5"
+                                        name="quantity" value="0" type="number">
+
+                                    <input id="menos<?php echo $index ?>" class="bg-gradient-danger" value="-"
+                                        type="button">
+                                    </input>
+
+                                    <script>
+                                        $(document).ready(function() {
+                                            $("#mais<?php echo $index ?>").click(function() {
+                                                
+                                                Quantidade = document.getElementById(
+                                                        "detalhes[<?php echo $index ?>][quantidade]")
+                                                    .value
+
+                                                Quantidade++;
+
+                                                Q = document.getElementById(
+                                                        "detalhes[<?php echo $index ?>][quantidade]")
+                                                    .value = Quantidade;
+
+                                                valor = document.getElementById(
+                                                        "detalhes[<?php echo $index ?>][preco_venda]")
+                                                    .value
+                                                    total = Q * valor;
+
+                                                pedido = document.getElementById(
+                                                        "detalhes[<?php echo $index ?>][pedido]")
+                                                    .value
+                                                    
+                                                // console.log("Click " + total);
+
+                                                document.getElementById(
+                                                    "detalhes[<?php echo $index ?>][valor_unitario]"
+                                                ).value = total;
+                                               
+                                              obs =  document.getElementById(
+                                                    "detalhes[<?php echo $index ?>][observacoes]"
+                                                ).value;
+                                              id =  document.getElementById(
+                                                    "detalhes[<?php echo $index ?>][id]"
+                                                ).value;
+                                               
+                                                var vData = {
+                                                    id: id,
+                                                    pedido: pedido,
+                                                    Quantidade: Quantidade,
+                                                    valor: total,
+                                                    obs: obs
+                                                }; 
+
+                                                console.log(vData);
+
+                                                $.ajax({
+                                                    url: '../model/ad_pedido_previa.php',
+                                                    dataType: 'html',
+                                                    type: 'POST',
+                                                    data: vData,
+                                                    beforeSend: function() {
+                                                        // document.getElementById('spiner').style =
+                                                        //     'display:block;';
+                                                    },
+                                                    success: function(html) {
+                                                       console.log(html);
+
+                                                    },
+
+                                                    error: function(err) {
+                                                        document.getElementById('spiner').style =
+                                                            'display:none;';
+
+                                                    },
+
+                                                });
+
+
+                                            });
+                                        });
+                                    </script>
+                                    <script>
+                                        $(document).ready(function() {
+                                            $("#menos<?php echo $index ?>").click(function() {
+                                                Quantidade = document.getElementById(
+                                                        "detalhes[<?php echo $index ?>][quantidade]")
+                                                    .value
+                                                Quantidade--;
+
+                                                if( Quantidade == "-1"){
+
+                                                }else{
+
+
+                                                Q = document.getElementById(
+                                                        "detalhes[<?php echo $index ?>][quantidade]")
+                                                    .value = Quantidade;
+
+                                                valor = document.getElementById(
+                                                        "detalhes[<?php echo $index ?>][preco_venda]")
+                                                    .value
+                                                    total = Q * valor;
+
+                                                pedido = document.getElementById(
+                                                        "detalhes[<?php echo $index ?>][pedido]")
+                                                    .value
+                                                    
+                                                // console.log("Click " + total);
+
+                                                document.getElementById(
+                                                    "detalhes[<?php echo $index ?>][valor_unitario]"
+                                                ).value = total;
+                                               
+                                              obs =  document.getElementById(
+                                                    "detalhes[<?php echo $index ?>][observacoes]"
+                                                ).value;
+                                              id =  document.getElementById(
+                                                    "detalhes[<?php echo $index ?>][id]"
+                                                ).value;
+                                               
+                                                var vData = {
+                                                    id: id,
+                                                    pedido: pedido,
+                                                    Quantidade: Quantidade,
+                                                    valor: total,
+                                                    obs: obs
+                                                }; 
+
+                                                console.log(vData);
+
+                                                $.ajax({
+                                                    url: '../model/ad_pedido_previa.php',
+                                                    dataType: 'html',
+                                                    type: 'POST',
+                                                    data: vData,
+                                                    beforeSend: function() {
+                                                        // document.getElementById('spiner').style =
+                                                        //     'display:block;';
+                                                    },
+                                                    success: function(html) {
+                                                       console.log(html);
+
+                                                    },
+
+                                                    error: function(err) {
+                                                        document.getElementById('spiner').style =
+                                                            'display:none;';
+
+                                                    },
+
+                                                });
+  
+                                            };
+                                            });
+                                        });
+                                    </script>
+
+                                </td>
+
+                                       
+                                            <input id="detalhes[<?php echo $index ?>][valor_unitario]"
+                                            class="bg-gradient-default text-center" style="width:50px;" name="" min="0"
+                                            maxlength="5" name="quantity" value="0" type="hidden" disabled >
+                                       
+
+                                <td  >
+
+                                    <textarea name="detalhes[<?php echo $index ?>][observacoes]" class="form-control"
+                                        id="detalhes[<?php echo $index ?>][observacoes]"></textarea>
+
+                                </td>
+
+                            </tr>
+
+                            <?php $index++;
+                    } 
+                }
+                    
+                    ?>
+
+                        </tbody>
+                    </table>
+                </div>
+
+        
         <script>
         $(document).ready(function() {
             $('#dtBasicExample').DataTable({
@@ -226,7 +431,7 @@ session_start();
         <?php } else {
     ?>
         <script>
-        window.location.href = 'app_login.php'
+            window.location.href = 'app_login.php'
         </script>
         <?php
       // header('Location: app_login.php');
@@ -238,6 +443,55 @@ session_start();
         <!-- <script src="../common/js/popper.min.js"></script> -->
         <!-- <script src="../common/js/bootstrap.min.js"></script> -->
 
-</body>
+<style>
+    body {margin:0;}
 
+    .navbar {
+    overflow: hidden;
+    background-color: #333;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    }
+
+    .navbar a {
+    float: left;
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+    }
+
+    .navbar a:hover {
+    background: #ddd;
+    color: black;
+    }
+
+    .main {
+    padding: 16px;
+    margin-bottom: 30px;
+    height: 1500px; /* Used in this example to enable scrolling */
+    }
+</style>
+
+<div id="div" class="navbar">
+  <a href=""> <?php echo $valor_real ?> </a>
+</div>
+
+<script>
+    $(function() {
+        var atualiza = function() {
+            $("#div").load("app_previa.php");
+            };
+
+setInterval(function() {
+    atualiza();
+}, 100); // A CADA 1 SEGUNDO RODA A FUNÇÃO atualiza
+
+});
+</script> 
+
+</body>
 </html>
