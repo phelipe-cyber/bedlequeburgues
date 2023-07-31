@@ -130,10 +130,10 @@ $(document).ready(function() {
 
                 </div>
 
-                <div class="row">
+                <div id="frete" style="display: none;" class="row">
                     <h4 class="col-lg-12">
                         <label for="">* Frete:</label>
-                            <div id="frete" class="alert alert-primary" role="alert">
+                            <div class="alert alert-primary" role="alert">
                                 
                             </div>    
                     </h4>
@@ -141,32 +141,31 @@ $(document).ready(function() {
                 </div>
 
                 <script>
-    $(document).ready(function() {
-      $("#cliente").change(function() {
+                    $(document).ready(function() {
+                        $("#cliente").change(function() {
+                            let id_cliente = document.getElementById("cliente").value;
+                                console.log(id_cliente);
+                                var vData = {
+                                    id_cliente: id_cliente
+                                };
+                                if( id_cliente > 0 ){
+                                    $.ajax({
+                                    url: './mvc/model/frete.php',
+                                    method: "POST",
+                                    data: vData,
+                                    success: function(html) {
+                                        document.getElementById('frete').style = 'display:block;';
+                                        $('#frete').html(html);
+                                    },
+                                    error: function(err) {
+                                        $('#frete').html(html);
+                                    },
+                                    });
+                                }
+                        })
+                    });
+                    </script>
 
-        let id_cliente = document.getElementById("cliente").value;
-            console.log(id_cliente);
-
-        $.ajax({
-          url: './mvc/model/frete.php',
-          method: "GET",
-          success: function(html) {
-            document.getElementById('frete').style = 'display:block;';
-            $('#frete').html(html);
-          },
-          error: function(err) {
-            $('#frete').html(html);
-
-          },
-
-        });
-
-      })
-
-    });
-  </script>
-
-                            <br>
                 <b>
                     <label for="">* Forma de Pagamento:</label>
                 </b>
@@ -220,6 +219,13 @@ $(document).ready(function() {
                     ?>
 
                             <tr>
+                                <?php  
+                                    if( $rows_produtos['nome'] == 'Frete' ){
+
+                                    }else{
+
+                                    
+                                ?>
                                 <td style="color: #4D4D4D;"><?php echo ($rows_produtos['nome']); ?>
                                     <input name="detalhes[<?php echo $index ?>][pedido]" type="hidden"
                                         class="form-control" id="detalhes[<?php echo $index ?>][pedido]"
@@ -419,7 +425,7 @@ $(document).ready(function() {
                                             maxlength="5" name="quantity" value="0" type="hidden" disabled >
                                        
 
-                                <td>
+                                <td  >
 
                                     <textarea name="detalhes[<?php echo $index ?>][observacoes]" class="form-control"
                                         id="detalhes[<?php echo $index ?>][observacoes]"></textarea>
@@ -430,6 +436,7 @@ $(document).ready(function() {
 
                             <?php $index++;
                     } 
+                }
                     
                     ?>
 

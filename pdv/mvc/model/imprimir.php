@@ -52,8 +52,8 @@ where numeropedido = '$id'";
 <div style="text-align: center;">
     <label for="">Bedlek Burgue's</label>
     <br>
-    <label for="">CNPJ - </label>
-    <br>
+    <!-- <label for="">CNPJ - </label>
+    <br> -->
     <label for="">R. Nicolau Maevsky, 1410 - Vale do Sol Jandira - SP</label>
     <br>
     <label for="">06622-005</label>

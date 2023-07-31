@@ -23,7 +23,7 @@ $update_pedido = mysqli_query($conn, $update);
 
 //  echo $update;
  
- echo $insert_table;
+//  echo $insert_table;
 //  echo "<br>";
 
  
