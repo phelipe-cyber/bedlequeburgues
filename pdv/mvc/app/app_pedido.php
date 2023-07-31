@@ -52,7 +52,7 @@ session_start();
 
     include_once "../model/apagar_previa.php";
 
-    $tab_produtos = "SELECT * FROM produtos ";
+    $tab_produtos = "SELECT * FROM produtos where nome <> 'Frete' ";
 
     $produtos = mysqli_query($conn, $tab_produtos);
         
