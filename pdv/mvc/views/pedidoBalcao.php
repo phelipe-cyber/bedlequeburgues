@@ -45,160 +45,162 @@ $cliente = $_POST['cliente'];
 
             <div class="col-8"></div>
             <div class="col-4" id="mensagem" style="visibility: visible"><?php if (isset($_SESSION['msg'])) {
-                                                                                echo $_SESSION['msg'];
-                                                                                unset($_SESSION['msg']);
-                                                                            } ?></div>
+                                                                        echo $_SESSION['msg'];
+                                                                        unset($_SESSION['msg']);
+                                                                    } ?></div>
         </div>
 
         <br>
 
         <?php
 
-        $tab_clientes = "SELECT * FROM clientes";
-        $clientes = mysqli_query($conn, $tab_clientes);
+$tab_clientes = "SELECT * FROM clientes";
+$clientes = mysqli_query($conn, $tab_clientes);
 
-        $tab_produtos = "SELECT * FROM `produtos` where nome <> 'Frete' ORDER by id ASC";
-        $produtos = mysqli_query($conn, $tab_produtos);
+$tab_produtos = "SELECT * FROM `produtos` where nome <> 'Frete' ORDER by id ASC" ;
+$produtos = mysqli_query($conn, $tab_produtos);
 
-        $tab_pgto = "SELECT * FROM `forma_pagamento` ORDER by id ASC";
-        $pgto = mysqli_query($conn, $tab_pgto);
+$tab_pgto = "SELECT * FROM `forma_pagamento` ORDER by id ASC" ;
+$pgto = mysqli_query($conn, $tab_pgto);
 
 
-        if ($mesa == 'delivery') {
-        ?>
-            <form id="Form" action="mvc/model/ad_pedido.php" method="POST">
+if ($mesa == 'delivery') {
+?>
+        <form id="Form" action="mvc/model/ad_pedido.php" method="POST">
+            <input type="hidden" name="categoria" id="categoria" value="<?php echo $categoria; ?>">
+            <input type="hidden" name="mesa" id="mesa" value="<?php echo $mesa; ?>">
+            <!-- <input type="hidden" name="cliente" id="cliente" value="<?php echo $cliente; ?>"> -->
+            <div class="row">
+                <h4 class="col-lg-7">
+                    <label for="">Cliente:</label>
+                    <input autofocus type="text" class="form-control" width="100%" height="100%" name="cliente"
+                        id="cliente" value="<?php echo $cliente ?>">
+                </h4>
+            </div>
+
+            <input class="btn btn-outline-success" type="submit" name="enviar" value="Finalizar Pedido">
+
+            <?php
+
+} else {
+
+    ?>
+  
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<script>
+    
+// In your Javascript (external .js resource or <script> tag)
+$(document).ready(function() {
+    $('.js-example-basic-single').select2({
+        width: 'resolve',
+        dropdownAutoWidth: true,
+        tags: true,
+        placeholder: "Selecionar um cliente",
+        allowClear: true,
+        theme: "classic"
+    });
+});   
+
+</script>
+
+
+            <form id="Form" action="mvc/model/ad_pedido_balcao.php" method="POST">
                 <input type="hidden" name="categoria" id="categoria" value="<?php echo $categoria; ?>">
                 <input type="hidden" name="mesa" id="mesa" value="<?php echo $mesa; ?>">
                 <!-- <input type="hidden" name="cliente" id="cliente" value="<?php echo $cliente; ?>"> -->
                 <div class="row">
-                    <h4 class="col-lg-7">
-                        <label for="">Cliente:</label>
-                        <input autofocus type="text" class="form-control" width="100%" height="100%" name="cliente" id="cliente" value="<?php echo $cliente ?>">
-                    </h4>
+                    <h4 class="col-lg-12">
+                        <label for="">* Cliente:</label>
+                        <br>
+                        <!-- <input autofocus type="text" class="form-control" width="100%" height="100%" name="cliente" id="cliente" value="" required> -->
+                        <select style="width: 70%"  class="js-example-basic-single" name="cliente" id="cliente" value="" required>
+                            <?php while ($rows_clientes = mysqli_fetch_assoc($clientes)) {
+                                ?>
+                                <option value=""></option>
+                                <option value="<?php echo $rows_clientes['id']?>"> <?php echo $rows_clientes['nome']?> </option>
+                                
+                                <?php
+                                
+                            }
+                            ?>
+                            </select>
+                            </h4>
+
                 </div>
 
-                <input class="btn btn-outline-success" type="submit" name="enviar" value="Finalizar Pedido">
-                
-            <?php
+                <div id="frete" style="display: none;" class="row">
+                    <h4 class="col-lg-12">
+                        <label for="">* Frete:</label>
+                            <div class="alert alert-primary" role="alert">
+                                
+                            </div>    
+                    </h4>
 
-        } else {
-
-            ?>
-
-                <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-                <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+                </div>
 
                 <script>
-                    // In your Javascript (external .js resource or <script> tag)
                     $(document).ready(function() {
-                        $('.js-example-basic-single').select2({
-                            width: 'resolve',
-                            dropdownAutoWidth: true,
-                            tags: true,
-                            placeholder: "Selecionar um cliente",
-                            allowClear: true,
-                            theme: "classic"
-                        });
-                    });
-                </script>
-
-
-                <form id="Form" action="mvc/model/ad_pedido_balcao.php" method="POST">
-
-                    <input type="hidden" name="categoria" id="categoria" value="<?php echo $categoria; ?>">
-                    <input type="hidden" name="mesa" id="mesa" value="<?php echo $mesa; ?>">
-                    <!-- <input type="hidden" name="cliente" id="cliente" value="<?php echo $cliente; ?>"> -->
-                    <div class="row">
-                        <h4 class="col-lg-12">
-                            <label for="">* Cliente:</label>
-                            <br>
-                            <!-- <input autofocus type="text" class="form-control" width="100%" height="100%" name="cliente" id="cliente" value="" required> -->
-                            <select style="width: 70%" class="js-example-basic-single" name="cliente" id="cliente" value="" required>
-                                <?php while ($rows_clientes = mysqli_fetch_assoc($clientes)) {
-                                ?>
-                                    <option value=""></option>
-                                    <option value="<?php echo $rows_clientes['id'] ?>"> <?php echo $rows_clientes['nome'] ?> </option>
-
-                                <?php
-
-                                }
-                                ?>
-                            </select>
-                        </h4>
-
-                    </div>
-
-                    <div id="frete" style="display: none;" class="row">
-                        <h4 class="col-lg-12">
-                            <label for="">* Frete:</label>
-                            <div class="alert alert-primary" role="alert">
-
-                            </div>
-                        </h4>
-
-                    </div>
-
-                    <script>
-                        $(document).ready(function() {
-                            $("#cliente").change(function() {
-                                let id_cliente = document.getElementById("cliente").value;
+                        $("#cliente").change(function() {
+                            let id_cliente = document.getElementById("cliente").value;
                                 console.log(id_cliente);
                                 var vData = {
                                     id_cliente: id_cliente
                                 };
-                                if (id_cliente > 0) {
+                                if( id_cliente > 0 ){
                                     $.ajax({
-                                        url: './mvc/model/frete.php',
-                                        method: "POST",
-                                        data: vData,
-                                        success: function(html) {
-                                            document.getElementById('frete').style = 'display:block;';
-                                            $('#frete').html(html);
-                                        },
-                                        error: function(err) {
-                                            $('#frete').html(html);
-                                        },
+                                    url: './mvc/model/frete.php',
+                                    method: "POST",
+                                    data: vData,
+                                    success: function(html) {
+                                        document.getElementById('frete').style = 'display:block;';
+                                        $('#frete').html(html);
+                                    },
+                                    error: function(err) {
+                                        $('#frete').html(html);
+                                    },
                                     });
                                 }
-                            })
-                        });
+                        })
+                    });
                     </script>
 
-                    <b>
-                        <label for="">* Forma de Pagamento:</label>
-                    </b>
-                    <div class="row">
-
-                        <?php
-                        while ($rows_pgto = mysqli_fetch_assoc($pgto)) {
-                        ?>
-
-                            <div class="form-group col-md-2">
-                                <div class="form-check">
-                                    <input name="pgto" class="form-check-input" type="checkbox" value="<?php echo ($rows_pgto['value']) ?>" id="<?php echo ($rows_pgto['tipo']) ?>">
-                                    <label class="form-check-label" for="<?php echo ($rows_pgto['tipo']) ?>"><?php echo ($rows_pgto['tipo']) ?></label>
-                                </div>
-                            </div>
-                        <?php
-                        }
-                        ?>
-
-
-                    </div>
-
-                    <input class="btn btn-outline-success" type="submit" name="enviar" value="Finalizar Pedido">
+                <b>
+                    <label for="">* Forma de Pagamento:</label>
+                </b>
+                <div class="row">
 
                 <?php
-            }
+                    while ($rows_pgto = mysqli_fetch_assoc($pgto)) {
                 ?>
-                <br><br>
+
+                    <div class="form-group col-md-2">
+                        <div class="form-check">
+                            <input name="pgto" class="form-check-input" type="checkbox" value="<?php echo ($rows_pgto['value']) ?>" id="<?php echo ($rows_pgto['tipo']) ?>">
+                            <label class="form-check-label" for="<?php echo ($rows_pgto['tipo']) ?>"><?php echo ($rows_pgto['tipo']) ?></label>
+                        </div>
+                    </div>
+                <?php
+                    }
+                ?>
+                    
+
+                </div>
+
+                <input class="btn btn-outline-success" type="submit" name="enviar" value="Finalizar Pedido">
+
+                <?php
+    }
+        ?>
                 <div class="table-responsive">
                     <!-- <div class="col-2"> -->
                     <!-- <div class="flex-center flex-column"> -->
                     <!-- <div class="card card-body"> -->
 
                     <!-- <div class="table-responsive"> -->
-                    <table id="dtBasicExample" class="table table-striped table-bordered table-sm reponsive" cellspacing="0" width="100%">
+                    <table id="dtBasicExample" class="table table-striped table-bordered table-sm reponsive"
+                        cellspacing="0" width="100%">
                         <!-- <table id="dtBasicExample" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%"> -->
                         <thead>
                             <tr>
@@ -211,211 +213,224 @@ $cliente = $_POST['cliente'];
                         </thead>
                         <tbody>
                             <?php
-                            $index = 0;
+                    $index = 0;
+                    
+                    while ($rows_produtos = mysqli_fetch_assoc($produtos)) {
+                    ?>
 
-                            while ($rows_produtos = mysqli_fetch_assoc($produtos)) {
-                            ?>
-
-                                <tr>
+                            <tr>
+                                <td style="color: #4D4D4D;"><?php echo ($rows_produtos['nome']); ?>
+                                    <input name="detalhes[<?php echo $index ?>][pedido]" type="hidden"
+                                        class="form-control" id="detalhes[<?php echo $index ?>][pedido]"
+                                        value="<?php echo ($rows_produtos['nome']); ?>">
+                                    <p style="color: #4D4D4D;">
+                                        <b>
+                                            R$ <?php echo ($rows_produtos['preco_venda']); ?>
+                                        </b>
+                                    </p>
                                     <?php
-                                    
+                                        
+                                    if( $rows_produtos['categoria'] == 'LANCHE' ){
+                                        echo ($rows_produtos['detalhes']);
+                                    }else{
+
+                                    }
+
                                     ?>
-                                        <td style="color: #4D4D4D;"><?php echo ($rows_produtos['nome']); ?>
-                                            <input name="detalhes[<?php echo $index ?>][pedido]" type="hidden" class="form-control" id="detalhes[<?php echo $index ?>][pedido]" value="<?php echo ($rows_produtos['nome']); ?>">
-                                            <p style="color: #4D4D4D;">
-                                                <b>
-                                                    R$ <?php echo ($rows_produtos['preco_venda']); ?>
-                                                </b>
-                                            </p>
-                                            <?php
-
-                                            if ($rows_produtos['categoria'] == 'LANCHE') {
-                                                echo ($rows_produtos['detalhes']);
-                                            } else {
-                                            }
-                                           
-                                            
-                                            ?>
-                                            <input id="detalhes[<?php echo $index ?>][preco_venda]" name="detalhes[<?php echo $index ?>][preco_venda]" type="hidden" class="form-control" value="<?php echo ($rows_produtos['preco_venda']); ?>">
-
-                                            <input id="detalhes[<?php echo $index ?>][id]" name="detalhes[<?php echo $index ?>][id]" type="hidden" class="form-control" value="<?php echo ($rows_produtos['id']); ?>">
-                                        </td>
-                                        <td style="text-align: center; display: flex;">
-
-                                            <input id="mais<?php echo $index ?>" class="bg-gradient-success" value="+" type="button">
-                                            </input>
-
-                                            <input readonly id="detalhes[<?php echo $index ?>][quantidade]" class="bg-gradient-default text-center" style="width:50px;" name="detalhes[<?php echo $index ?>][quantidade]" min="0" maxlength="5" name="quantity" value="0" type="number">
-
-                                            <input id="menos<?php echo $index ?>" class="bg-gradient-danger" value="-" type="button">
-                                            </input>
-
-                                            <script>
-                                                $(document).ready(function() {
-                                                    $("#mais<?php echo $index ?>").click(function() {
-
-                                                        Quantidade = document.getElementById(
-                                                                "detalhes[<?php echo $index ?>][quantidade]")
-                                                            .value
-
-                                                        Quantidade++;
-
-                                                        Q = document.getElementById(
-                                                                "detalhes[<?php echo $index ?>][quantidade]")
-                                                            .value = Quantidade;
-
-                                                        valor = document.getElementById(
-                                                                "detalhes[<?php echo $index ?>][preco_venda]")
-                                                            .value
-                                                        total = Q * valor;
-
-                                                        pedido = document.getElementById(
-                                                                "detalhes[<?php echo $index ?>][pedido]")
-                                                            .value
-
-                                                        // console.log("Click " + total);
-
-                                                        document.getElementById(
-                                                            "detalhes[<?php echo $index ?>][valor_unitario]"
-                                                        ).value = total;
-
-                                                        obs = document.getElementById(
-                                                            "detalhes[<?php echo $index ?>][observacoes]"
-                                                        ).value;
-                                                        id = document.getElementById(
-                                                            "detalhes[<?php echo $index ?>][id]"
-                                                        ).value;
-
-                                                        var vData = {
-                                                            id: id,
-                                                            pedido: pedido,
-                                                            Quantidade: Quantidade,
-                                                            valor: total,
-                                                            obs: obs
-                                                        };
-
-                                                        console.log(vData);
-
-                                                        $.ajax({
-                                                            url: './mvc/model/ad_pedido_previa.php',
-                                                            dataType: 'html',
-                                                            type: 'POST',
-                                                            data: vData,
-                                                            beforeSend: function() {
-                                                                // document.getElementById('spiner').style =
-                                                                //     'display:block;';
-                                                            },
-                                                            success: function(html) {
-                                                                console.log(html);
-
-                                                            },
-
-                                                            error: function(err) {
-                                                                document.getElementById('spiner').style =
-                                                                    'display:none;';
-
-                                                            },
-
-                                                        });
 
 
-                                                    });
+                                    <input id="detalhes[<?php echo $index ?>][preco_venda]"
+                                        name="detalhes[<?php echo $index ?>][preco_venda]" type="hidden"
+                                        class="form-control" value="<?php echo ($rows_produtos['preco_venda']); ?>">
+
+                                    <input id="detalhes[<?php echo $index ?>][id]"
+                                        name="detalhes[<?php echo $index ?>][id]" type="hidden"
+                                        class="form-control" value="<?php echo ($rows_produtos['id']); ?>">
+                                </td>
+                                <td style="text-align: center; display: flex;">
+
+                                    <input id="mais<?php echo $index ?>" class="bg-gradient-success" value="+"
+                                        type="button">
+                                    </input>
+
+                                    <input readonly id="detalhes[<?php echo $index ?>][quantidade]"
+                                        class="bg-gradient-default text-center" style="width:50px;"
+                                        name="detalhes[<?php echo $index ?>][quantidade]" min="0" maxlength="5"
+                                        name="quantity" value="0" type="number">
+
+                                    <input id="menos<?php echo $index ?>" class="bg-gradient-danger" value="-"
+                                        type="button">
+                                    </input>
+
+                                    <script>
+                                        $(document).ready(function() {
+                                            $("#mais<?php echo $index ?>").click(function() {
+                                                
+                                                Quantidade = document.getElementById(
+                                                        "detalhes[<?php echo $index ?>][quantidade]")
+                                                    .value
+
+                                                Quantidade++;
+
+                                                Q = document.getElementById(
+                                                        "detalhes[<?php echo $index ?>][quantidade]")
+                                                    .value = Quantidade;
+
+                                                valor = document.getElementById(
+                                                        "detalhes[<?php echo $index ?>][preco_venda]")
+                                                    .value
+                                                    total = Q * valor;
+
+                                                pedido = document.getElementById(
+                                                        "detalhes[<?php echo $index ?>][pedido]")
+                                                    .value
+                                                    
+                                                // console.log("Click " + total);
+
+                                                document.getElementById(
+                                                    "detalhes[<?php echo $index ?>][valor_unitario]"
+                                                ).value = total;
+                                               
+                                              obs =  document.getElementById(
+                                                    "detalhes[<?php echo $index ?>][observacoes]"
+                                                ).value;
+                                              id =  document.getElementById(
+                                                    "detalhes[<?php echo $index ?>][id]"
+                                                ).value;
+                                               
+                                                var vData = {
+                                                    id: id,
+                                                    pedido: pedido,
+                                                    Quantidade: Quantidade,
+                                                    valor: total,
+                                                    obs: obs
+                                                }; 
+
+                                                console.log(vData);
+
+                                                $.ajax({
+                                                    url: './mvc/model/ad_pedido_previa.php',
+                                                    dataType: 'html',
+                                                    type: 'POST',
+                                                    data: vData,
+                                                    beforeSend: function() {
+                                                        // document.getElementById('spiner').style =
+                                                        //     'display:block;';
+                                                    },
+                                                    success: function(html) {
+                                                       console.log(html);
+
+                                                    },
+
+                                                    error: function(err) {
+                                                        document.getElementById('spiner').style =
+                                                            'display:none;';
+
+                                                    },
+
                                                 });
-                                            </script>
-                                            <script>
-                                                $(document).ready(function() {
-                                                    $("#menos<?php echo $index ?>").click(function() {
-                                                        Quantidade = document.getElementById(
-                                                                "detalhes[<?php echo $index ?>][quantidade]")
-                                                            .value
-                                                        Quantidade--;
-
-                                                        if (Quantidade == "-1") {
-
-                                                        } else {
 
 
-                                                            Q = document.getElementById(
-                                                                    "detalhes[<?php echo $index ?>][quantidade]")
-                                                                .value = Quantidade;
+                                            });
+                                        });
+                                    </script>
+                                    <script>
+                                        $(document).ready(function() {
+                                            $("#menos<?php echo $index ?>").click(function() {
+                                                Quantidade = document.getElementById(
+                                                        "detalhes[<?php echo $index ?>][quantidade]")
+                                                    .value
+                                                Quantidade--;
 
-                                                            valor = document.getElementById(
-                                                                    "detalhes[<?php echo $index ?>][preco_venda]")
-                                                                .value
-                                                            total = Q * valor;
+                                                if( Quantidade == "-1"){
 
-                                                            pedido = document.getElementById(
-                                                                    "detalhes[<?php echo $index ?>][pedido]")
-                                                                .value
+                                                }else{
 
-                                                            // console.log("Click " + total);
 
-                                                            document.getElementById(
-                                                                "detalhes[<?php echo $index ?>][valor_unitario]"
-                                                            ).value = total;
+                                                Q = document.getElementById(
+                                                        "detalhes[<?php echo $index ?>][quantidade]")
+                                                    .value = Quantidade;
 
-                                                            obs = document.getElementById(
-                                                                "detalhes[<?php echo $index ?>][observacoes]"
-                                                            ).value;
-                                                            id = document.getElementById(
-                                                                "detalhes[<?php echo $index ?>][id]"
-                                                            ).value;
+                                                valor = document.getElementById(
+                                                        "detalhes[<?php echo $index ?>][preco_venda]")
+                                                    .value
+                                                    total = Q * valor;
 
-                                                            var vData = {
-                                                                id: id,
-                                                                pedido: pedido,
-                                                                Quantidade: Quantidade,
-                                                                valor: total,
-                                                                obs: obs
-                                                            };
+                                                pedido = document.getElementById(
+                                                        "detalhes[<?php echo $index ?>][pedido]")
+                                                    .value
+                                                    
+                                                // console.log("Click " + total);
 
-                                                            console.log(vData);
+                                                document.getElementById(
+                                                    "detalhes[<?php echo $index ?>][valor_unitario]"
+                                                ).value = total;
+                                               
+                                              obs =  document.getElementById(
+                                                    "detalhes[<?php echo $index ?>][observacoes]"
+                                                ).value;
+                                              id =  document.getElementById(
+                                                    "detalhes[<?php echo $index ?>][id]"
+                                                ).value;
+                                               
+                                                var vData = {
+                                                    id: id,
+                                                    pedido: pedido,
+                                                    Quantidade: Quantidade,
+                                                    valor: total,
+                                                    obs: obs
+                                                }; 
 
-                                                            $.ajax({
-                                                                url: './mvc/model/ad_pedido_previa.php',
-                                                                dataType: 'html',
-                                                                type: 'POST',
-                                                                data: vData,
-                                                                beforeSend: function() {
-                                                                    // document.getElementById('spiner').style =
-                                                                    //     'display:block;';
-                                                                },
-                                                                success: function(html) {
-                                                                    console.log(html);
+                                                console.log(vData);
 
-                                                                },
+                                                $.ajax({
+                                                    url: './mvc/model/ad_pedido_previa.php',
+                                                    dataType: 'html',
+                                                    type: 'POST',
+                                                    data: vData,
+                                                    beforeSend: function() {
+                                                        // document.getElementById('spiner').style =
+                                                        //     'display:block;';
+                                                    },
+                                                    success: function(html) {
+                                                       console.log(html);
 
-                                                                error: function(err) {
-                                                                    document.getElementById('spiner').style =
-                                                                        'display:none;';
+                                                    },
 
-                                                                },
+                                                    error: function(err) {
+                                                        document.getElementById('spiner').style =
+                                                            'display:none;';
 
-                                                            });
+                                                    },
 
-                                                        };
-                                                    });
                                                 });
-                                            </script>
+  
+                                            };
+                                            });
+                                        });
+                                    </script>
 
-                                        </td>
+                                </td>
 
+                                       
+                                            <input id="detalhes[<?php echo $index ?>][valor_unitario]"
+                                            class="bg-gradient-default text-center" style="width:50px;" name="" min="0"
+                                            maxlength="5" name="quantity" value="0" type="hidden" disabled >
+                                       
 
-                                        <input id="detalhes[<?php echo $index ?>][valor_unitario]" class="bg-gradient-default text-center" style="width:50px;" name="" min="0" maxlength="5" name="quantity" value="0" type="hidden" disabled>
+                                <td  >
 
+                                    <textarea name="detalhes[<?php echo $index ?>][observacoes]" class="form-control"
+                                        id="detalhes[<?php echo $index ?>][observacoes]"></textarea>
 
-                                        <td>
+                                </td>
 
-                                            <textarea name="detalhes[<?php echo $index ?>][observacoes]" class="form-control" id="detalhes[<?php echo $index ?>][observacoes]"></textarea>
-
-                                        </td>
-                                    <?php }; ?>
-
-                                </tr>
+                            </tr>
 
                             <?php $index++;
-
-                            ?>
+                    };
+                    
+                    ?>
 
                         </tbody>
                     </table>
@@ -439,42 +454,40 @@ $cliente = $_POST['cliente'];
                         var1.style.display = "none";
                     }, 5000)
                 </script>
-                </form>
+            </form>
 
-
+          
     </div>
 
     <script>
 
     </script>
 
-    <?php
+   <?php 
 
     // include_once("apagar_previa.php");
     include_once "./mvc/model/apagar_previa.php";
 
-    ?>
+   ?>
 
-    <script>
-        $(function() {
-            var atualiza = function() {
-                $("#div").load("./mvc/views/pedidoprevia.php");
-            };
+<script>
+$(function() {
+var atualiza = function() {
+    $("#div").load("./mvc/views/pedidoprevia.php");
+};
 
-            setInterval(function() {
-                atualiza();
-            }, 100); // A CADA 1 SEGUNDO RODA A FUNÇÃO atualiza
+setInterval(function() {
+atualiza();
+}, 100); // A CADA 1 SEGUNDO RODA A FUNÇÃO atualiza
 
-        });
-    </script>
-    <!-- <div class="row">
+});
+</script> 
+<!-- <div class="row">
 
 <div class="col-8" ></div>
-<div class="col-4" id="mensagem" style="visibility: visible"><?php if (isset($_SESSION['msg'])) {
-                                                                    echo $_SESSION['msg'];
-                                                                    unset($_SESSION['msg']);
-                                                                } ?></div>
+<div class="col-4" id="mensagem" style="visibility: visible"><?php if (isset($_SESSION['msg'])) {echo $_SESSION['msg'];  unset($_SESSION['msg']); }?></div>
 
 </div> -->
 
-    <h1 class="col-xl-6 col-md-6 mb-4" id="div"> </h1>
+<h1 class="col-xl-6 col-md-6 mb-4" id="div" > </h1>
+
