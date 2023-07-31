@@ -6,6 +6,7 @@ $hora_pedido = date('H:i');
 
 include_once ("conexao.php");
 
+
 if( $_POST['pedido'] <> ""){
 
  $numeropedido = $_POST['pedido'];
@@ -16,21 +17,32 @@ $cliente = ($_POST['cliente']);
 $cliente_2 = ($_POST['cliente']);
 $pgto = $_POST['pgto'];
 
-foreach ($detalhes as $detalhesPedidos) {
+// foreach ($detalhes as $detalhesPedidos) {
 
-  $quantidade = $detalhesPedidos['quantidade'];
-  $pedido =     ($detalhesPedidos['pedido']);
-  $preco_venda = $detalhesPedidos['preco_venda'];
-  $observacoes = $detalhesPedidos['observacoes'];
+//   $quantidade = $detalhesPedidos['quantidade'];
+//   $pedido =     ($detalhesPedidos['pedido']);
+//   $preco_venda = $detalhesPedidos['preco_venda'];
+//   $observacoes = $detalhesPedidos['observacoes'];
   
   
-  if ($quantidade == 0 )
-  continue;
+//   if ($quantidade == 0 )
+//   continue;
   
 //   print_r($pedido);
 //   echo "<br>";
 //   print_r($cliente);
 //   exit();
+
+$sql_previa = "SELECT * FROM `pedido_previa` where quantidade <> '' GROUP BY id_produto order by id ASC";
+    $pedido_previa = mysqli_query($conn, $sql_previa);
+
+ while ($rows_previa = mysqli_fetch_assoc($pedido_previa)) {
+    // print_r($rows_previa);
+    
+  $quantidade = $rows_previa['quantidade'];
+  $pedido =     ($rows_previa['produto']);
+  $preco_venda = $rows_previa['valor'];
+  $observacoes = $rows_previa['observacoes'];
 
    $insert_table = "INSERT INTO pedido (numeropedido, delivery,cliente, idmesa, produto, quantidade, hora_pedido, valor, observacao, pgto ,usuario, `data`, gorjeta, status) VALUES
   ('$numeropedido','','$cliente', '$id_mesa', '$pedido', '$quantidade', '$hora_pedido', '$preco_venda', '$observacoes','$pgto','$user', '$data_hora','', 2 )";
@@ -78,26 +90,38 @@ if ($pedido == null) {
 $numeropedido = $pedido;
 
 $user =  $_SESSION['user'];
-$detalhes =  $_POST['detalhes'];
+// $detalhes =  $_POST['detalhes'];
 $cliente = ($_POST['cliente']);
 $cliente_2 = ($_POST['cliente']);
 $pgto = ($_POST['pgto']);
 
-foreach ($detalhes as $detalhesPedidos) {
+// foreach ($detalhes as $detalhesPedidos) {
 
-  $quantidade = $detalhesPedidos['quantidade'];
-  $pedido =     ($detalhesPedidos['pedido']);
-  $preco_venda = $detalhesPedidos['preco_venda'];
-  $observacoes = $detalhesPedidos['observacoes'];
+  // $quantidade = $detalhesPedidos['quantidade'];
+  // $pedido =     ($detalhesPedidos['pedido']);
+  // $preco_venda = $detalhesPedidos['preco_venda'];
+  // $observacoes = $detalhesPedidos['observacoes'];
   
   
-  if ($quantidade == 0 )
-  continue;
+  // if ($quantidade == 0 )
+  // continue;
   
-//   print_r($pedido);
+  // print_r($_POST);
 //   echo "<br>";
   // print_r($_POST['cliente']);
   // exit();
+
+  $sql_previa = "SELECT * FROM `pedido_previa` where quantidade <> '' GROUP BY id_produto order by id ASC";
+    $pedido_previa = mysqli_query($conn, $sql_previa);
+
+ while ($rows_previa = mysqli_fetch_assoc($pedido_previa)) {
+    // print_r($rows_previa);
+    
+  $quantidade = $rows_previa['quantidade'];
+  $pedido =     ($rows_previa['produto']);
+  $preco_venda = $rows_previa['valor'];
+  $observacoes = $rows_previa['observacoes'];
+//  die();
 
  $insert_table = "INSERT INTO pedido (numeropedido, delivery,cliente, idmesa, produto, quantidade, hora_pedido, valor, observacao, pgto, usuario, `data` , gorjeta, status ) VALUES
   ('$numeropedido','','$cliente', '$id_mesa', '$pedido', '$quantidade', '$hora_pedido', '$preco_venda', '$observacoes', '$pgto','$user','$data_hora' ,'' , 2 )";

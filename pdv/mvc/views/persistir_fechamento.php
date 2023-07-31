@@ -70,10 +70,10 @@ $venda = $total;
 		// var_dump($Valor_format);
 		
 		$total = $_POST['total'];
-		$porcentagem = 97.61;
+		$porcentagem = 1.99;
 		$resultado = $total - ($total * $porcentagem / 100);
-		$R = $total - $resultado;
-        $Valor_format = number_format($R, 2);
+		// $R = $total - $resultado;
+        $Valor_format = number_format($resultado, 2);
 
 	}else{
 

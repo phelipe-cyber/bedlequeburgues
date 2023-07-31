@@ -107,6 +107,7 @@ $(document).ready(function() {
 
 
             <form id="Form" action="mvc/model/ad_pedido_balcao.php" method="POST">
+
                 <input type="hidden" name="categoria" id="categoria" value="<?php echo $categoria; ?>">
                 <input type="hidden" name="mesa" id="mesa" value="<?php echo $mesa; ?>">
                 <!-- <input type="hidden" name="cliente" id="cliente" value="<?php echo $cliente; ?>"> -->

@@ -97,7 +97,7 @@ if ($status == 1 || $status == 2 || $status == 3  ) { ?>
 					$quantidade = $rows_produtos['quantidade'];
 					$valor = $rows_produtos['valor'];
 
-					$subtotal = $valor * $quantidade;
+					$subtotal = $valor ;
 					$total += $subtotal;
 
 				?>
