@@ -76,7 +76,7 @@ if ($numeropedido == "" || $numeropedido ==  0 ) {
 			continue;
 
 		$insert_table = "INSERT INTO pedido (numeropedido, delivery,cliente, idmesa, produto, quantidade, hora_pedido, valor, observacao, pgto, usuario, data, gorjeta, `status`) VALUES
-	 	('$numeropedido','','$cliente', '$id_mesa', '$nome', '$quantidade', '$hora_pedido', '$preco_venda', '$observacoes', '', '$user', '$data_hora' ,'', 2 )";
+	 	('$numeropedido','','$cliente', '$id_mesa', '$nome', '$quantidade', '$hora_pedido', '$preco_venda', '$observacoes', '', '$user', '$data_hora' ,'', 1 )";
 		$adiciona_pedido = mysqli_query($conn, $insert_table);
 		
 		$update_table = "UPDATE mesas SET status = '2', nome = '$cliente' , id_pedido = '$numeropedido' WHERE id_mesa = '$id_mesa' ";
@@ -115,7 +115,7 @@ if ($numeropedido == "" || $numeropedido ==  0 ) {
 			continue;
 
 		 $insert_table = "INSERT INTO pedido (numeropedido, delivery,cliente, idmesa, produto, quantidade, hora_pedido, valor, observacao, pgto, usuario, data, gorjeta, `status`) VALUES
-			('$numeropedido','','$cliente', '$id_mesa', '$nome', '$quantidade', '$hora_pedido', '$preco_venda', '$observacoes', '', '$user', '$data_hora' ,'', 2 )";
+			('$numeropedido','','$cliente', '$id_mesa', '$nome', '$quantidade', '$hora_pedido', '$preco_venda', '$observacoes', '', '$user', '$data_hora' ,'', 1 )";
 		$adiciona_pedido = mysqli_query($conn, $insert_table);
 		// echo "<br>";
 		$update_table = "UPDATE mesas SET status = '2', nome = '$cliente' , id_pedido = '$numeropedido' WHERE id_mesa = '$id_mesa' ";
