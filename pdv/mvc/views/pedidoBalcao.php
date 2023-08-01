@@ -23,7 +23,7 @@ $cliente = $_POST['cliente'];
 <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.2/css/mdb.min.css" rel="stylesheet">
 <!-- <link href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css" rel="stylesheet"> -->
 <!-- JQuery -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
 <!-- Bootstrap tooltips -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
 <!-- Bootstrap core JavaScript -->
@@ -485,16 +485,16 @@ $(document).ready(function() {
    ?>
 
 <script>
-    // $(function() {
-    // var atualiza = function() {
-    //     $("#div").load("./mvc/views/pedidoprevia.php");
-    // };
+    $(function() {
+    var atualiza = function() {
+        $("#div").load("./mvc/views/pedidoprevia.php");
+    };
 
-    // setInterval(function() {
-    // atualiza();
-    // }, 100); // A CADA 1 SEGUNDO RODA A FUNÇÃO atualiza
+    setInterval(function() {
+    atualiza();
+    }, 100); // A CADA 1 SEGUNDO RODA A FUNÇÃO atualiza
 
-    // });
+    });
 </script> 
 <!-- <div class="row">
 
