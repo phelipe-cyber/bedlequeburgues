@@ -18,7 +18,7 @@ $valor = $_POST['valor'];
 
 //  $insert_table = "INSERT INTO vendas (valor, cliente, rendimento, data) 
 
- $insert_table = "INSERT INTO vendas ( id_pedido, valor, valor_maquina, cliente, rendimento, pgto, data) VALUES ('', '$valor', '$valor', '$cliente', '$rendimento', '' , '$data')";
+ $insert_table = "INSERT INTO vendas ( id_pedido, valor, valor_maquina, cliente, rendimento, pgto, data) VALUES ('', '$valor', '', '$cliente', '$rendimento', '' , '$data')";
 
 // VALUES ('$valor', '$cliente', '$rendimento', '$data')";
 

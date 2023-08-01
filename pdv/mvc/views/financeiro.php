@@ -233,7 +233,7 @@ if (isset($escolha)) {
 		</form>
 		<?php
 
-		 $tab_vendas = "SELECT * FROM vendas v left join clientes c on c.id = v.cliente WHERE data LIKE '%$mes%'";
+		$tab_vendas = "SELECT *, v.id as id_venda FROM vendas v left join clientes c on c.id = v.cliente WHERE data LIKE '%$mes%'";
 		$vendas = mysqli_query($conn, $tab_vendas);
 
 		$tab_despesas = "SELECT * FROM despesas WHERE data LIKE '%$mes%'";
@@ -269,7 +269,8 @@ if (isset($escolha)) {
 
 				while ($rows_vendas = mysqli_fetch_assoc($vendas)) {
 
-					$id = $rows_vendas['id'];
+					 $id = $rows_vendas['id'];
+					 $id_venda = $rows_vendas['id_venda'];
 					$data = $rows_vendas['data'];
 
 					$rendimento = $rows_vendas['rendimento'];
@@ -295,7 +296,7 @@ if (isset($escolha)) {
 						<td class="text-center"><b><?php echo $pedido; ?></b></td>
 						<td class="text-center">
 							<form method="POST" action="/pdv/mvc/model/imprime_balcao.php" target="_blank">
-								<input name="id" type="hidden" value="<?php echo $pedido; ?>">
+								<input name="id" type="hidden" value="<?php echo $pedido ? $pedido : $id_venda ; ?>">
 								<input name="cliente" type="hidden" value="<?php echo $cliente; ?>">
 								<input name="pgto" type="hidden" value="<?php echo $pgto; ?>">
 								<button type="submit" class="btn btn-outline-success">Imprimir</button>
@@ -317,7 +318,7 @@ if (isset($escolha)) {
 							<div style="width: 100%; color: green;">Rendimento</div>
 						</td>
 						<td class="text-center">
-							<div type="button" style=" color: red;" data-toggle="modal" data-target="#modal_exclui_proventos" data-rendimento="<?php echo $rendimento; ?>" data-cliente="<?php echo $cliente; ?>" data-data="<?php echo $data; ?>" data-valor="<?php echo number_format($valor, 2); ?>" data-id="<?php echo $id; ?>"><b>X</b></div>
+							<div type="button" style=" color: red;" data-toggle="modal" data-target="#modal_exclui_proventos" data-rendimento="<?php echo $rendimento; ?>" data-cliente="<?php echo $cliente; ?>" data-data="<?php echo $data; ?>" data-valor="<?php echo number_format($valor, 2); ?>" data-id="<?php echo $id_venda; ?>"><b>X</b></div>
 						</td>
 					</tr>
 
@@ -348,7 +349,7 @@ if (isset($escolha)) {
 						<h4 style="width: 100%; color: green;"><b>R$ <?php echo number_format($total1, 2); ?></b></h4>
 					</td>
 					<td class="text-center">
-						<h4 style="width: 100%; color: green;"><b>R$ <?php echo number_format($total3, 2); ?></b></h4>
+						<h4 style="width: 100%; color: green;"><b>R$ <?php echo number_format($total1-$total3, 2); ?></b></h4>
 					</td>
 					<td class="text-center"></td>
 					<td class="text-center"></td>
@@ -473,7 +474,6 @@ if (isset($escolha)) {
 
 					<div class="modal-footer">
 						<input name="id" id="id" type="hidden" class="form-control">
-
 						<button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
 						<button type="submit" class="btn btn-danger">Excluir</button>
 
@@ -504,6 +504,7 @@ if (isset($escolha)) {
 
 						<form method="POST" action="mvc/model/exclui_despesas.php">
 							<div class="row">
+
 								<div class="form-group col-md-8">
 									<label for="message-text" class="col-form-label text-center">Despesa</label>
 									<input name="despesa" id="despesa" type="text" class="form-control">
@@ -594,12 +595,27 @@ if (isset($escolha)) {
 
 		echo "<hr>";
 
-		$saldo = $total3 - $total2;
+		$saldo = $total1 - $total3;
+		
+		// echo $total1;
+		// echo "<br>";
+		// echo $total3;
+		// echo "<br>";
+		// echo $total2;
 
 		if ($saldo > 0) {
 		?>
 
-			<h2 class="text-center" style="color: green; height: 50px;"><b>Saldo: R$ <?php echo number_format($saldo, 2); ?></b></h2>
+			<h2 class="text-center" style="color: green; height: 50px;"><b>Saldo Vendas: R$ <?php echo number_format($total1, 2); ?></b></h2>
+			<h2 class="text-center" style="color: green; height: 50px;"><b>Valor Total Venda Maquina: R$ <?php echo number_format($total3, 2); ?></b></h2>
+			<h2 class="text-center" style="color: green; height: 50px;"><b>Saldo Atual C/ Desconto Maquina: R$ <?php echo number_format($saldo, 2); ?></b></h2>
+			<?php
+				if( $total2 == 0 ){
+				}else{
+
+					?><h2 class="text-center" style="color: red; height: 50px;"><b>Saldo Atual C/ À Despesas: R$ <?php echo number_format($saldo - $total2, 2); ?></b></h2><?php
+				} 
+			?>
 
 		<?php
 		} else {
