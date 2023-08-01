@@ -6,6 +6,7 @@ $hora_pedido = date('H:i');
 
 include_once ("conexao.php");
 
+// print_r($_POST);
 
 if( $_POST['pedido'] <> ""){
 
@@ -33,7 +34,7 @@ $pgto = $_POST['pgto'];
 //   print_r($cliente);
 //   exit();
 
-$sql_previa = "SELECT * FROM `pedido_previa` where quantidade <> '' GROUP BY id_produto order by id ASC";
+$sql_previa = "SELECT * FROM `pedido_previa` where quantidade <> '' and hashpagina = '$hashpagina' GROUP BY id_produto order by id ASC";
     $pedido_previa = mysqli_query($conn, $sql_previa);
 
  while ($rows_previa = mysqli_fetch_assoc($pedido_previa)) {
@@ -94,6 +95,7 @@ $user =  $_SESSION['user'];
 $cliente = ($_POST['cliente']);
 $cliente_2 = ($_POST['cliente']);
 $pgto = ($_POST['pgto']);
+$hashpagina = $_POST['hashpagina'];
 
 // foreach ($detalhes as $detalhesPedidos) {
 
@@ -111,7 +113,7 @@ $pgto = ($_POST['pgto']);
   // print_r($_POST['cliente']);
   // exit();
 
-  $sql_previa = "SELECT * FROM `pedido_previa` where quantidade <> '' GROUP BY id_produto order by id ASC";
+  $sql_previa = "SELECT * FROM `pedido_previa` where quantidade <> '' and hashpagina = '$hashpagina' GROUP BY id_produto order by id ASC";
     $pedido_previa = mysqli_query($conn, $sql_previa);
 
  while ($rows_previa = mysqli_fetch_assoc($pedido_previa)) {
@@ -121,17 +123,17 @@ $pgto = ($_POST['pgto']);
   $pedido =     ($rows_previa['produto']);
   $preco_venda = $rows_previa['valor'];
   $observacoes = $rows_previa['observacoes'];
-//  die();
-
- $insert_table = "INSERT INTO pedido (numeropedido, delivery,cliente, idmesa, produto, quantidade, hora_pedido, valor, observacao, pgto, usuario, `data` , gorjeta, status ) VALUES
+  
+  $insert_table = "INSERT INTO pedido (numeropedido, delivery,cliente, idmesa, produto, quantidade, hora_pedido, valor, observacao, pgto, usuario, `data` , gorjeta, status ) VALUES
   ('$numeropedido','','$cliente', '$id_mesa', '$pedido', '$quantidade', '$hora_pedido', '$preco_venda', '$observacoes', '$pgto','$user','$data_hora' ,'' , 2 )";
 
-   $adiciona_pedido = mysqli_query($conn, $insert_table);
-  
-  $insert_table = "UPDATE mesas SET status = '2', nome = '$cliente' , id_pedido = '$numeropedido' WHERE id_mesa = $id_mesa";
-  $adiciona_pedido_2 = mysqli_query($conn, $insert_table);
+$adiciona_pedido = mysqli_query($conn, $insert_table);
+
+$insert_table = "UPDATE mesas SET status = '2', nome = '$cliente' , id_pedido = '$numeropedido' WHERE id_mesa = $id_mesa";
+$adiciona_pedido_2 = mysqli_query($conn, $insert_table);
 
 };
+//  die();
 
 $novoIdInserido = $conn->insert_id;
 

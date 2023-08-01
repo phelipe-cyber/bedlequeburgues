@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 ?>
 
 <!DOCTYPE html>
@@ -38,6 +39,8 @@ session_start();
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
 
     <form method="POST" action="../model/app_gravadb.php">
+
+
         <?php
 
     $categoria = $_GET['categoria'];
@@ -49,8 +52,9 @@ session_start();
     $numeropedido = $_GET['numeropedido'];
 
     include_once "../model/conexao.php";
+    include_once "app_hash.php";
 
-    include_once "../model/apagar_previa.php";
+    // include_once "../model/apagar_previa.php";
 
     $tab_produtos = "SELECT * FROM produtos where nome <> 'Frete' ";
 
@@ -75,7 +79,7 @@ session_start();
 
 
     ?>
-
+        <input type="hidden" id="app_hash" name="app_hash" value="<?php echo $app_hashpagina ?>">
 
         <div class="row" style="background: #2d3339; height: 1%;">
 
@@ -109,11 +113,13 @@ session_start();
             <div class="row">
                 <h4 class="col-lg-7">
                     <label for="">Cliente:</label>
-                    <input autofocus type="text" class="form-control" width="100%" height="100%" name="cliente"
-                        id="cliente" value="" required>
+
+                    <input autofocus type="text" class="form-control" width="100%" height="100%" name="cliente" id="cliente" value="" required>
+                    
                     <input autofocus type="hidden" class="form-control" width="100%" height="100%" name="numeropedido"
                         id="numeropedido" value="<?php echo $id_pedido ?>">
-                    <input autofocus type="hidden" class="form-control" width="100%" height="100%" name="id" id="id"
+                    
+                        <input autofocus type="hidden" class="form-control" width="100%" height="100%" name="id" id="id"
                         value="<?php echo $_GET['id'] ?>">
 
                 </h4>
@@ -126,7 +132,7 @@ session_start();
             <div class="row">
                 <h4 class="col-lg-7">
                     <label for="">Cliente:</label>
-                    <input autofocus type="text" class="form-control" width="100%" height="100%" name="cliente"
+                    <input autofocus required type="text" class="form-control" width="100%" height="100%" name="cliente"
                         id="cliente" value="<?php echo $cliente ?>">
                     <input autofocus type="hidden" class="form-control" width="100%" height="100%" name="numeropedido"
                         id="numeropedido" value="<?php echo $id_pedido ?>">
@@ -262,12 +268,17 @@ session_start();
                                                     "detalhes[<?php echo $index ?>][id]"
                                                 ).value;
                                                
+                                                hashpagina =  document.getElementById(
+                                                    "app_hash"
+                                                ).value;
+                                               
                                                 var vData = {
                                                     id: id,
                                                     pedido: pedido,
                                                     Quantidade: Quantidade,
                                                     valor: total,
-                                                    obs: obs
+                                                    obs: obs,
+                                                    hashpagina: hashpagina
                                                 }; 
 
                                                 console.log(vData);
@@ -337,12 +348,17 @@ session_start();
                                                     "detalhes[<?php echo $index ?>][id]"
                                                 ).value;
                                                
+                                                hashpagina =  document.getElementById(
+                                                    "app_hash"
+                                                ).value;
+                                               
                                                 var vData = {
                                                     id: id,
                                                     pedido: pedido,
                                                     Quantidade: Quantidade,
                                                     valor: total,
-                                                    obs: obs
+                                                    obs: obs,
+                                                    hashpagina: hashpagina
                                                 }; 
 
                                                 console.log(vData);

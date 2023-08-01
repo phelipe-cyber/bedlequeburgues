@@ -1,15 +1,13 @@
 <?php
-
 session_start();
 // include_once("conexao.php");
 // include "./mvc/model/conexao.php";
+// print_r($_SESSION);
 
-
-// print_r($_POST);
-// exit();
-
-// print_r($_POST);
+$hashpagina = $_SESSION['hashpagina'];
+// echo $hashpagina
 ?>
+
 <!-- <h1 class="" id="div" > </h1> -->
 
 <!-- <div id="div"> -->
@@ -20,8 +18,7 @@ session_start();
                 <label for="recipient-name" class="col-xl-12 text-center"
                     style="font-size: 25px; background: gray; color: white; ">Valor Total Previsto</label>
                 
-                    <input id="pagamento" class="col-xl-12 col-md-6 mb-4 text-center" type="text"
-                    name="pagamento" value="0.00" disabled>
+                    <input id="pagamento" class="col-xl-12 col-md-6 mb-4 text-center" type="text" name="pagamento" value="0.00" disabled>
 
                     <table id="dtBasicExample" class="table table-striped table-bordered table-sm reponsive"
                         cellspacing="0" width="auto">
@@ -32,7 +29,7 @@ session_start();
     include_once "../model/conexao.php";
     
     
-    $selectSQL = ("SELECT * FROM `pedido_previa` where quantidade <> '' GROUP BY id_produto order by id ASC ");
+    $selectSQL = ("SELECT * FROM `pedido_previa` where quantidade <> '' and hashpagina = '$hashpagina' GROUP BY id_produto order by id ASC ");
     
     $recebidos = mysqli_query($conn, $selectSQL);
     $index = 1;
@@ -51,13 +48,13 @@ session_start();
         echo $observacao = $row_usuario['observacao'];
         echo "</td>";
         
-        // echo $quantidade = $row_usuario['quantidade'];
+        $quantidade = $row_usuario['quantidade'];
         // echo "<br>";
         echo "<td>";
         echo "R$ ". number_format($row_usuario['valor'],2);
         echo "</td>";
         
-         $valor[] = number_format($row_usuario['valor'],2);
+        $valor[] = number_format( $row_usuario['valor'] ,2);
         // echo "<br>";
 
         echo "</tr>";
@@ -69,7 +66,7 @@ session_start();
     ?>
                     </table>
 <?php
-                    @$valor_total = array_sum( $valor );
+                    @$valor_total = array_sum($valor);
                     $valor_real = number_format($valor_total, 2)
                     ?>
 

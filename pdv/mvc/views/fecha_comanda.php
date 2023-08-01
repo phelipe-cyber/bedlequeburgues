@@ -228,7 +228,7 @@
   					<label for="recipient-name" class="col-xl-12 text-center" style="font-size: 25px; background: #c42eff; color: white; ">Forma de Pgto </label>
   					<!-- <input name="acrecimo" id="acrecimo" style="font-size: 25px" class="col-xl-12 col-md-6 mb-4 text-center" type="text" name="pagamento" value="0.00"> -->
   				</div>
-  				<div class="form-group col-md-3">
+  				<!-- <div class="form-group col-md-3">
   					<div class="form-check">
   						<input name="pgto" class="form-check-input" type="checkbox" value="Dinheiro" id="Dinheiro">
   						<label class="form-check-label" for="Dinheiro">Dinheiro</label>
@@ -251,7 +251,42 @@
   						<input name="pgto" class="form-check-input" type="checkbox" value="Pix" id="pix">
   						<label class="form-check-label" for="pix">Pix</label>
   					</div>
-  				</div>
+  				</div> -->
+				  <?php
+				  $tab_pgto = "SELECT * FROM `forma_pagamento` ORDER by id ASC" ;
+				  $pgtor = mysqli_query($conn, $tab_pgto);
+                    while ($rows_pgto = mysqli_fetch_assoc($pgtor)) {
+						
+						// echo $pgto;
+						// echo "<br>"; 
+						// echo $rows_pgto['tipo'];
+
+						if( $pgto == $rows_pgto['tipo']){
+							?>
+
+							<div class="form-group col-md-3">
+								<div class="form-check">
+									<input checked name="pgto" class="form-check-input" type="radio" value="<?php echo ($rows_pgto['value']) ?>" id="<?php echo ($rows_pgto['tipo']) ?>">
+									<label class="form-check-label" for="<?php echo ($rows_pgto['tipo']) ?>"><?php echo ($rows_pgto['tipo']) ?></label>
+								</div>
+							</div>
+						<?php
+						}else{
+							?>
+
+							<div class="form-group col-md-3">
+								<div class="form-check">
+									<input required name="pgto" class="form-check-input" type="radio" value="<?php echo ($rows_pgto['value']) ?>" id="<?php echo ($rows_pgto['tipo']) ?>">
+									<label class="form-check-label" for="<?php echo ($rows_pgto['tipo']) ?>"><?php echo ($rows_pgto['tipo']) ?></label>
+								</div>
+							</div>
+                <?php
+
+						}
+                
+                    }
+                ?>
+
   			</div>
 
   			<button class="form-group col-md-12 btn btn-success" type="submit" style="font-size: 30px;">Efetuar Pagamento</button>

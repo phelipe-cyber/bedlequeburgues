@@ -2,7 +2,7 @@
 session_start();
 // include_once("conexao.php");
 include "./mvc/model/conexao.php";
-
+include_once "./mvc/model/hashPagina.php";
 // print_r($_POST);
 // exit();
 
@@ -38,6 +38,8 @@ $cliente = $_POST['cliente'];
 
 <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.12.1/datatables.min.js"></script>
 
+
+
 <div class="row">
     <div class="col-xl-6 col-md-6 mb-4">
 
@@ -67,6 +69,7 @@ $pgto = mysqli_query($conn, $tab_pgto);
 if ($mesa == 'delivery') {
 ?>
         <form id="Form" action="mvc/model/ad_pedido.php" method="POST">
+            <input type="hidden" id="hash" name="hash">
             <input type="hidden" name="categoria" id="categoria" value="<?php echo $categoria; ?>">
             <input type="hidden" name="mesa" id="mesa" value="<?php echo $mesa; ?>">
             <!-- <input type="hidden" name="cliente" id="cliente" value="<?php echo $cliente; ?>"> -->
@@ -107,6 +110,8 @@ $(document).ready(function() {
 
 
             <form id="Form" action="mvc/model/ad_pedido_balcao.php" method="POST">
+                <input type="hidden" id="hash" name="hashpagina" value="<?php echo $hashpagina ?>">
+                
                 <input type="hidden" name="categoria" id="categoria" value="<?php echo $categoria; ?>">
                 <input type="hidden" name="mesa" id="mesa" value="<?php echo $mesa; ?>">
                 <!-- <input type="hidden" name="cliente" id="cliente" value="<?php echo $cliente; ?>"> -->
@@ -175,9 +180,9 @@ $(document).ready(function() {
                     while ($rows_pgto = mysqli_fetch_assoc($pgto)) {
                 ?>
 
-                    <div class="form-group col-md-2">
+                    <div class="form-group col-md-3">
                         <div class="form-check">
-                            <input name="pgto" class="form-check-input" type="checkbox" value="<?php echo ($rows_pgto['value']) ?>" id="<?php echo ($rows_pgto['tipo']) ?>">
+                            <input name="pgto" class="form-check-input" type="radio" value="<?php echo ($rows_pgto['value']) ?>" id="<?php echo ($rows_pgto['tipo']) ?>">
                             <label class="form-check-label" for="<?php echo ($rows_pgto['tipo']) ?>"><?php echo ($rows_pgto['tipo']) ?></label>
                         </div>
                     </div>
@@ -297,13 +302,17 @@ $(document).ready(function() {
                                               id =  document.getElementById(
                                                     "detalhes[<?php echo $index ?>][id]"
                                                 ).value;
+                                                hashpagina =  document.getElementById(
+                                                    "hash"
+                                                ).value;
                                                
                                                 var vData = {
                                                     id: id,
                                                     pedido: pedido,
                                                     Quantidade: Quantidade,
                                                     valor: total,
-                                                    obs: obs
+                                                    obs: obs,
+                                                    hashpagina: hashpagina
                                                 }; 
 
                                                 console.log(vData);
@@ -372,14 +381,19 @@ $(document).ready(function() {
                                               id =  document.getElementById(
                                                     "detalhes[<?php echo $index ?>][id]"
                                                 ).value;
+                                                hashpagina =  document.getElementById(
+                                                    "hash"
+                                                ).value;
                                                
                                                 var vData = {
                                                     id: id,
                                                     pedido: pedido,
                                                     Quantidade: Quantidade,
                                                     valor: total,
-                                                    obs: obs
+                                                    obs: obs,
+                                                    hashpagina: hashpagina
                                                 }; 
+
 
                                                 console.log(vData);
 
@@ -465,22 +479,22 @@ $(document).ready(function() {
 
    <?php 
 
-    // include_once("apagar_previa.php");
-    include_once "./mvc/model/apagar_previa.php";
+    // include_once "./mvc/model/apagar_previa.php";
+    // include_once "./mvc/views/pedidoprevia.php";
 
    ?>
 
 <script>
-$(function() {
-var atualiza = function() {
-    $("#div").load("./mvc/views/pedidoprevia.php");
-};
+    // $(function() {
+    // var atualiza = function() {
+    //     $("#div").load("./mvc/views/pedidoprevia.php");
+    // };
 
-setInterval(function() {
-atualiza();
-}, 100); // A CADA 1 SEGUNDO RODA A FUNÇÃO atualiza
+    // setInterval(function() {
+    // atualiza();
+    // }, 100); // A CADA 1 SEGUNDO RODA A FUNÇÃO atualiza
 
-});
+    // });
 </script> 
 <!-- <div class="row">
 

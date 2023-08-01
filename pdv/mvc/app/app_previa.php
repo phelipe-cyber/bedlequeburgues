@@ -1,11 +1,10 @@
 <?php
-
 session_start();
 // include_once("conexao.php");
 // include "./mvc/model/conexao.php";
+$app_hashpagina = $_SESSION['app_hashpagina'];
 
-
-// print_r($_POST);
+// print_r($_SESSION);
 // exit();
 
 // print_r($_POST);
@@ -32,7 +31,7 @@ session_start();
 include_once "../model/conexao.php";
     
     
-    $selectSQL = ("SELECT * FROM `pedido_previa` where quantidade <> '' GROUP BY id_produto order by id ASC ");
+    $selectSQL = ("SELECT * FROM `pedido_previa` where quantidade <> '' and hashpagina = '$app_hashpagina' GROUP BY id_produto order by id ASC ");
     
     $recebidos = mysqli_query($conn, $selectSQL);
     $index = 1;

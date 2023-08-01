@@ -23,16 +23,16 @@ if($mesa == 'delivery'){
   $status = 1;
 }
 
-foreach ($detalhes as $detalhesPedidos) {
+// foreach ($detalhes as $detalhesPedidos) {
 
-  $quantidade = $detalhesPedidos['quantidade'];
-  $pedido =     ($detalhesPedidos['pedido']);
-  $preco_venda = $detalhesPedidos['preco_venda'];
-  $observacoes = $detalhesPedidos['observacoes'];
+//   $quantidade = $detalhesPedidos['quantidade'];
+//   $pedido =     ($detalhesPedidos['pedido']);
+//   $preco_venda = $detalhesPedidos['preco_venda'];
+//   $observacoes = $detalhesPedidos['observacoes'];
 
 
-  if ($quantidade == 0)
-    continue;
+//   if ($quantidade == 0)
+//     continue;
 
 
   $result_usuarios = ("SELECT MAX(numeropedido) as 'Pedido'FROM `pedido` ORDER BY numeropedido DESC limit 1 ");
@@ -57,6 +57,16 @@ foreach ($detalhes as $detalhesPedidos) {
 
   $numeropedido = $novo_pedido;
 
+  $sql_previa = "SELECT * FROM `pedido_previa` where quantidade <> '' and hashpagina = '$hashpagina' GROUP BY id_produto order by id ASC";
+    $pedido_previa = mysqli_query($conn, $sql_previa);
+
+ while ($rows_previa = mysqli_fetch_assoc($pedido_previa)) {
+    // print_r($rows_previa);
+    
+  $quantidade = $rows_previa['quantidade'];
+  $pedido =     ($rows_previa['produto']);
+  $preco_venda = $rows_previa['valor'];
+  $observacoes = $rows_previa['observacoes'];
 
  $insert_table = "INSERT INTO pedido ( numeropedido, delivery,cliente, idmesa, produto, quantidade, hora_pedido, valor, observacao, usuario, gorjeta, status) 
  VALUES ('$numeropedido','','$cliente', '$mesa', '$pedido', '$quantidade', '$hora_pedido', '$preco_venda', '$observacoes', '$user', '', $status )";

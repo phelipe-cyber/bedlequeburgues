@@ -88,9 +88,9 @@ if ($lon == "") {
                 <?php echo "Valor do Frete R$ " . $valor ?>
             </p>
             <div class="custom-control custom-switch">
-                <input value="<?php echo ($id) ?>" type="checkbox" class="custom-control-input" id="customSwitch<?php echo $id ?>">
-                <label class="custom-control-label" for="customSwitch<?php echo ($id) ?>"></label>
-                <input id="id_user<?php echo ($id) ?>" value="<?php echo ($id) ?>" type="hidden">
+                <input value="<?php echo ($id_cliente) ?>" type="checkbox" class="custom-control-input" id="customSwitch<?php echo $id_cliente ?>">
+                <label class="custom-control-label" for="customSwitch<?php echo ($id_cliente) ?>"></label>
+                <input id="id_user<?php echo ($id_cliente) ?>" value="<?php echo ($id_cliente) ?>" type="hidden">
             </div>
         </div>
 
@@ -101,20 +101,22 @@ if ($lon == "") {
 
     <script>
         $(document).ready(function() {
-            $("#customSwitch<?php echo $id ?>").click(function() {
+            $("#customSwitch<?php echo $id_cliente ?>").click(function() {
 
-                var isChecked = document.getElementById("customSwitch<?php echo $id ?>").checked;
-                // console.log(isChecked);
+                var isChecked = document.getElementById("customSwitch<?php echo $id_cliente ?>").checked;
+                console.log(isChecked);
 
                 if (isChecked == false) {
 
                     let valor_frete = document.getElementById("valor_frete").value;
+                    let hashpagina =  document.getElementById( "hash").value;
 
                     var vData = {
                         id: 0001,
                         pedido: "FRETE",
                         Quantidade: 0,
                         valor: valor_frete,
+                        hashpagina: hashpagina,
                     };
                     $.ajax({
                         url: './mvc/model/ad_pedido_previa.php',
@@ -131,12 +133,14 @@ if ($lon == "") {
                 } else {
 
                     let valor_frete = document.getElementById("valor_frete").value;
+                    let hashpagina =  document.getElementById( "hash").value;
 
                     var vData = {
                         id: 0001,
                         pedido: "FRETE",
                         Quantidade: 1,
                         valor: valor_frete,
+                        hashpagina: hashpagina,
                     };
                     console.log(vData);
                     $.ajax({
