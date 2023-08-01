@@ -155,6 +155,8 @@ $usuario = $_SESSION['user'];
             <h6 class="collapse-header">Gestão</h6>
             <a class="collapse-item" href="/pdv/?view=estoque" style=" border-radius: 8px; font-size:18px;">Estoque</a>
             <a class="collapse-item" href="/pdv/?view=financeiro" style=" border-radius: 8px; font-size:18px;">Financeiro</a>
+            <a class="collapse-item" href="/pdv/?view=frete" style=" border-radius: 8px; font-size:18px;">Frete</a>
+            <a class="collapse-item" href="/pdv/?view=geolocalizacao" style=" border-radius: 8px; font-size:18px;">Geolocalização</a>
             <!-- <a class="collapse-item" href="/pdv/?view=cards" style=" border-radius: 8px; font-size:18px;">Pessoal</a> -->
             <!-- <a class="collapse-item" href="/pdv/?view=open" style=" border-radius: 8px; font-size:18px;">Abertura Caixa</a> -->
             <!-- <a class="collapse-item" href="/pdv/?view=exit" style=" border-radius: 8px; font-size:18px;">Fechamento Caixa</a> -->
