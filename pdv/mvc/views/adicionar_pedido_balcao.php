@@ -107,7 +107,6 @@ $msg4 = $msg . $itensConcatenados. $msg3;
   <i class="fab fa-whatsapp"></i>
 </a> -->
 
- <a target='_blank' href='https://api.whatsapp.com/send?phone=55<?php echo $tel . "&text=" . $msg4 ?>'> <i class='fab fa-whatsapp' style='font-size:30px;color:green;'></i> </a>
 
 
 <!-- https://api.whatsapp.com/send?phone=5511964081280&text=Ola.Recebemos%20seu%20pedido...%20-Pedido%20ser%C3%A1%20entregue%20no%20endere%C3%A7o:%20Rua%20Biotonico,%20n%C2%BA%20205,%20Vila%20Urup%C3%AAs%20----------------------------------------%201x%20Pizza%20Grande%20-%20Batata%201x%20Pizza%20Grande%20-%20Salame%20*%20Obs:%20Metade%20salame%20/%20metade%20nordestina%20----------------------------------------%20Forma%20de%20pagamento:%20Pix%2011948758597%20Valor%20entrega:%20R$%203,00%20Valor%20total:%20R$%2086,00 -->
@@ -147,7 +146,11 @@ if ($status == 1 || $status == 2 || $status == 3  ) { ?>
 
 <h4 class="mb-10 text-center" style="font-size: 32px; color: green;">Cliente: <?php echo ($cliente); ?></h4>
 
-<h4 class="mb-10 text-center">Pedido: <?php echo $id; ?></h4>
+
+<h4 class="mb-10 text-center">Pedido: <?php echo $id; ?>
+<a target='_blank' href='https://api.whatsapp.com/send?phone=55<?php echo $tel . "&text=" . $msg4 ?>'> <i class='fab fa-whatsapp' style='font-size:50px;color:green;'></i> </a>
+
+</h4>
 
 <form method="POST" action="?view=novo_item">
 
