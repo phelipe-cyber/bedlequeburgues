@@ -100,11 +100,11 @@
         ?>
 
             <!--todo dado vindo do banco de dados deve ser trazido e tratado antes de ir para modal-->
-            <div class="col-lg-3" style="height: 150px;">
+            <div class="col-lg-4" style="height: auto;">
                 <div class=" <?php echo $cor; ?> text-white shadow">
 
                     <div class="card-body" style="text-align: center;">
-                        <h4 class="mb-10 text-center">Cliente: <?php echo ($nome); ?></h4>
+                        <h4 class="mb-10 text-center"><?php echo ($nome); ?></h4>
 
                         <form method="POST" action="?view=adicionar_pedido_balcao">
                             <input name="id" type="hidden" id="id" value="<?php echo $rows_mesas['numeropedido']; ?>">
@@ -121,8 +121,12 @@
                         }else{
                             
                         }
+                        
                         ?>
-
+                        <form method="POST" action="?view=whatsapp">
+                            <input name="id_pedido" type="hidden" id="id" value="<?php echo $rows_mesas['numeropedido']; ?>">
+                            <button type="submit" class="btn  btn-outline-light" style="text-align: center;" data-toggle="modal"> Enviar - Pedido</button>
+                        </form>
                     </div>
                 </div>
             </div>

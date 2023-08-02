@@ -62,14 +62,99 @@ if ($status == 1 || $status == 2 || $status == 3  ) { ?>
         </form>
     </div>
 
+
     <div class="col-md-4 offset-md-4">
         <form method="POST" action="/pdv/mvc/model/excluir_pedido.php">
             <input name="id" type="hidden" value="<?php echo $id; ?>">
             <button type="submit" class="btn btn-outline-danger">Excluir Pedido</button>
         </form>
     </div>
-
 </div>
+
+<?php
+include "./mvc/model/conexao.php";
+
+// virgula = %2C
+// Qubra de linha = %0A
+// Numero Nº = n%C2%BA
+?>
+
+<?php
+
+
+// $id_pedido = $_POST['id_pedido'];
+
+ $tab_cliente = "SELECT * FROM pedido p left JOIN clientes c on c.id = p.cliente where  p.numeropedido = '$id' limit 1";
+$cliente = mysqli_query($conn, $tab_cliente);
+
+ $tab_pedido = "SELECT * FROM pedido p  where  p.numeropedido = '$id'";
+$pedido = mysqli_query($conn, $tab_pedido);
+
+while ($rows_cliente = mysqli_fetch_assoc($cliente)) {
+  // print_r($rows_cliente);
+  $numeropedido = $rows_cliente['numeropedido'];
+  $nome = $rows_cliente['nome'];
+  $endereco = $rows_cliente['endereco']; 
+  $bairro = $rows_cliente['bairro']; 
+  $pgto = $rows_cliente['pgto']; 
+  $complemento = $rows_cliente['complemento']; 
+  //  $rows_cliente['tel1'];
+  $tel = preg_replace("/[^0-9,]+/i", "", $rows_cliente['tel1']);
+};
+
+
+$msg ="Ola. $nome%0A
+Recebemos seu Pedido: *$id*...
+%0A%0A
+-Pedido será *entregue* no endereço:
+%0A
+$endereco $bairro
+%0A
+$complemento
+%0A
+----------------------------------------
+";
+
+$produto[] = "";
+$index = 1;
+  while ($rows_pedido = mysqli_fetch_assoc($pedido)) {
+  // print_r($rows_pedido);
+    if($rows_pedido['observacao'] =="" ){
+      $obs = "";
+    }else{
+        $obs = "%0A*Obs:* ". $rows_pedido['observacao'];
+    }
+    $produto[] = "$index Item | ". $rows_pedido['quantidade'] . "x" . " ( " . $rows_pedido['produto'] . " ) " . "R$". number_format( $rows_pedido['valor'] ,2) .$obs."%0A";
+    $observacao = $rows_pedido['observacao'];
+    $valor[] = number_format( $rows_pedido['valor'] ,2);
+    // $msg2[] = "$index Item | $produto'%0A'";
+    $index ++;
+};
+
+foreach ($produto as $itens) {
+  $itensConcatenados .= $itens . '%0A';
+}
+
+@$valor_total = array_sum($valor);
+$valor_real = number_format($valor_total, 2);
+
+$msg3 ="
+----------------------------------------
+%0A
+*Forma de pagamento:* $pgto
+%0A
+*Valor total:* $valor_real
+";
+
+$msg4 = $msg . $itensConcatenados. $msg3;
+
+
+?>
+<br>
+<div>
+    <a target='_blank' href='https://api.whatsapp.com/send?phone=55<?php echo $tel . "&text=" . $msg4 ?>'> <i class='fab fa-whatsapp' style='font-size:30px;color:green;'></i> </a>
+</div>
+
 <h4> Relação de Produtos :</h4>
 <div class="table-responsive">
     <table class="table table-striped table-sm">
