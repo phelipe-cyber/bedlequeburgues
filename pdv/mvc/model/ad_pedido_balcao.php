@@ -43,7 +43,7 @@ $sql_previa = "SELECT * FROM `pedido_previa` where quantidade <> '' and hashpagi
   $quantidade = $rows_previa['quantidade'];
   $pedido =     ($rows_previa['produto']);
   $preco_venda = $rows_previa['valor'];
-  $observacoes = $rows_previa['observacoes'];
+  $observacoes = $rows_previa['observacao'];
 
    $insert_table = "INSERT INTO pedido (numeropedido, delivery,cliente, idmesa, produto, quantidade, hora_pedido, valor, observacao, pgto ,usuario, `data`, gorjeta, status) VALUES
   ('$numeropedido','','$cliente', '$id_mesa', '$pedido', '$quantidade', '$hora_pedido', '$preco_venda', '$observacoes','$pgto','$user', '$data_hora','', 1 )";
@@ -122,7 +122,7 @@ $hashpagina = $_POST['hashpagina'];
   $quantidade = $rows_previa['quantidade'];
   $pedido =     ($rows_previa['produto']);
   $preco_venda = $rows_previa['valor'];
-  $observacoes = $rows_previa['observacoes'];
+  $observacoes = $rows_previa['observacao'];
   
   $insert_table = "INSERT INTO pedido (numeropedido, delivery,cliente, idmesa, produto, quantidade, hora_pedido, valor, observacao, pgto, usuario, `data` , gorjeta, status ) VALUES
   ('$numeropedido','','$cliente', '$id_mesa', '$pedido', '$quantidade', '$hora_pedido', '$preco_venda', '$observacoes', '$pgto','$user','$data_hora' ,'' , 1 )";

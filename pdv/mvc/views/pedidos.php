@@ -123,10 +123,10 @@
                         }
                         
                         ?>
-                        <form method="POST" action="?view=whatsapp">
+                        <!-- <form method="POST" action="?view=whatsapp">
                             <input name="id_pedido" type="hidden" id="id" value="<?php echo $rows_mesas['numeropedido']; ?>">
                             <button type="submit" class="btn  btn-outline-light" style="text-align: center;" data-toggle="modal"> Enviar - Pedido</button>
-                        </form>
+                        </form> -->
                     </div>
                 </div>
             </div>
