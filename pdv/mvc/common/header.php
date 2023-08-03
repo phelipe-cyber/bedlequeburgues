@@ -157,6 +157,7 @@ $usuario = $_SESSION['user'];
             <a class="collapse-item" href="/pdv/?view=financeiro" style=" border-radius: 8px; font-size:18px;">Financeiro</a>
             <a class="collapse-item" href="/pdv/?view=frete" style=" border-radius: 8px; font-size:18px;">Frete</a>
             <a class="collapse-item" href="/pdv/?view=geolocalizacao" style=" border-radius: 8px; font-size:18px;">Geolocalização</a>
+            <a class="collapse-item" href="https://whatsapp-api-ph-b4d70f6eb4d2.herokuapp.com/" target="_blank" style=" border-radius: 8px; font-size:18px;">Conectar Whatsapp</a>
             <!-- <a class="collapse-item" href="/pdv/?view=cards" style=" border-radius: 8px; font-size:18px;">Pessoal</a> -->
             <!-- <a class="collapse-item" href="/pdv/?view=open" style=" border-radius: 8px; font-size:18px;">Abertura Caixa</a> -->
             <!-- <a class="collapse-item" href="/pdv/?view=exit" style=" border-radius: 8px; font-size:18px;">Fechamento Caixa</a> -->
