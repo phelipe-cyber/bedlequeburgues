@@ -148,7 +148,13 @@ if ($status == 1 || $status == 2 || $status == 3  ) { ?>
 
 
 <h4 class="mb-10 text-center">Pedido: <?php echo $id; ?>
-<a target='_blank' href='https://api.whatsapp.com/send?phone=55<?php echo $tel . "&text=" . $msg4 ?>'> <i class='fab fa-whatsapp' style='font-size:50px;color:green;'></i> </a>
+<!-- <a target='_blank' href='https://api.whatsapp.com/send?phone=55<?php echo $tel . "&text=" . $msg4 ?>'> <i class='fab fa-whatsapp' style='font-size:50px;color:green;'></i> </a> -->
+
+<form method="POST" action="?view=whatsapp">
+    <input type="hidden" name="id_pedido" value="<?php echo $id; ?>">
+    <!-- <a target='_blank' > <i class='fab fa-whatsapp' style='font-size:50px;color:green;'></i> </a> -->
+    <button class='fab fa-whatsapp' style='font-size:50px;color:green;'>  </button>
+</form>
 
 </h4>
 
