@@ -76,7 +76,7 @@ $clientes = mysqli_query($conn, $tab_clientes);
 
 						<div class="form-group col-md-2">
 							<label for="recipient-name" class="col-form-label">CEP:</label>
-							<input id="cep" name="cep" type="text" class="form-control">
+							<input required id="cep" name="cep" type="text" class="form-control">
 						</div>
 					</div>
 
@@ -169,28 +169,28 @@ $clientes = mysqli_query($conn, $tab_clientes);
 
 						<div class="form-group col-md-4">
 							<label for="recipient-name" class="col-form-label">Nome do Cliente:</label>
-							<input name="nome" type="text" class="form-control">
+							<input required name="nome" type="text" class="form-control">
 						</div>
 
 						<div class="form-group col-md-6">
 							<label for="message-text" class="col-form-label">Endereço (Rua e Número):</label>
-							<input id="endereco" name="endereco" type="text" class="form-control">
+							<input required id="endereco" name="endereco" type="text" class="form-control">
 						</div>
 						<div class="form-group col-md-2">
 							<label for="recipient-name" class="col-form-label">Bairro:</label>
-							<input id="bairro" name="bairro" type="text" class="form-control">
+							<input required id="bairro" name="bairro" type="text" class="form-control">
 						</div>
 						<div class="form-group col-md-4">
 							<label for="recipient-name" class="col-form-label">Cidade:</label>
-							<input id="cidade" name="cidade" type="text" class="form-control">
+							<input required id="cidade" name="cidade" type="text" class="form-control">
 						</div>
 						<div class="form-group col-md-2">
 							<label for="recipient-name" class="col-form-label">Estado:</label>
-							<input id="estado" name="estado" type="text" class="form-control">
+							<input required id="estado" name="estado" type="text" class="form-control">
 						</div>
 						<div class="form-group col-md-4">
 							<label for="recipient-name" class="col-form-label">Complemento:</label>
-							<input name="complemento" type="text" class="form-control">
+							<input  name="complemento" type="text" class="form-control">
 						</div>
 
 						<div class="form-group col-md-4">
@@ -199,7 +199,7 @@ $clientes = mysqli_query($conn, $tab_clientes);
 						</div>
 						<div class="form-group col-md-2">
 							<label for="recipient-name" class="col-form-label">Telefone #1:</label>
-							<input onkeyup="mascaraFone(event)" name="tel1" type="text" class="form-control" id="telefone">
+							<input required onkeyup="mascaraFone(event)" name="tel1" type="text" class="form-control" id="telefone">
 						</div>
 						<div class="form-group col-md-2">
 							<label for="recipient-name" class="col-form-label">Telefone #2:</label>
