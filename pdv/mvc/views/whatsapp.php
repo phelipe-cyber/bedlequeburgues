@@ -105,8 +105,8 @@ $msg4 = $msg . $itensConcatenados . $msg3;
   <i class="fab fa-whatsapp"></i>
 </a> -->
 
-<input id="number" type="text" value="<?php echo $tel ?>">
-<input id="message" text="text" value="<?php echo $msg4 ?>">
+<input id="number" type="hidden" value="<?php echo $tel ?>">
+<input id="message" type="hidden" value="<?php echo $msg4 ?>">
 
 <script>
   let number = document.getElementById("number").value;
@@ -142,7 +142,7 @@ $msg4 = $msg . $itensConcatenados . $msg3;
   xhr.open("POST", "https://whatsapp-api-ph-b4d70f6eb4d2.herokuapp.com/send-message");
   xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
   // xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
-  window.location.href = "?view=todosPedidoBalcao";
+  // window.location.href = "?view=todosPedidoBalcao";
 
 
   xhr.send(vData);

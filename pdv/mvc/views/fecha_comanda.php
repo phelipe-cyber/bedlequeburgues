@@ -17,6 +17,8 @@
 		$pgto = $rows_pedidos['pgto'];
 	}
 
+	
+
 	?>
   <form method="POST" action="?view=persistir_fechamento">
 
@@ -83,9 +85,9 @@
 
   			<div class="row">
 
-  				<div class="form-group col-md-6">
+  				<div id="valor_pago_style" class="form-group col-md-6" style="display: block;" >
   					<label for="recipient-name" class="col-xl-12 text-center" style="font-size: 25px; background: green; color: white; ">Valor Pago</label>
-  					<input autofocus name="valor_pago" id="valor_pago" style="font-size: 25px" class="col-xl-12 col-md-6 mb-4 text-center" type="text" name="pagamento" value="">
+  					<input autofocus required name="valor_pago" id="valor_pago" style="font-size: 25px" class="col-xl-12 col-md-6 mb-4 text-center" type="text" name="pagamento" value="<?php echo number_format($total, 2); ?>">
   				</div>
 
   				<script>
@@ -140,7 +142,7 @@
   					});
   				</script>
 
-  				<div class="form-group col-md-6">
+  				<div id="valor_pago_style_total" class="form-group col-md-6">
   					<label for="recipient-name" class="col-xl-12 text-center" style="font-size: 25px; background: blue; color: white; ">Valor Total</label>
   					<input autofocus name="valor_pago" id="valor_frete" style="font-size: 25px" class="col-xl-12 col-md-6 mb-4 text-center" type="text" name="pagamento" value="<?php echo number_format($total, 2); ?>">
   				</div>
@@ -261,9 +263,26 @@
 						// echo "<br>"; 
 						// echo $rows_pgto['tipo'];
 
-						if( $pgto == $rows_pgto['tipo']){
+						if( $pgto == 'Dinheiro' || $pgto == "" ){
 							?>
+							<script>
+  									document.getElementById('valor_pago_style').style = 'display:block';
+  									document.getElementById('valor_pago_style_total').style = 'display:block';
+							</script>
+							<?php	
+						}else{
+							?>
+							<script>
+  									document.getElementById('valor_pago_style').style = 'display:none';
+  									document.getElementById('valor_pago_style_total').style = 'display:none';
+									
+							</script>
+							<?php	
+						}
 
+						if( $pgto == $rows_pgto['tipo'] ){
+							?>
+							
 							<div class="form-group col-md-3">
 								<div class="form-check">
 									<input checked name="pgto" class="form-check-input" type="radio" value="<?php echo ($rows_pgto['value']) ?>" id="<?php echo ($rows_pgto['tipo']) ?>">

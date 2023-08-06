@@ -69,7 +69,7 @@ $usuario = $_SESSION['user'];
       <!-- Sidebar - Brand -->
       <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/mvc/?view=Dashboard1">
         <div class="sidebar-brand-icon rotate-n-15">
-          <i class="fas fa-print"></i>
+          <i class="fa fa-desktop"></i>
         </div>
         <div class="sidebar-brand-text mx-3">Menu</div>
       </a>

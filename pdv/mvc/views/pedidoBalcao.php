@@ -124,7 +124,7 @@ $(document).ready(function() {
                             <?php while ($rows_clientes = mysqli_fetch_assoc($clientes)) {
                                 ?>
                                 <option value=""></option>
-                                <option value="<?php echo $rows_clientes['id']?>"> <?php echo $rows_clientes['nome']?> </option>
+                                <option value="<?php echo $rows_clientes['id']?>"> <?php echo  $rows_clientes['nome'] ." | ". $rows_clientes['tel1'] ?> </option>
                                 
                                 <?php
                                 
@@ -235,7 +235,7 @@ $(document).ready(function() {
                                     </p>
                                     <?php
                                         
-                                    if( $rows_produtos['categoria'] == 'LANCHE' ){
+                                    if( $rows_produtos['categoria'] <> 'BEBIDAS' ){
                                         echo ($rows_produtos['detalhes']);
                                     }else{
 
