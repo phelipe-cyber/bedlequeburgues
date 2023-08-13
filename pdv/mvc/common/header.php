@@ -97,6 +97,13 @@ $usuario = $_SESSION['user'];
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Ver Pedidos - Balcão</span></a>
       </li>
+
+      <li class="nav-item active">
+        <a class="nav-link" href="/pdv/?view=Dashboard1">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>Ver Pedidos - Mesas</span></a>
+      </li>
+
       <!-- <li class="nav-item active">
         <a class="nav-link" href="/pdv/?view=delivery">
           <i class="fa fa-motorcycle"></i>

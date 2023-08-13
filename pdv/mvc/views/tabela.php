@@ -83,7 +83,7 @@ $produtos = mysqli_query($conn, $tab_produtos);
                         </div>
                         <div class="form-group col-md-4">
                             <label for="recipient-name" class="col-form-label">Nome:</label>
-                            <input name="nome" type="text" class="form-control">
+                            <input required name="nome" type="text" class="form-control">
                         </div>
                         <div class="form-group col-md-4">
                             <label for="message-text" class="col-form-label">Detalhes:</label>
@@ -91,7 +91,7 @@ $produtos = mysqli_query($conn, $tab_produtos);
                         </div>
                         <div class="form-group col-md-2">
                             <label for="recipient-name" class="col-form-label">Categoria:</label>
-                            <input name="categoria" type="text" class="form-control">
+                            <input required name="categoria" type="text" class="form-control">
                         </div>
                         <div class="form-group col-md-2">
                             <label for="recipient-name" class="col-form-label">Preço de Custo:</label>
@@ -99,7 +99,7 @@ $produtos = mysqli_query($conn, $tab_produtos);
                         </div>
                         <div class="form-group col-md-2">
                             <label for="recipient-name" class="col-form-label">Preço de Venda:</label>
-                            <input name="preco_venda" type="text" class="form-control">
+                            <input required name="preco_venda" type="text" class="form-control">
                         </div>
                         <div class="form-group col-md-2">
                             <label for="recipient-name" class="col-form-label">Estoque Atual:</label>
@@ -325,7 +325,7 @@ $produtos = mysqli_query($conn, $tab_produtos);
 					          	</div>
 					          	<div class="form-group col-md-4">
 					            	<label for="recipient-name" class="col-form-label">Nome:</label>
-					            	<input name="nome" type="text" class="form-control" id="recipient-name">
+					            	<input  name="nome" type="text" class="form-control" id="recipient-name">
 					          	</div>
 					          	<div class="form-group col-md-4">
 					            	<label for="message-text" class="col-form-label">Detalhes:</label>
@@ -333,7 +333,7 @@ $produtos = mysqli_query($conn, $tab_produtos);
 					          	</div>
 					          	<div class="form-group col-md-2">
 					            	<label for="recipient-name" class="col-form-label">Categoria:</label>
-					            	<input name="categoria" type="text" class="form-control" id="categoria">
+					            	<input  name="categoria" type="text" class="form-control" id="categoria">
 					          	</div>	          				          			
 					          	<div class="form-group col-md-2">
 					            	<label for="recipient-name" class="col-form-label">Preço de Custo:</label>
@@ -341,7 +341,7 @@ $produtos = mysqli_query($conn, $tab_produtos);
 					          	</div>
 					          	<div class="form-group col-md-2">
 					            	<label for="recipient-name" class="col-form-label">Preço de Venda:</label>
-					            	<input name="preco_venda" type="text" class="form-control" id="preco-venda">
+					            	<input  name="preco_venda" type="text" class="form-control" id="preco-venda">
 					          	</div>
 					          	<div class="form-group col-md-2">
 					            	<label for="recipient-name" class="col-form-label">Estoque Atual:</label>
