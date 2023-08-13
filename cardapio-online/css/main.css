@@ -270,10 +270,19 @@ a.navbar-brand {
     font-size: 24px;
 }
 
+
 .card-item .add-carrinho {
     display: none;
     text-align: center;
     height: 30px;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-item .dsc-produto {
+    display: none;
+    text-align: center;
+    height: 100px;
     justify-content: center;
     align-items: center;
 }
@@ -333,6 +342,13 @@ a.navbar-brand {
     margin-top: 20px;
 }
 
+.card-item:hover .dsc-produto {
+    display: flex;
+    margin-bottom:80px;
+    color: var(--color-black);
+    font-size: 13px;
+
+}
 
 .depoimentos {
     padding-top: 100px;

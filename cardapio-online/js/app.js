@@ -44,6 +44,7 @@ cardapio.metodos = {
 
             let temp = cardapio.templates.item.replace(/\${img}/g, e.img)
             .replace(/\${nome}/g, e.name)
+            .replace(/\${dsc}/g, e.dsc)
             .replace(/\${preco}/g, parseFloat(e.price).toFixed(2).replace('.', ','))
             .replace(/\${id}/g, e.id)
 
@@ -609,6 +610,9 @@ cardapio.templates = {
                 </p>
                 <p class="price-produto text-center">
                     <b>R$ \${preco}</b>
+                </p>
+                <p class="dsc-produto text-center">
+                    \${dsc}
                 </p>
                 <div class="add-carrinho">
                     <span class="btn-menos" onclick="cardapio.metodos.diminuirQuantidade('\${id}')"><i class="fas fa-minus"></i></span>
