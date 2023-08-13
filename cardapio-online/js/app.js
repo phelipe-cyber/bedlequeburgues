@@ -1,6 +1,8 @@
-$(document).ready(function () {
-    cardapio.eventos.init();
-})
+setTimeout(function() {
+    $(document).ready(function () {
+        cardapio.eventos.init();
+    })
+}, 1000);
 
 var cardapio = {};
 
