@@ -10,6 +10,5 @@ xhr.onreadystatechange = function() {
 
 // xhr.open("GET", "../pdv/mvc/model/dados.php", true);
 xhr.open("GET", "./dados.php", true);
-xhr.setRequestHeader("Cache-Control", "no-cache");
 xhr.send();
 
