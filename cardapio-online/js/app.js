@@ -119,7 +119,7 @@ cardapio.metodos = {
     adicionarAoCarrinho: (id) => {
 
         let qntdAtual = parseInt($("#qntd-" + id).text());
-
+            
         if (qntdAtual > 0) {
 
             // obter a categoria ativa
@@ -154,6 +154,9 @@ cardapio.metodos = {
 
             }
 
+        }else{
+
+            cardapio.metodos.mensagem('Quantidade não selecionada')
         }
 
     },
@@ -598,12 +601,13 @@ cardapio.metodos = {
 }
 
 cardapio.templates = {
+    // <img src="\${img}" />
 
     item: `
         <div class="col-12 col-lg-3 col-md-3 col-sm-6 mb-5 animated fadeInUp">
             <div class="card card-item" id="\${id}">
                 <div class="img-produto">
-                    <img src="\${img}" />
+                    <img src="./img/cardapio/burguers/usda-prime-burgers-pack-of-18-8oz-each.274c67f15aa1c0b210dbf51801706670.jpg" />
                 </div>
                 <p class="title-produto text-center mt-4">
                     <b>\${nome}</b>
