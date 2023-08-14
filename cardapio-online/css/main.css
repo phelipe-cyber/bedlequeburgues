@@ -734,6 +734,10 @@ select.form-control {
     margin-bottom: 0;
 }
 
+.cidade-endereco-nome {
+    margin-bottom: 0;
+}
+
 .badge-total-carrinho {
     width: 25px;
     height: 25px;

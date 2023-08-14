@@ -432,7 +432,13 @@ cardapio.metodos = {
         let uf = $("#ddlUf").val().trim();
         let numero = $("#txtNumero").val().trim();
         let complemento = $("#txtComplemento").val().trim();
+        let nome = $("#txtNome").val().trim();
 
+        if (nome.length <= 0) {
+            cardapio.metodos.mensagem('Informe o Nome, por favor.');
+            $("#txtNome").focus();
+            return;
+        }
         if (cep.length <= 0) {
             cardapio.metodos.mensagem('Informe o CEP, por favor.');
             $("#txtCEP").focus();
@@ -476,7 +482,8 @@ cardapio.metodos = {
             cidade: cidade,
             uf: uf,
             numero: numero,
-            complemento: complemento
+            complemento: complemento,
+            nome: nome
         }
 
         cardapio.metodos.carregarEtapa(3);
@@ -500,6 +507,7 @@ cardapio.metodos = {
 
         });
 
+        $("#resumonome").html(`${MEU_ENDERECO.nome}`);
         $("#resumoEndereco").html(`${MEU_ENDERECO.endereco}, ${MEU_ENDERECO.numero}, ${MEU_ENDERECO.bairro}`);
         $("#cidadeEndereco").html(`${MEU_ENDERECO.cidade}-${MEU_ENDERECO.uf} / ${MEU_ENDERECO.cep} ${MEU_ENDERECO.complemento}`);
 
@@ -513,6 +521,7 @@ cardapio.metodos = {
         if (MEU_CARRINHO.length > 0 && MEU_ENDERECO != null) {
 
             var texto = 'Olá! gostaria de fazer um pedido:';
+            texto += `\n*Nome:* ${MEU_ENDERECO.nome}`;
             texto += `\n*Itens do pedido:*\n\n\${itens}`;
             texto += '\n*Endereço de entrega:*';
             texto += `\n${MEU_ENDERECO.endereco}, ${MEU_ENDERECO.numero}, ${MEU_ENDERECO.bairro}`;
