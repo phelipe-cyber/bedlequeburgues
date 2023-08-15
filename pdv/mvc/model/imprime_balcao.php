@@ -18,7 +18,7 @@ try {
     
     // Imprime o conteúdo na impressora
     $printer->textRaw($htmlContent);
-    print_r($printer);
+    // print_r($printer);
     
     // Corte de papel (opcional)
     $printer->cut();
@@ -27,13 +27,6 @@ try {
 
     echo $e->getMessage() . "\n";
 
-} finally {
-    // $printer->close();
-    // ?>
-    // <script>
-    //     window.location.href = '/pdv/?views=todosPedidoBalcao';
-    // </script>
-    // <?php
 }
 
 ?>
