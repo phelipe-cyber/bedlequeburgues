@@ -9,6 +9,9 @@ use Mike42\Escpos\PrintConnectors\FilePrintConnector;
 // $printer = new Printer(new FilePrintConnector("php://stdout"));
 $connector = new FilePrintConnector("php://stdout");
 $printer = new Printer($connector);
+print_r($printer);
+echo "<br>";
+print_r($$connector);
 
 try {
     // Carrega o conteúdo do arquivo HTML
@@ -25,12 +28,12 @@ try {
     echo $e->getMessage() . "\n";
 
 } finally {
-    $printer->close();
-    ?>
-    <script>
-        window.location.href = '/pdv/?views=todosPedidoBalcao';
-    </script>
-    <?php
+    // $printer->close();
+    // ?>
+    // <script>
+    //     window.location.href = '/pdv/?views=todosPedidoBalcao';
+    // </script>
+    // <?php
 }
 
 ?>

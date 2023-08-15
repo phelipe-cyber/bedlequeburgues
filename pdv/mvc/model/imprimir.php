@@ -207,10 +207,10 @@ where numeropedido = '$id'";
 </body>
 
 <script>
-    // window.print();
-    // window.addEventListener("afterprint", function(event) { window.close(); });
-    // window.onafterprint();
-    // window.location.href = '/pdv/?views=todosPedidoBalcao';
+    window.print();
+    window.addEventListener("afterprint", function(event) { window.close(); });
+    window.onafterprint();
+    window.location.href = '/pdv/?views=todosPedidoBalcao';
 </script>
 
 <?php
