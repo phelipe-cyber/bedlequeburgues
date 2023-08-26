@@ -1,7 +1,8 @@
 <?php
-include "./conexao.php";
 
-$tab_produtos = "SELECT id, nome as `name`, categoria, categoria as category, detalhes as 'dsc' , TRIM(TRAILING '.00' FROM preco_venda) AS 'price' FROM `produtos` where categoria <> 'FRETE' and categoria <> '' ORDER by id ASC" ;
+include '.././pdv/mvc/model/conexao.php';
+
+$tab_produtos = "SELECT id, nome as `name`, categoria, categoria as category, detalhes as 'dsc' , TRIM(TRAILING '.00' FROM preco_venda) AS 'price', img FROM `produtos` where categoria <> 'FRETE' and categoria <> '' ORDER by id ASC" ;
 $result = mysqli_query($conn, $tab_produtos);
 $menu = array();
 

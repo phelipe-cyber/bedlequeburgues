@@ -2,7 +2,7 @@
 
 include "./mvc/model/conexao.php";
 
-$tab_produtos = "SELECT * FROM produtos ORDER BY `produtos`.`nome` ASC ";
+$tab_produtos = "SELECT * FROM produtos ORDER BY `produtos`.`id` ASC ";
 
 $produtos = mysqli_query($conn, $tab_produtos);
 // print_r($produtos);
@@ -173,6 +173,7 @@ $produtos = mysqli_query($conn, $tab_produtos);
             <?php
                     $index = 0;
                     while ($rows_produtos = mysqli_fetch_assoc($produtos)) {
+                        // print_r($rows_produtos);
 						$num +=1;
                     ?>
 
@@ -205,7 +206,10 @@ $produtos = mysqli_query($conn, $tab_produtos);
                         data-unidadeproduto="<?php echo $rows_produtos['unidade']; ?>"
                         data-marcaproduto="<?php echo $rows_produtos['marca']; ?>"
                         data-fornecedorproduto="<?php echo $rows_produtos['fornecedor']; ?>"
-                        data-observacoesproduto="<?php echo $rows_produtos['observacoes']; ?>">
+                        data-observacoesproduto="<?php echo $rows_produtos['observacoes']; ?>"
+                        data-img="<?php echo $rows_produtos['img']; ?>"
+                        data-srcimg="<?php echo "../../../cardapio-online/img/cardapio/cardapioonline/".$rows_produtos['img']; ?>"
+                        >
                         Editar
                     </button>
 
@@ -317,7 +321,7 @@ $produtos = mysqli_query($conn, $tab_produtos);
 				      </div>
 				      <div class="modal-body">
 				      	<!-- CRIA O FORMULÁRIO PARA APRESENTRAÇÃO E ENVIA PELO METODO POST PARA O SCRIPT "edita_produtos.php" -->
-				        <form method="POST" action="mvc/model/edita_produtos.php">
+				        <form method="POST" action="mvc/model/edita_produtos.php" enctype="multipart/form-data">
 				        	<div class="row">
 					          	<div class="form-group col-md-4">
 					            	<label for="recipient-name" class="col-form-label">Código(Barras):</label>
@@ -374,7 +378,76 @@ $produtos = mysqli_query($conn, $tab_produtos);
 					         		<div class="form-group col-md-12">
 					            	<label for="message-text" class="col-form-label">Observação/Ingredientes:</label>
 					            	<textarea name="observacoes" class="form-control" id="observacoes" ></textarea>
-					          	</div>	          			
+                                    <input id="img" name="img" type="hidden">
+					          	</div>
+                                  <div class="form-group col-md-12">
+                                      <input type="file" id="imagemInput" accept="image/*" name="imgproduto">
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                   <img id="imgsrc" src="" alt="">
+                                 </div>
+                                
+                                  <div class="form-group col-md-6">
+                                      <div class="form-group col-md-4">
+                                          <span id="remove_img" class="fa fa-times-circle fa-lg closeBtn" onclick="remove_img(this)" title="remove" style="display: none!important;"></span>
+                                        </div>
+                                     <canvas id="canvas" style="max-width: 300px; display: none;"></canvas>
+                                  </div>
+                                
+                                <script>
+                                    const imagemInput = document.getElementById('imagemInput');
+                                    const canvas = document.getElementById('canvas');
+                                    
+                                    imagemInput.addEventListener('change', function(event) {
+                                        const file = event.target.files[0];
+                                        
+                                        if (file) {
+                                            const reader = new FileReader();
+                                            
+                                            reader.onload = function(e) {
+                                                const img = new Image();
+                                                img.src = e.target.result;
+                                                
+                                                img.onload = function() {
+                                                    const width = 400; // Defina a largura desejada
+                                                    const height = 400; // Defina a altura desejada
+                                                    
+                                                    canvas.width = width;
+                                                    canvas.height = height;
+                                                    
+                                                    const ctx = canvas.getContext('2d');
+                                                    ctx.drawImage(img, 0, 0, width, height);
+                                                    
+                                                    canvas.style.display = 'block';
+                                                };
+                                            };
+                                            
+                                            reader.readAsDataURL(file);
+                                        } else {
+                                            canvas.style.display = 'none';
+                                        }
+                                        document.getElementById('remove_img').style = "display: flex!important;"
+                                        document.getElementById('imgsrc').style = "display: none!important;"
+                                    });
+                                    
+                                </script>
+
+                                <script>
+                                  function remove_img() {
+                                    document.getElementById('canvas').value = ""
+                                    document.getElementById('canvas').style = "display: none!important;"
+
+                                    document.getElementById('imagemInput').value = ""
+                                    
+                                    document.getElementById('remove_img').value = ""
+                                    document.getElementById('remove_img').style = "display: none!important;"
+                                   
+                                    document.getElementById('imgsrc').style = "display: flex!important;"
+
+
+                                    }
+                                </script>
+
 					          </div>
 				          <!--cria um campo invisivel "hidden" para pegar o id "id_Produto"-->
 				          <input name="id" type="hidden" id="id_Produto">
@@ -417,6 +490,8 @@ $('#exampleModal').on('show.bs.modal', function (event) {
   var recipientmarca = button.data('marcaproduto')
   var recipientfornecedor = button.data('fornecedorproduto')
   var recipientobservacoes = button.data('observacoesproduto')
+  var recipientimg = button.data('img')
+  var recipientscr = button.data('srcimg')
 
 
   var modal = $(this)
@@ -436,6 +511,12 @@ $('#exampleModal').on('show.bs.modal', function (event) {
   modal.find('#marca').val(recipientmarca)
   modal.find('#fornecedor').val(recipientfornecedor)
   modal.find('#observacoes').val(recipientobservacoes)
+  modal.find('#img').val(recipientimg)
+  modal.find('#imgsrc').val(recipientscr)
+
+  var imageElement = modal.find('#imgsrc');
+  imageElement.attr('src', recipientscr);
+
 })
 </script>
 

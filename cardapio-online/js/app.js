@@ -42,7 +42,8 @@ cardapio.metodos = {
 
         $.each(filtro, (i, e) => {
 
-            let temp = cardapio.templates.item.replace(/\${img}/g, e.img)
+            let temp = cardapio.templates.item
+            .replace(/\${img}/g, e.img)
             .replace(/\${nome}/g, e.name)
             .replace(/\${dsc}/g, e.dsc)
             .replace(/\${preco}/g, parseFloat(e.price).toFixed(2).replace('.', ','))
@@ -616,7 +617,7 @@ cardapio.templates = {
         <div class="col-12 col-lg-3 col-md-3 col-sm-6 mb-5 animated fadeInUp">
             <div class="card card-item" id="\${id}">
                 <div class="img-produto">
-                    <img src="./img/cardapio/burguers/usda-prime-burgers-pack-of-18-8oz-each.274c67f15aa1c0b210dbf51801706670.jpg" />
+                    <img src=./img/cardapio/cardapioonline/\${img} />
                 </div>
                 <p class="title-produto text-center mt-4">
                     <b>\${nome}</b>
