@@ -173,7 +173,7 @@ if ($status == 1 || $status == 2 || $status == 3  ) { ?>
 
 <div class="row">
     <div class="col-md-4">
-        <form method="POST" action="/pdv/mvc/model/imprime_balcao.php" target="_blank">
+        <form method="POST" action="/pdv/mvc/model/imprimir.php" target="_blank">
             <input name="id" type="hidden" value="<?php echo $id; ?>">
             <input name="cliente" type="hidden" value="<?php echo $cliente; ?>">
             <input name="pgto" type="hidden" value="<?php echo $pgto; ?>">
