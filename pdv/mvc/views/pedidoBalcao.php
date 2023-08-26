@@ -124,7 +124,11 @@ $(document).ready(function() {
                             <?php while ($rows_clientes = mysqli_fetch_assoc($clientes)) {
                                 ?>
                                 <option value=""></option>
-                                <option value="<?php echo $rows_clientes['id']?>"> <?php echo  $rows_clientes['nome'] ." | ". $rows_clientes['tel1'] ?> </option>
+                                <option value="<?php echo $rows_clientes['id']?>">
+                                <?php 
+                                    echo  $rows_clientes['nome'] ." | ". $rows_clientes['tel1']
+                                ?> 
+                                </option>
                                 
                                 <?php
                                 

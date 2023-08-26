@@ -1,6 +1,9 @@
 <?php
+
 $cor = $_POST['cor'];
 $mesas = $_POST['mesas'];
+
+$login_usuario = $_POST['login_usuario'];
 
 include_once ('./conexao.php');
 
@@ -16,7 +19,7 @@ if($cor != null){
 	}if($cor == 5){
 		$cor = 'primary';
 	}
-	$insert_table = "UPDATE cor SET  cor = '$cor' WHERE id ='1'";
+	$insert_table = "UPDATE cor SET  cor = '$cor' WHERE id_user = '$login_usuario' ";
 	//$insert_table = "INSERT INTO cor (id, cor) VALUES ('1', '$cor')";
 	$insert_table = mysqli_query($conn, $insert_table);
 }

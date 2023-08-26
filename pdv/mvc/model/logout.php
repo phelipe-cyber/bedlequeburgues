@@ -3,5 +3,7 @@ session_start();
 
 $_SESSION['login'] = 0;
 
-header("Location: /pdv/?view=Dashboard1");
+session_destroy();
+
+header("Location: /pdv/?view=index");
 ?>

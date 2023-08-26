@@ -6,23 +6,6 @@ ini_set( 'display_errors', 0 );//oculta  erros
 
 include('./mvc/model/conexao.php');
 
-// $servidor = "db";
-// $usuario = "root";
-// $senha = "#tr0caf0ne#";
-// $dbname = "u841971040_pdv";
-// $conn = mysqli_connect($servidor, $usuario, $senha, $dbname);
-
-$select_table = "SELECT * FROM cor WHERE id LIKE '1'";
-$verifica_tabela = mysqli_query($conn, $select_table);
-$verifica_tabela = mysqli_fetch_assoc($verifica_tabela);
-$cor = $verifica_tabela['cor'];
-$_SESSION['cor'] = $cor;
-
-
-include('./mvc/model/conexao.php');
-
-
-
 if($_SESSION['login'] == 0){?>
 
 <!DOCTYPE html>
@@ -123,12 +106,7 @@ if($_SESSION['login'] == 0){?>
 
 </html>
 
-
-
-
-
-
-<?php }elseif($_SESSION['login'] == 1){
+<?php }elseif($_SESSION['login'] >= 1){
 	include('mvc/classes/system.class.php');
 
 	if (isset($_GET['view'])) {

@@ -1,9 +1,17 @@
 <?php
 session_start();
+include('./mvc/model/conexao.php');
 
-$cor = $_SESSION['cor'];
+$login_usuario = $_SESSION['login'];
 
 $usuario = $_SESSION['user'];
+
+ $select_table = "SELECT * FROM cor c WHERE c.id_user = '$login_usuario'";
+	$verifica_tabela = mysqli_query($conn, $select_table);
+	while ($rows_cor = mysqli_fetch_assoc($verifica_tabela)) {
+    $cor = $rows_cor['cor'];
+  }
+  
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -64,7 +72,7 @@ $usuario = $_SESSION['user'];
   <div id="wrapper">
 
     <!-- Sidebar -->
-    <ul class="navbar-nav bg-gradient-<?php echo $cor; ?> sidebar sidebar-dark accordion" id="accordionSidebar">
+    <ul class="navbar-nav bg-gradient-<?php echo $cor ?> sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
       <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/mvc/?view=Dashboard1">
@@ -328,6 +336,7 @@ $usuario = $_SESSION['user'];
 
                       <h5 style="padding: 5%;" class="text-center"><b> Defina a quantidade de Mesas do seu estabelecimento:</b></h5>
                       <input class="text-center" type="number" name="mesas">
+                      <input class="text-center" type="hidden" name="login_usuario" value="<?php echo $login_usuario ?>">
 
 
                   </div>

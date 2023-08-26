@@ -14,7 +14,7 @@ $printer = new Printer($connector);
 
 try {
     // Carrega o conteúdo do arquivo HTML
-    $htmlContent = file_get_contents('/imprimir.php');
+    $htmlContent = file_get_contents('./imprimir.php');
     
     // Imprime o conteúdo na impressora
     $printer->textRaw($htmlContent);
@@ -22,6 +22,7 @@ try {
     
     // Corte de papel (opcional)
     $printer->cut();
+    $printer->close();
     
 } catch (Exception $e) {
 

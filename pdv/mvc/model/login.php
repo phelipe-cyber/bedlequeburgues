@@ -7,7 +7,7 @@ $senha = $_POST['senha'];
 
 
 if ($login != null && $senha != null) {
-	$select_table = "SELECT * FROM usuarios WHERE login LIKE '%$login%'";
+	$select_table = "SELECT u.id as id, u.login, u.senha, u.nivel, c.cor as cor  FROM usuarios u left join cor c on c.id_user = u.id WHERE u.login LIKE '%$login%'";
 	$verifica_tabela = mysqli_query($conn, $select_table);
 
 	$verifica_tabela = mysqli_fetch_assoc($verifica_tabela );
@@ -16,8 +16,10 @@ if ($login != null && $senha != null) {
 
 		if($verifica_tabela['nivel'] == 1 || $verifica_tabela['nivel'] == 2){
 
-			$_SESSION['login'] = 1;
+			$_SESSION['login'] = $verifica_tabela['id'];
 			$_SESSION['user'] = $login;
+			// $_SESSION['cor'] = $verifica_tabela['cor'];
+			
 			header("Location: /pdv/?view=pedidoBalcao");
 		}else{
 

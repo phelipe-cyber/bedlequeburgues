@@ -76,7 +76,7 @@ $clientes = mysqli_query($conn, $tab_clientes);
 
 						<div class="form-group col-md-2">
 							<label for="recipient-name" class="col-form-label">CEP:</label>
-							<input required id="cep" name="cep" type="text" class="form-control">
+							<input id="cep" name="cep" type="text" class="form-control">
 						</div>
 					</div>
 
@@ -174,19 +174,19 @@ $clientes = mysqli_query($conn, $tab_clientes);
 
 						<div class="form-group col-md-6">
 							<label for="message-text" class="col-form-label">Endereço (Rua e Número):</label>
-							<input required id="endereco" name="endereco" type="text" class="form-control">
+							<input  id="endereco" name="endereco" type="text" class="form-control">
 						</div>
 						<div class="form-group col-md-2">
 							<label for="recipient-name" class="col-form-label">Bairro:</label>
-							<input required id="bairro" name="bairro" type="text" class="form-control">
+							<input  id="bairro" name="bairro" type="text" class="form-control">
 						</div>
 						<div class="form-group col-md-4">
 							<label for="recipient-name" class="col-form-label">Cidade:</label>
-							<input required id="cidade" name="cidade" type="text" class="form-control">
+							<input  id="cidade" name="cidade" type="text" class="form-control">
 						</div>
 						<div class="form-group col-md-2">
 							<label for="recipient-name" class="col-form-label">Estado:</label>
-							<input required id="estado" name="estado" type="text" class="form-control">
+							<input  id="estado" name="estado" type="text" class="form-control">
 						</div>
 						<div class="form-group col-md-4">
 							<label for="recipient-name" class="col-form-label">Complemento:</label>
@@ -277,6 +277,7 @@ $clientes = mysqli_query($conn, $tab_clientes);
     
   }
 </script>
+
 <script>
 	function mascaraFone_2(event) {
     var valor = document.getElementById("telefone_2").attributes[0].ownerElement['value'];

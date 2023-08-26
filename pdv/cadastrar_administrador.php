@@ -14,6 +14,10 @@ if($nivel == 1){
 	if($login != null && $senha != null && $pergunta != null && $resposta != null){
 		$insert_table = "INSERT INTO usuarios (login, senha, nivel, pergunta, resposta) VALUES ('$login', '$senha', '1', '$pergunta', '$resposta')";
 		$insert_table = mysqli_query($conn, $insert_table);
+		
+		$id_novo_user = $conn->insert_id;
+		$insert_table_cor = "INSERT INTO `cor` (`id`, `cor`, `id_user`) VALUES (NULL, 'primary', '$id_novo_user')";
+		$insert_table_cor = mysqli_query($conn, $insert_table_cor);
 
 		$_SESSION['msg'] = "<div class='alert alert-success' role='alert'>Sucesso ao criar Administrador !</div>";
 		header("Location: /pdv/?view=Dashboard1");
@@ -30,6 +34,10 @@ if($nivel == 1){
 	if($login != null && $senha != null && $pergunta != null && $resposta != null){
 		$insert_table = "INSERT INTO usuarios (login, senha, nivel, pergunta, resposta) VALUES ('$login', '$senha', '2', '$pergunta', '$resposta')";
 		$insert_table = mysqli_query($conn, $insert_table);
+		
+		$id_novo_user = $conn->insert_id;
+		$insert_table_cor = "INSERT INTO `cor` (`id`, `cor`, `id_user`) VALUES (NULL, 'primary', '$id_novo_user')";
+		$insert_table_cor = mysqli_query($conn, $insert_table_cor);
 
 		$_SESSION['msg'] = "<div class='alert alert-success' role='alert'>Sucesso ao criar Administrador !</div>";
 		header("Location: /pdv/?view=Dashboard1");
@@ -46,6 +54,10 @@ if($nivel == 1){
 	if($login != null && $senha != null && $pergunta != null && $resposta != null){
 		$insert_table = "INSERT INTO usuarios (login, senha, nivel, pergunta, resposta) VALUES ('$login', '$senha', '3', '$pergunta', '$resposta')";
 		$insert_table = mysqli_query($conn, $insert_table);
+		
+		$id_novo_user = $conn->insert_id;
+		$insert_table_cor = "INSERT INTO `cor` (`id`, `cor`, `id_user`) VALUES (NULL, 'primary', '$id_novo_user')";
+		$insert_table_cor = mysqli_query($conn, $insert_table_cor);
 
 		$_SESSION['msg'] = "<div class='alert alert-success' role='alert'>Sucesso ao criar Administrador !</div>";
 		header("Location: /pdv/?view=Dashboard1");

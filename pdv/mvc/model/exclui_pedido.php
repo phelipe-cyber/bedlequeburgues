@@ -5,10 +5,11 @@ include_once ('./conexao.php');
 
 $id = $_POST['pedido'];
 $mesa = $_POST['mesa'];
+$idproduto = $_POST['idproduto'];
 
 
+echo $exclude_table = "DELETE FROM pedido WHERE idpedido = '$idproduto' and numeropedido = '$id' ";
 
-$exclude_table = "DELETE FROM pedido WHERE idpedido = '$id'";	
 $produto_excluido = mysqli_query($conn, $exclude_table);
 
 	echo "<META HTTP-EQUIV=REFRESH CONTENT = '0;URL=/pdv/?view=todosPedidoBalcao'>";

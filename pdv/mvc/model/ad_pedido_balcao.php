@@ -6,33 +6,19 @@ $hora_pedido = date('H:i');
 
 include_once ("conexao.php");
 
-// print_r($_POST);
 
 if( $_POST['pedido'] <> ""){
-
- $numeropedido = $_POST['pedido'];
+  print_r($_POST);
+  echo "Não Vazio";
+  die();
+  
+$numeropedido = $_POST['pedido'];
 
 $user =  $_SESSION['user'];
 $detalhes =  $_POST['detalhes'];
 $cliente = ($_POST['cliente']);
 $cliente_2 = ($_POST['cliente']);
 $pgto = $_POST['pgto'];
-
-// foreach ($detalhes as $detalhesPedidos) {
-
-//   $quantidade = $detalhesPedidos['quantidade'];
-//   $pedido =     ($detalhesPedidos['pedido']);
-//   $preco_venda = $detalhesPedidos['preco_venda'];
-//   $observacoes = $detalhesPedidos['observacoes'];
-  
-  
-//   if ($quantidade == 0 )
-//   continue;
-  
-//   print_r($pedido);
-//   echo "<br>";
-//   print_r($cliente);
-//   exit();
 
 $sql_previa = "SELECT * FROM `pedido_previa` where quantidade <> '' and hashpagina = '$hashpagina' GROUP BY id_produto order by id ASC";
     $pedido_previa = mysqli_query($conn, $sql_previa);
@@ -65,7 +51,6 @@ $_SESSION['msg'] = "<div class='alert alert-success' role='alert'> Pedido para $
 
     exit();
 }else{
-
 
 $result_usuarios = ("SELECT MAX(numeropedido) as 'Pedido'FROM `pedido`ORDER BY numeropedido DESC limit 1 ");
 $recebidos = mysqli_query($conn, $result_usuarios);
@@ -141,13 +126,10 @@ $novoIdInserido = $conn->insert_id;
 // header("Location: /pdv/mvc/model/imprime_balcao.php");
 
 // echo "<script language='javascript'>window.open('/pdv/mvc/model/imprime_balcao.php','_blank');</script>";
-
-echo "<META http-equiv='refresh' content='0;URL=/pdv/mvc/model/imprime_balcao.php' target='_blank'>";
-
 // $conn->close(); 
+echo "<META http-equiv='refresh' content='0;URL=/pdv/mvc/model/imprimir.php' target='_blank'>";
 
 $_SESSION['novoIdInserido'] = $numeropedido;
-
 $_SESSION['$cliente'] = $cliente;
 
 // echo "<META HTTP-EQUIV=REFRESH CONTENT = '0;URL=/pdv/?view=pedidoBalcao'>";

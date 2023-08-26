@@ -214,11 +214,12 @@ if ($status == 1 || $status == 2 || $status == 3  ) { ?>
 				// mysqli_fetch_assoc senpre retorna um array associaivo
 				while ($rows_produtos = mysqli_fetch_assoc($pedidos)) {
 					$num += 1;
-
+                    // print_r($rows_produtos);
 					$quantidade = $rows_produtos['quantidade'];
 					$valor = $rows_produtos['valor'];
+					$id_produto = $rows_produtos['idpedido'];
 
-					$subtotal = $valor ;
+					$subtotal = $valor * $quantidade;
 					$total += $subtotal;
 
 				?>
@@ -227,17 +228,24 @@ if ($status == 1 || $status == 2 || $status == 3  ) { ?>
                 <td><?php echo ($rows_produtos['produto']) ?></td>
                 <td><?php echo $rows_produtos['observacao']; ?></td>
                 <td><?php echo $rows_produtos['quantidade']; ?></td>
+                
 
                 <td>R$ <?php echo number_format($rows_produtos['valor'], 2); ?></td>
                 <td>
                     <button type="button" class="btn btn-danger btn-icon-split btn-sm" data-toggle="modal"
                         data-idmesa="<?php echo  $id; ?>" data-idpedido="<?php echo  $id; ?>"
-                        data-idproduto="<?php echo  $rows_produtos['produto']; ?>" data-target="#excluir">Excluir
+                        data-produto="<?php echo  $rows_produtos['produto']; ?>" 
+                        data-idproduto="<?php echo  $rows_produtos['idpedido']; ?>" 
+                        data-target="#excluir">Excluir
                         Item</button>
                     <button type="button" class="btn btn-warning btn-icon-split btn-sm" data-toggle="modal"
                         data-target="#editar" data-idpedido="<?php echo  $id; ?>"
-                        data-id="<?php echo $id; ?>" data-produto="<?php echo  $rows_produtos['produto']; ?>"
+                        
+                        data-id="<?php echo $id; ?>"
+                        data-idproduto="<?php echo  $rows_produtos['idpedido']; ?>" 
+                        data-produto="<?php echo  $rows_produtos['produto']; ?>"
                         data-obs="<?php echo  $rows_produtos['observacao']; ?>"
+
                         data-quantidade="<?php echo  $rows_produtos['quantidade']; ?>">Editar Item</button>
                 </td>
                 <td></td>
@@ -388,11 +396,12 @@ if ($status == 1 || $status == 2 || $status == 3  ) { ?>
             </div>
             <div class="modal-body" style="color:white; background: #e74a3b;">
                 <form method="POST" action="mvc/model/exclui_pedido.php">
-                    <h4 class="mb-10 text-center">Excluir Pedido:</h4>
+                    <h4 class="mb-10 text-center">Excluir item do pedido:</h4>
                     <input name="pedido" type="hidden" class="form-control" id="pedido">
                     <input name="produto" type="button" class="form-control" id="produto"
                         style="color: red; background: white; font-size: 22px;">
                     <input name="mesa" type="hidden" class="form-control" id="mesa">
+                    <input name="idproduto" type="hidden" class="form-control" id="idproduto">
 
             </div>
             <div class="modal-footer">
@@ -427,11 +436,11 @@ if ($status == 1 || $status == 2 || $status == 3  ) { ?>
                             <label for="recipient-name" class="col-form-label">Qtd</label>
                             <input name="quantidade" type="text" class="form-control" id="quantidade">
                             <input name="idpedido" type="hidden" class="form-control" id="idpedido">
-                            <input name="id" type="hidden" id="id">
+                            <input name="idproduto" type="hidden" class="form-control" id="idproduto">
                         </div>
                         <div class="form-group col-md-10">
                             <label for="recipient-name" class="col-form-label">Produto</label>
-                            <input name="produto" type="button" class="form-control" id="produto">
+                            <input name="produto" type="text" class="form-control" id="produto">
                         </div>
                         <div class="form-group col-md-12">
                             <label for="recipient-name" class="col-form-label">Obs</label>
@@ -461,15 +470,15 @@ $('#excluir').on('show.bs.modal', function(event) {
     var button = $(event.relatedTarget) // Button that triggered the modal
 
     var recipientpedido = button.data('idpedido')
-    var recipientproduto = button.data('idproduto')
+    var recipientidproduto = button.data('idproduto')
+    var recipientproduto = button.data('produto')
     var recipientmesa = button.data('idmesa')
-
-
 
     var modal = $(this)
     modal.find('#pedido').val(recipientpedido)
     modal.find('#produto').val(recipientproduto)
     modal.find('#mesa').val(recipientmesa)
+    modal.find('#idproduto').val(recipientidproduto)
 
 
 })
@@ -481,6 +490,7 @@ $('#editar').on('show.bs.modal', function(event) {
     var button = $(event.relatedTarget) // Button that triggered the modal
 
     var idpedido = button.data('idpedido')
+    var idproduto = button.data('idproduto')
     var quantidade = button.data('quantidade')
     var produto = button.data('produto')
     var obs = button.data('obs')
@@ -490,6 +500,7 @@ $('#editar').on('show.bs.modal', function(event) {
     var modal = $(this)
     modal.find('.modal-header').text('Edita Pedido  ' + idpedido)
     modal.find('#idpedido').val(idpedido)
+    modal.find('#idproduto').val(idproduto)
     modal.find('#quantidade').val(quantidade)
     modal.find('#produto').val(produto)
     modal.find('#obs').val(obs)

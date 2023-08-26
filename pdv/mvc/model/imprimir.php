@@ -22,6 +22,7 @@ if( empty($id) ){
     $cliente = $_SESSION['cliente'];
 }
 
+// print_r($_SESSION);
 
     // $data_pedido = $_POST['data_pedido'];
 
@@ -208,14 +209,18 @@ where numeropedido = '$id'";
 
 <script>
     window.print();
-    window.addEventListener("afterprint", function(event) { window.close(); });
-    window.onafterprint();
-    window.location.href = '/pdv/?views=todosPedidoBalcao';
+    // window.addEventListener("afterprint", function(event) { window.close(); });
+    // window.onafterprint();
+    // window.location.href = '/pdv/?views=todosPedidoBalcao';
 </script>
 
 <?php
-    // echo "<META http-equiv='refresh' content='0;URL=/pdv/?views=todosPedidoBalcao' target='_blank'>";
-
+    echo "<META http-equiv='refresh' content='1;URL=/pdv/?views=todosPedidoBalcao' target='_blank'>";
+    // $fileToPrint = 'caminho/para/seu/arquivo.pdf';
+    // $printerName = 'nome_da_impressora';
+    
+    // $command = "lp -d $printerName $fileToPrint";
+    // exec($command);
 ?>
 
 </html>
