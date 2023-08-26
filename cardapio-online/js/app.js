@@ -641,7 +641,7 @@ cardapio.templates = {
     itemCarrinho: `
         <div class="col-12 item-carrinho">
             <div class="img-produto">
-                <img src="\${img}" />
+            <img src=./img/cardapio/cardapioonline/\${img} />
             </div>
             <div class="dados-produto">
                 <p class="title-produto"><b>\${nome}</b></p>
@@ -659,7 +659,7 @@ cardapio.templates = {
     itemResumo: `
         <div class="col-12 item-carrinho resumo">
             <div class="img-produto-resumo">
-                <img src="\${img}" />
+            <img src=./img/cardapio/cardapioonline/\${img} />
             </div>
             <div class="dados-produto">
                 <p class="title-produto-resumo">
