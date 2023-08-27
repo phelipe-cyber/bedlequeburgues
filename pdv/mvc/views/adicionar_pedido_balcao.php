@@ -219,7 +219,7 @@ if ($status == 1 || $status == 2 || $status == 3  ) { ?>
 					$valor = $rows_produtos['valor'];
 					$id_produto = $rows_produtos['idpedido'];
 
-					$subtotal = $valor * $quantidade;
+					$subtotal = $valor ;
 					$total += $subtotal;
 
 				?>
