@@ -411,11 +411,23 @@
 
                     <div id="localEntrega" class="row mr-0 ml-0 animated fadeIn hidden">
 
-                        <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                        <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                            <div class="form-group container-cep">
+                                <label for="phone" >Telefone:</label>
+                                <input placeholder="(00) 00000-0000" oninput="cardapio.metodos.formatPhoneNumber(this)" type="tel" id="phone" name="phone" class="form-control" pattern="[0-9]{15}" maxlength="15" />
+                                <small>Informe um número de telefone com 11 dígitos.</small>
+                                <a class="btn btn-yellow btn-sm"  onclick="cardapio.metodos.buscarteldados()" >
+                                    <i class="fa fa-search"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-lg-6 col-md-6 col-sm-12">
                             <div class="form-group container-cep">
                                 <label>CEP:</label>
-                                <input id="txtCEP" type="text" class="form-control" />
-                                <a class="btn btn-yellow btn-sm" onclick="cardapio.metodos.buscarCep()">
+                                <input placeholder="00000-000" id="txtCEP" type="text" class="form-control" maxlength="08" oninput="cardapio.metodos.formatCEP(this)" />
+                                <small>Informe o CEP com 08 dígitos.</small>
+                                <a class="btn btn-yellow btn-sm searchCep hidden" onclick="cardapio.metodos.buscarCep()">
                                     <i class="fa fa-search"></i>
                                 </a>
                             </div>
@@ -563,10 +575,14 @@
                     <a onclick="cardapio.metodos.resumoPedido()" class="btn btn-yellow float-right hidden" id="btnEtapaEndereco">
                         Revisar pedido
                     </a>
-                    <a href="#" class="btn btn-yellow float-right hidden" id="btnEtapaResumo" target="_blank">
+                    
+                    <!-- <a href="#" class="btn btn-yellow float-right hidden" id="btnEtapaResumo" target="_blank"  >
+                        Enviar pedido
+                    </a> -->
+
+                    <a class="btn btn-yellow float-right hidden" id="btnEtapaResumo" onclick="cardapio.metodos.validateClick()" >
                         Enviar pedido
                     </a>
-
                     <a onclick="cardapio.metodos.voltarEtapa()" class="btn btn-white float-right mr-3 hidden" id="btnVoltar">
                         Voltar
                     </a>
