@@ -130,7 +130,7 @@ where numeropedido = '$id'";
             $bloco = $rows_clientes['bloco'];
             $apartamento = $rows_clientes['apartamento'];
 
-            $subtotal = $valor * $quantidade;
+            $subtotal = $valor ;
             $total += $subtotal;
 
             $i++;
