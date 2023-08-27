@@ -176,7 +176,7 @@ where numeropedido = '$id'";
     </table>
     <!-- <hr> -->
     <?php
-        $valorTotal = "SELECT sum( quantidade * valor ) AS totalValor FROM pedido WHERE numeropedido = '$id'";
+        $valorTotal = "SELECT sum(  valor ) AS totalValor FROM pedido WHERE numeropedido = '$id'";
 
         $pedido = mysqli_query($conn, $valorTotal);
 
