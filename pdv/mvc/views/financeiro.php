@@ -295,7 +295,7 @@ if (isset($escolha)) {
 						<td class="text-center"><b><?php echo $data; ?></b></td>
 						<td class="text-center"><b><?php echo $pedido; ?></b></td>
 						<td class="text-center">
-							<form method="POST" action="/pdv/mvc/model/imprime_balcao.php" target="_blank">
+							<form method="POST" action="/pdv/mvc/model/imprimir.php" target="_blank">
 								<input name="id" type="hidden" value="<?php echo $pedido ? $pedido : $id_venda ; ?>">
 								<input name="cliente" type="hidden" value="<?php echo $cliente; ?>">
 								<input name="pgto" type="hidden" value="<?php echo $pgto; ?>">
