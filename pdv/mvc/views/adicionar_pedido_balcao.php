@@ -50,6 +50,7 @@ while ($rows_cliente = mysqli_fetch_assoc($cliente)) {
   $bairro = $rows_cliente['bairro']; 
   $pgto = $rows_cliente['pgto']; 
   $complemento = $rows_cliente['complemento']; 
+  $id_cliente = $rows_cliente['cliente']; 
   //  $rows_cliente['tel1'];
   $tel = preg_replace("/[^0-9,]+/i", "", $rows_cliente['tel1']);
 };
@@ -167,6 +168,8 @@ if ($status == 1 || $status == 2 || $status == 3  ) { ?>
 
     <input type="hidden" name="pedido" value="<?php echo $id; ?>">
     <input type="hidden" name="nomecliente" value="<?php echo $cliente; ?>">
+    <input type="hidden" name="pgto" value="<?php echo $pgto; ?>">
+    <input type="hidden" name="id_cliente" value="<?php echo $id_cliente?>">
     <input type="hidden" name="pgto" value="<?php echo $pgto; ?>">
 
 </form>

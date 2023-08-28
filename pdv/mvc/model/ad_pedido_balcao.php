@@ -8,19 +8,20 @@ include_once ("conexao.php");
 
 
 if( $_POST['pedido'] <> ""){
-  print_r($_POST);
-  echo "Não Vazio";
-  die();
-  
+  // print_r($_POST);
+ 
 $numeropedido = $_POST['pedido'];
-
+$hashpagina = $_POST['hashpagina'];
+$user =  $_SESSION['user'];
+$pgto = ($_POST['pgto']);
+$hashpagina = $_POST['hashpagina'];
+$id_cliente = $_POST['id_cliente'];
 $user =  $_SESSION['user'];
 $detalhes =  $_POST['detalhes'];
-$cliente = ($_POST['cliente']);
-$cliente_2 = ($_POST['cliente']);
 $pgto = $_POST['pgto'];
+$cliente_2 = $_POST['nomecliente'];
 
-$sql_previa = "SELECT * FROM `pedido_previa` where quantidade <> '' and hashpagina = '$hashpagina' GROUP BY id_produto order by id ASC";
+ $sql_previa = "SELECT * FROM `pedido_previa` where quantidade <> '' and hashpagina = '$hashpagina' GROUP BY id_produto order by id ASC";
     $pedido_previa = mysqli_query($conn, $sql_previa);
 
  while ($rows_previa = mysqli_fetch_assoc($pedido_previa)) {
@@ -32,7 +33,7 @@ $sql_previa = "SELECT * FROM `pedido_previa` where quantidade <> '' and hashpagi
   $observacoes = $rows_previa['observacao'];
 
    $insert_table = "INSERT INTO pedido (numeropedido, delivery,cliente, idmesa, produto, quantidade, hora_pedido, valor, observacao, pgto ,usuario, `data`, gorjeta, status) VALUES
-  ('$numeropedido','','$cliente', '$id_mesa', '$pedido', '$quantidade', '$hora_pedido', '$preco_venda', '$observacoes','$pgto','$user', '$data_hora','', 1 )";
+  ('$numeropedido','','$id_cliente', '$id_mesa', '$pedido', '$quantidade', '$hora_pedido', '$preco_venda', '$observacoes','$pgto','$user', '$data_hora','', 1 )";
  
   $adiciona_pedido = mysqli_query($conn, $insert_table);
   
@@ -46,7 +47,7 @@ $conn->close();
 
 
 echo "<META HTTP-EQUIV=REFRESH CONTENT = '0;URL=/pdv/?view=pedidoBalcao'>";
-$_SESSION['msg'] = "<div class='alert alert-success' role='alert'> Pedido para $cliente_2 cadastrado com sucesso!<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>";
+$_SESSION['msg'] = "<div class='alert alert-success' role='alert'> Pedido para $cliente_2 editado com sucesso!<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>";
 
 
     exit();
