@@ -55,12 +55,12 @@ $caixa = mysqli_query($conn, $tab_caixa);
             <?php
                     $index = 0;
                     while ($rows_caixa = mysqli_fetch_assoc($caixa)) {
-                        $dataHora = date('d/m/Y H:i', strtotime($rows_caixa['data_hora']));
+                        $dataHora = date('d/m/Y H:i:s', strtotime($rows_caixa['data_hora']));
                         $update_at = $rows_caixa['update_at'];
                         if($update_at == NULL){
                             $update_at == '';
                         }else{
-                            $update_at = date('d/m/Y H:i', strtotime($rows_caixa['update_at']));
+                            $update_at = date('d/m/Y H:i:s', strtotime($rows_caixa['update_at']));
                         }
                     ?>
             <tr>
