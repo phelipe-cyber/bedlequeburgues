@@ -50,6 +50,7 @@ if ($resultado_telefone->num_rows == 0) {
     $numero = $dadoscliennte['numero'];
     $complemento = $dadoscliennte['complemento'];
     $nome = $dadoscliennte['nome'];
+    $cidade = $dadoscliennte['cidade'];
 
     $insert_table_cliente = "INSERT INTO `clientes` (`id`, `nome`, `endereco`, `bairro`, `cidade`, `estado`, `complemento`, `cep`, `ponto_referecia`, `tel1`, 
     `tel2`, `email`, `cpf_cnpj`, `rg`, `condominio`, `bloco`, `apartamento`, `local_entrega`, `observacoes`) VALUES
@@ -74,7 +75,7 @@ if ($resultado_telefone->num_rows == 0) {
         $quantidade = $elem['qntd'];
 
         $insert_table = "INSERT INTO pedido (numeropedido, delivery,cliente, idmesa, produto, quantidade, hora_pedido, valor, observacao, pgto, usuario, `data` , gorjeta, status ) VALUES
-        ('$numeropedido','','$id_cliente', '$id_mesa', '$pedido', '$quantidade', '$hora_pedido', '$preco_venda', '$observacoes', '$pgto','$user','$data_hora' ,'' , 1 )";
+        ('$numeropedido','','$id_cliente', '$id_mesa', '$pedido', '$quantidade', '$hora_pedido', '$preco_venda', '$observacoes', '$pgto','$user','$data_hora' ,'' , 2 )";
       
       $adiciona_pedido = mysqli_query($conn, $insert_table);
 
