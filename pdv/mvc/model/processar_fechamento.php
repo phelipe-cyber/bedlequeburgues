@@ -18,25 +18,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // print_r(mysqli_fetch_assoc($conn_valida));
     
     $select_table = mysqli_fetch_assoc($conn_valida);
-    $id = $select_table['id'];
     // echo $id;
     // exit();
     if(mysqli_fetch_assoc($conn_valida) != ""){
-        echo "<META HTTP-EQUIV=REFRESH CONTENT = '0;URL=/pdv/?view=open'>";	
+        echo "<META HTTP-EQUIV=REFRESH CONTENT = '0;URL=/pdv/?view=exit'>";	
 		$_SESSION['msg'] = "<div class='alert alert-danger' role='alert'>Erro ao fazer fechar, caixa já fechado Hoje <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>";
     }else{
-		    echo "<META HTTP-EQUIV=REFRESH CONTENT = '0;URL=/pdv/?view=pedidoBalcao'>";
+
+            $sql_valida = "SELECT * FROM `caixa` WHERE CAST(data_hora AS DATE) = '$data' order by id desc";
+            $conn_valida = mysqli_query($conn, $sql_valida);
+            
+            $select_table = mysqli_fetch_assoc($conn_valida);
+            $id = $select_table['id'];
+		    echo "<META HTTP-EQUIV=REFRESH CONTENT = '0;URL=/pdv/?view=exit'>";
 	    	$_SESSION['msg'] = "<div class='alert alert-success' role='alert'>Caixa fechado com sucesso! Valor final: $valor_final<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>";
                 
             $sql = "UPDATE `caixa` SET `valor_fechamento`= '$valor_final', `status`='2', `update_at`='$data_hora' WHERE id = '$id' ";
             $adiciona = mysqli_query($conn, $sql);
             // print_r(mysqli_affected_rows($conn));
             
-            if(mysqli_affected_rows($conn) != 0){
-                echo "<META HTTP-EQUIV=REFRESH CONTENT = '0;URL=/pdv/?view=pedidoBalcao'>";
+            if(mysqli_affected_rows($conn) != -1){
+                echo "<META HTTP-EQUIV=REFRESH CONTENT = '0;URL=/pdv/?view=exit'>";
                 $_SESSION['msg'] = "<div class='alert alert-success' role='alert'>Caixa fechado com sucesso! Valor final: $valor_final<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>";
             }else{
-                echo "<META HTTP-EQUIV=REFRESH CONTENT = '0;URL=/pdv/?view=open'>";	
+                echo "<META HTTP-EQUIV=REFRESH CONTENT = '0;URL=/pdv/?view=exit'>";	
                 $_SESSION['msg'] = "<div class='alert alert-danger' role='alert'>Erro ao fazer o fechamento  <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>";
             }
         }

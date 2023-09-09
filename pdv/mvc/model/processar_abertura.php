@@ -21,16 +21,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo "<META HTTP-EQUIV=REFRESH CONTENT = '0;URL=/pdv/?view=open'>";	
 		$_SESSION['msg'] = "<div class='alert alert-danger' role='alert'>Erro ao fazer abertura, caixa já aberto Hoje <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>";
     }else{
-		    echo "<META HTTP-EQUIV=REFRESH CONTENT = '0;URL=/pdv/?view=pedidoBalcao'>";
+		    echo "<META HTTP-EQUIV=REFRESH CONTENT = '0;URL=/pdv/?view=open'>";
 	    	$_SESSION['msg'] = "<div class='alert alert-success' role='alert'>Caixa aberto com sucesso! Valor inicial: $valor_inicial<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>";
                 
             $sql = "INSERT INTO `caixa`(`id`, `valor_abertura`, `valor_fechamento`, `status`, `usuario`, `data_hora`, `update_at`) 
-            VALUES (null,'$valor_inicial','','1','$user','$data_hora','$data_hora')";
+            VALUES (null,'$valor_inicial','','1','$user','$data_hora',null)";
             $adiciona = mysqli_query($conn, $sql);
-            // print_r(mysqli_affected_rows($conn));
+            print_r(mysqli_affected_rows($conn));
             
-            if(mysqli_affected_rows($conn) != 0){
-                echo "<META HTTP-EQUIV=REFRESH CONTENT = '0;URL=/pdv/?view=pedidoBalcao'>";
+            if(mysqli_affected_rows($conn) != -1){
+                echo "<META HTTP-EQUIV=REFRESH CONTENT = '0;URL=/pdv/?view=opne'>";
                 $_SESSION['msg'] = "<div class='alert alert-success' role='alert'>Caixa aberto com sucesso! Valor inicial: $valor_inicial<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>";
             }else{
                 echo "<META HTTP-EQUIV=REFRESH CONTENT = '0;URL=/pdv/?view=open'>";	
