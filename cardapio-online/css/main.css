@@ -778,6 +778,49 @@ select.form-control {
     z-index: 9999;
 }
 
+
+/* Estilo para o contêiner do spinner */
+.container-spinner {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 100px;
+    background-color: transparent; /* Amarelo transparente */
+    border-radius: 10px;
+    animation: spinContainer 2s linear infinite; /* Animação do contêiner */
+    border: 6px solid transparent; /* Borda transparente */
+}
+
+/* Estilo para o spinner */
+.spinner {
+    border: 6px solid transparent; /* Borda transparente */
+    border-top: 6px solid #FFD700; /* Amarelo */
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spinSpinner 1s linear infinite; /* Animação do spinner */
+}
+
+/* Animação do contêiner */
+@keyframes spinContainer {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* Animação do spinner */
+@keyframes spinSpinner {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+
+
 .toast {
     color: var(--color-white);
     padding: 10px 25px;

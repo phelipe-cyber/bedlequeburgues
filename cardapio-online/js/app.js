@@ -2,7 +2,7 @@ setTimeout(function() {
     $(document).ready(function () {
         cardapio.eventos.init();
     })
-}, 2000);
+}, 3000);
 
 var cardapio = {};
 
@@ -10,7 +10,7 @@ var MEU_CARRINHO = [];
 var MEU_ENDERECO = null;
 
 var VALOR_CARRINHO = 0;
-var VALOR_ENTREGA = 7.5;
+var VALOR_ENTREGA = 0.00;
 
 var CELULAR_EMPRESA = '5511964081280';
 
@@ -33,7 +33,7 @@ cardapio.metodos = {
 
         var filtro = MENU[categoria];
         
-        var categoriaNoSpaces = categoria.replace(/\s/g, '');
+        // var categoriaNoSpaces = categoria.replace(/\s/g, '');
 
         if (!vermais) {
             $("#itensCardapio").html('');
@@ -66,25 +66,32 @@ cardapio.metodos = {
         // remove o ativo
         $(".container-menu a").removeClass('active');
 
+        var categoria = categoria.replace(/\s/g, '---');
+
         // seta o menu para ativo
-        $("#menu-" + categoriaNoSpaces).addClass('active')
+        $("#menu-" + categoria).addClass('active')
 
     },
 
     // obtem a lista das categorias
     obterCategoriaMenu: () =>{
-        var filtro = MENU;
+        if (typeof MENU === 'object') {
 
-        PropertyName =  Object.keys(filtro)
+            var filtro = MENU;
 
-        $.each(PropertyName, (i, e) => {
+            PropertyName =  Object.keys(filtro);
 
-            var ids = e.replace(/\s/g, '');
+            $.each(PropertyName, (i, e) => {
 
-            let menucategoria = cardapio.templates.categoriamenu.replace(/\${id}/g, ids).replace(/\${nome}/g, e)
-            $("#containermenu").append(menucategoria)
+                var category = e.replace(/\s/g, '---');
 
-        })
+                let menucategoria = cardapio.templates.categoriamenu.replace(/\${id}/g, category).replace(/\${nome}/g, e)
+                $("#containermenu").append(menucategoria)
+
+            })}
+        else{
+            console.error('MENU não é um objeto válido.');
+        }
     },
 
     // clique no botão de ver mais
@@ -112,6 +119,7 @@ cardapio.metodos = {
     aumentarQuantidade: (id) => {
 
         let qntdAtual = parseInt($("#qntd-" + id).text());
+        
         $("#qntd-" + id).text(qntdAtual + 1)
 
     },
@@ -125,6 +133,7 @@ cardapio.metodos = {
 
             // obter a categoria ativa
             var categoria = $(".container-menu a.active").attr('id').split('menu-')[1];
+            var categoria = categoria.replace(/---/g, ' ');
 
             // obtem a lista de itens
             let filtro = MENU[categoria];
@@ -220,6 +229,7 @@ cardapio.metodos = {
             $("#itensCarrinho").addClass('hidden');
             $("#localEntrega").removeClass('hidden');
             $("#resumoCarrinho").addClass('hidden');
+
 
             $(".etapa").removeClass('active');
             $(".etapa1").addClass('active');
@@ -379,13 +389,15 @@ cardapio.metodos = {
 
     // buscar dados cliente pelo telefone
     buscarteldados: () => {
+        $(".container-spinner").removeClass('hidden');
+
         // cria a variavel com o valor do telefone
         var phone = $("#phone").val().trim().replace(/\D/g, '');
 
         // verifica se o telefone possui valor informado
         if (phone != "") {
 
-            // Expressão regular para validar o CEP
+            // Expressão regular para validar o Telefone
             var validaphone = /^[0-9]{11}$/;
             
             if (validaphone.test(phone)) {
@@ -400,6 +412,7 @@ cardapio.metodos = {
                           data: vData,
                           success: function(dados) {
                                 if (dados != null) {
+                                    $(".container-spinner").addClass('hidden');
                                     $("#txtEndereco").val(dados.endereco);
                                     $("#txtBairro").val(dados.bairro);
                                     $("#txtCidade").val(dados.cidade);
@@ -412,6 +425,7 @@ cardapio.metodos = {
 
                                     cardapio.metodos.mensagem('Seus dados foram inseridos, por favor validar!','green');
                                 }else{
+                                    $(".container-spinner").addClass('hidden');
                                     cardapio.metodos.mensagem('Cadastro não encontrado. Preencha as informações manualmente.');
                                     $("#txtEndereco").val('');
                                     $("#txtBairro").val('');
@@ -427,18 +441,21 @@ cardapio.metodos = {
                                 }
                           },
                           error: function(err) {
+                            $(".container-spinner").addClass('hidden');
                            cardapio.metodos.mensagem('Telefone não localizado');
                            $("#phone").focus();
                           },
                       });  
             }
             else {
+                $(".container-spinner").addClass('hidden');
                 cardapio.metodos.mensagem('Formato do Telefone inválido.');
                 $("#phone").focus();
             }
 
         }
         else {
+            $(".container-spinner").addClass('hidden');
             cardapio.metodos.mensagem('Informe o Telefone, por favor.');
             $("#phone").focus();
         }
@@ -447,8 +464,8 @@ cardapio.metodos = {
     //formatar dados telefone
     formatPhoneNumber: (input) =>{
 
-        const rawNumber = input.value.replace(/\D/g, ''); // Remove caracteres não numéricos
-
+        const rawNumber = input.value.trim().replace(/\D/g, ''); // Remove caracteres não numéricos
+        const rawPhone = input.value.trim().replace(/\D/g, ''); // Remove caracteres não numéricos
         // Formatação para número de telefone no Brasil (exemplo: (11) 98765-4321)
         if (rawNumber.length <= 10) {
             const formattedNumber = rawNumber.replace(/(\d{2})(\d{4})(\d{4})/, '($1) $2-$3');
@@ -458,37 +475,103 @@ cardapio.metodos = {
             input.value = formattedNumber;
         }
 
+        if(rawPhone.length == 11 ){
+            $(".container-spinner").removeClass('hidden');
+            $(".searchPhone").addClass('hidden');
+
+            if (rawPhone != "") {
+
+                // Expressão regular para validar o Telefone
+                var validaphone = /^[0-9]{11}$|^[0-9]{10}$/ ;
+                  
+                        if (validaphone.test(rawPhone)) {
+                                var vData = {
+                                phone: rawPhone
+                                };
+                                $.ajax({
+                                    url: 'dadostel.php',
+                                    dataType: 'json',
+                                    type: 'POST',
+                                    data: vData,
+                                    success: function(dados) {
+                                            if (dados != null) {
+                                                $("#txtEndereco").val(dados.endereco);
+                                                $("#txtBairro").val(dados.bairro);
+                                                $("#txtCidade").val(dados.cidade);
+                                                $("#ddlUf").val(dados.estado);
+                                                $("#txtCEP").val(dados.cep);
+                                                $("#txtNome").val(dados.nome);
+                                                $("#txtComplemento").val(dados.complemento);
+                                                $("#txtNumero").focus();
+                                                // $(".searchCep").addClass('hidden');
+                                                $(".container-spinner").addClass('hidden');
+            
+                                                cardapio.metodos.mensagem('Seus dados foram inseridos, por favor validar!','green');
+                                            }else{
+                                                cardapio.metodos.mensagem('Cadastro não encontrado. Preencha as informações manualmente.');
+                                                $("#txtEndereco").val('');
+                                                $("#txtBairro").val('');
+                                                $("#txtCidade").val('');
+                                                $("#ddlUf").val('-1');
+                                                $("#txtCEP").val('');
+                                                $("#txtNome").val('');
+                                                $("#txtComplemento").val('');
+                                                $("#txtNumero").val('');
+                                                $("#phone").focus();
+                                                // $(".searchCep").removeClass('hidden');
+                                                $(".container-spinner").addClass('hidden');
+
+            
+                                            }
+                                    },
+                                    error: function(err) {
+                                    cardapio.metodos.mensagem('Telefone não localizado');
+                                    $("#phone").focus();
+                                    },
+                                });  
+                        }
+                        else {
+                            cardapio.metodos.mensagem('Formato do Telefone inválido.');
+                            $("#phone").focus();
+                        }
+    
+            }
+            else {
+                cardapio.metodos.mensagem('Informe o Telefone, por favor.');
+                $("#phone").focus();
+            }
+        }
+        if(rawPhone.length == 10){
+            $(".searchPhone").removeClass('hidden');
+        }
+
     },
 
     //formatar dados CEP
     formatCEP: (input) =>{
 
-        const rawCEP = input.value.replace(/\D/g, ''); // Remove caracteres não numéricos
-
+        const rawCEP = input.value.trim().replace(/\D/g, ''); // Remove caracteres não numéricos
         // Formatação para número de CEP no Brasil (exemplo: 12345-678)
         const formattedCEP = rawCEP.replace(/(\d{5})(\d{3})/, '$1-$2');
-
+                
         input.value = formattedCEP;
 
-    },
-
-    // API ViaCEP
-    buscarCep: () => {
-
-        // cria a variavel com o valor do cep
-        var cep = $("#txtCEP").val().trim().replace(/\D/g, '');
-
         // verifica se o CEP possui valor informado
-        if (cep != "") {
+        if (rawCEP != "") {
+            
+            if( rawCEP.length == 8 ){
+            $(".container-spinner").removeClass('hidden');
 
             // Expressão regular para validar o CEP
             var validacep = /^[0-9]{8}$/;
 
-            if (validacep.test(cep)) {
+            if (validacep.test(rawCEP)) {
 
-                $.getJSON("https://viacep.com.br/ws/" + cep + "/json/?callback=?", function (dados) {
+                $.getJSON("https://viacep.com.br/ws/" + rawCEP + "/json/?callback=?", function (dados) {
 
                     if (!("erro" in dados)) {
+
+                        cardapio.metodos.mensagem('CEP encontrado.  As informações foram preenchida.','green');
 
                         // Atualizar os campos com os valores retornados
                         $("#txtEndereco").val(dados.logradouro);
@@ -497,27 +580,124 @@ cardapio.metodos = {
                         $("#ddlUf").val(dados.uf);
                         $("#txtNome").focus();
 
+                        var vData = {
+                            cep: formattedCEP
+                           };
+                           $.ajax({
+                               url: 'frete.php',
+                               dataType: 'json',
+                               type: 'POST',
+                               data: vData,
+                               success: function(dados) {
+                                     if (dados != null) {
+                                         $(".container-spinner").addClass('hidden');
+                                         VALOR_ENTREGA = parseFloat(dados.valor)
+                                         
+                                         $("#lblValorEntrega").text(`+ R$ ${VALOR_ENTREGA.toFixed(2).replace('.', ',')}`);
+                                         $("#lblValorTotal").text(`R$ ${(VALOR_CARRINHO + VALOR_ENTREGA).toFixed(2).replace('.', ',')}`);
+                                         cardapio.metodos.mensagem('Entrega: R$ ' + VALOR_ENTREGA.toFixed(2).replace('.', ','),'green');
+             
+                                     }else{
+                                         $(".container-spinner").addClass('hidden');
+                                         cardapio.metodos.mensagem('Erro no frete');
+                                         VALOR_ENTREGA = 0.00
+                                         $("#lblValorEntrega").text(`+ R$ ${VALOR_ENTREGA.toFixed(2).replace('.', ',')}`);
+                                         $("#lblValorTotal").text(`R$ ${(VALOR_CARRINHO + VALOR_ENTREGA).toFixed(2).replace('.', ',')}`);
+                                     }
+                               },
+                               error: function(err) {
+                                 $(".container-spinner").addClass('hidden');
+                                cardapio.metodos.mensagem('Erro',err);
+                                
+                               },
+                           });  
+
                     }
                     else {
+                        $(".container-spinner").addClass('hidden');
                         cardapio.metodos.mensagem('CEP não encontrado. Preencha as informações manualmente.');
-                        $("#txtEndereco").focus();
+                        $("#txtEndereco").val('');
+                        $("#txtBairro").val('');
+                        $("#txtCidade").val('');
+                        $("#ddlUf").val('-1');
+                        $("#txtCEP").val('');
+                        $("#txtNome").val('');
+                        $("#txtComplemento").val('');
+                        $("#txtNumero").val('');
+                        $("#txtCEP").focus();
                     }
 
                 })
 
             }
             else {
+                $(".container-spinner").addClass('hidden');
                 cardapio.metodos.mensagem('Formato do CEP inválido.');
                 $("#txtCEP").focus();
             }
 
         }
+    }
         else {
+            $(".container-spinner").addClass('hidden');
             cardapio.metodos.mensagem('Informe o CEP, por favor.');
             $("#txtCEP").focus();
         }
+        
 
     },
+
+    // API ViaCEP
+    // buscarCep: () => {
+
+    //     // cria a variavel com o valor do cep
+    //     var cep = $("#txtCEP").val().trim().replace(/\D/g, '');
+
+    //          // verifica se o CEP possui valor informado
+    //     if (cep != "") {
+    //         if( cep.length == 8 ){
+    //                 // Expressão regular para validar o CEP
+    //                 var validacep = /^[0-9]{8}$/;
+
+    //                 if (validacep.test(cep)) {
+
+    //                     $.getJSON("https://viacep.com.br/ws/" + cep + "/json/?callback=?", function (dados) {
+
+    //                         if (!("erro" in dados)) {
+
+    //                             // Atualizar os campos com os valores retornados
+    //                             $("#txtEndereco").val(dados.logradouro);
+    //                             $("#txtBairro").val(dados.bairro);
+    //                             $("#txtCidade").val(dados.localidade);
+    //                             $("#ddlUf").val(dados.uf);
+    //                             $("#txtNome").focus();
+    //                             cardapio.metodos.mensagem('CEP preenchido com sucesso');
+    //                             alert("CEP preenchido com sucesso")
+
+    //                         }
+    //                         else {
+    //                             cardapio.metodos.mensagem('CEP não encontrado. Preencha as informações manualmente.');
+    //                             $("#txtEndereco").focus();
+    //                         }
+
+    //                     })
+
+    //                 }
+    //                 else {
+    //                     cardapio.metodos.mensagem('Formato do CEP inválido.');
+    //                     $("#txtCEP").focus();
+    //                 }
+
+    //             }
+    //     }
+    //     else {
+    //         cardapio.metodos.mensagem('Informe o CEP, por favor.');
+    //         $("#txtCEP").focus();
+    //     }
+        
+       
+
+    // },
 
     // validação antes de prosseguir para a etapa 3
     resumoPedido: () => {
@@ -659,8 +839,7 @@ cardapio.metodos = {
     //Validar click
     validateClick: () =>{
 
-            // console.log(MEU_CARRINHO);
-            // console.log(MEU_ENDERECO);
+        
             if (MEU_CARRINHO.length > 0 && MEU_ENDERECO != null) {
                 let phone = $("#phone").val().trim();
                 
@@ -677,7 +856,7 @@ cardapio.metodos = {
                     data: vMEU_CARRINHO,
                     success: function(dados) {
                             if (dados != null) {
-                                    // console.log(dados);
+                                    
                                     cardapio.metodos.mensagem('Seu Pedido: ' + dados + ' foi enviado ','green');
                                     cardapio.metodos.reload();
                             }else{

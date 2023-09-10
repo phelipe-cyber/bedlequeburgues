@@ -16,6 +16,7 @@
         <link rel="stylesheet" href="./css/animate.css" />
         <link rel="stylesheet" href="./css/main.css" />
         <link rel="stylesheet" href="./css/responsivo.css" />
+      
         
     </head>
 
@@ -31,6 +32,12 @@
         <div class="container-mensagens" id="container-mensagens">
 
         </div>
+
+        <div class="container-spinner hidden">
+            <div class="spinner"></div>
+        </div>
+        
+
 
         <a class="botao-carrinho animated bounceIn hidden" onclick="cardapio.metodos.abrirCarrinho(true)">
             <div class="badge-total-carrinho">0</div>
@@ -389,7 +396,7 @@
             <div class="m-header">
                 <div class="container">
                     <a href="#cardapio" class="btn btn-white btn-sm float-right" onclick="cardapio.metodos.abrirCarrinho(false)">
-                        Continuar comprando
+                        Adicionar + itens
                     </a>
                     <div class="etapas">
                         <div class="etapa etapa1 active">1</div>
@@ -416,7 +423,7 @@
                                 <label for="phone" >Telefone:</label>
                                 <input placeholder="(00) 00000-0000" oninput="cardapio.metodos.formatPhoneNumber(this)" type="tel" id="phone" name="phone" class="form-control" pattern="[0-9]{15}" maxlength="15" />
                                 <small>Informe um número de telefone com 11 dígitos.</small>
-                                <a class="btn btn-yellow btn-sm"  onclick="cardapio.metodos.buscarteldados()" >
+                                <a class="btn btn-yellow btn-sm searchPhone hidden"  onclick="cardapio.metodos.buscarteldados()" >
                                     <i class="fa fa-search"></i>
                                 </a>
                             </div>
@@ -425,7 +432,7 @@
                         <div class="col-12 col-lg-6 col-md-6 col-sm-12">
                             <div class="form-group container-cep">
                                 <label>CEP:</label>
-                                <input placeholder="00000-000" id="txtCEP" type="text" class="form-control" maxlength="08" oninput="cardapio.metodos.formatCEP(this)" />
+                                <input placeholder="00000-000" id="txtCEP" type="text" class="form-control" maxlength="09" oninput="cardapio.metodos.formatCEP(this)" />
                                 <small>Informe o CEP com 08 dígitos.</small>
                                 <a class="btn btn-yellow btn-sm searchCep hidden" onclick="cardapio.metodos.buscarCep()">
                                     <i class="fa fa-search"></i>
