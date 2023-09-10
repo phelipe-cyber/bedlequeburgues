@@ -14,7 +14,7 @@
         <div class="form-group col-md-2">
             <label for="recipient-name" class="col-form-label">Valor Final:</label>
             <!-- <input required type="text" name="valor_final" id="valor_final" class="form-control"> -->
-            <input required type="text" name="valor_final" id="valor_final" class="form-control" onblur="formatarValor(this)">
+            <input required type="text" name="valor_final" id="valor_final" class="form-control" onkeyup="formatarMoeda();">
         </div>
        
         <div class="form-group">
@@ -23,24 +23,32 @@
             </div>
         </div>
         <script>
-            function formatarValor(input) {
-                // Remove qualquer formatação anterior
-                input.value = input.value.replace(/\D/g, '');
-
-                // Formata o valor como moeda brasileira
-                input.value = formatarMoeda(input.value);
+            function formatarMoeda() {
+                var elemento = document.getElementById('valor_final');
+                var valor = elemento.value;
+                console.log(valor)
+                valor = valor + '';
+                valor = parseInt(valor.replace(/[\D]+/g, ''));
+                valor = valor + '';
+                valor = valor.replace(/([0-9]{2})$/g, ",$1");
+                if (valor.length > 6) {
+                    valor = valor.replace(/([0-9]{3}),([0-9]{2}$)/g, ".$1,$2");
+                }
+                if(valor == 'NaN'){
+                    valor = null;
+                }else{
+                    elemento.value = valor;
+                }
             }
+        </script>
 
-            function formatarMoeda(valor) {
-                return parseFloat(valor).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-            }
-
+        <script>
             var var1 = document.getElementById("mensagem");
             setTimeout(function() {
                 var1.style.display = "none";
             }, 5000)
-            
-    </script>
+        
+        </script>
     </form>
 </body>
 </html>
