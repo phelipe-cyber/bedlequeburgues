@@ -50,7 +50,36 @@ where numeropedido = '$id'";
      }
      
      ?>
+
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  /* Estilos gerais para a página */
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 10px;
+  }
+
+  /* Estilos específicos para a versão de impressão */
+  @media print {
+    body {
+      padding: 0;
+    }
+
+    /* Estilos para a impressora térmica de 58mm */
+    @page {
+      size: 58mm auto; /* Define o tamanho do papel para a impressora térmica */
+    }
+
+    /* Outros estilos de impressão */
+    /* Certifique-se de ajustar tamanhos de fonte e layouts para caber no espaço limitado */
+  }
+</style>
+
 <div style="text-align: center;">
+
     <label for="">Bedlek Burgue's</label>
     <br>
     <!-- <label for="">CNPJ - </label>
