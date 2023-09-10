@@ -2,7 +2,6 @@
 include '.././pdv/mvc/model/conexao.php';
 
 // print_r($_POST);
-// die();
 
 $cep = $_POST['cep'];
 
@@ -10,14 +9,12 @@ $tab_clientes = "SELECT * FROM cep_coordinates WHERE postcode = '$cep' ";
 
 $clientes = mysqli_query($conn, $tab_clientes);
 while ($rows_clientes = mysqli_fetch_assoc($clientes)) {
-    
+
     $cep = $rows_clientes['cep'];
     $lon = $rows_clientes['lon'];
     $lat = $rows_clientes['lat'];
 };
-?>
 
-<?php
 
 // die();
 function calcularDistancia($latitude1, $longitude1, $latitude2, $longitude2)
@@ -65,6 +62,7 @@ while ($rows_km = mysqli_fetch_assoc($sql_km)) {
 
     $km = $rows_km['km'];
     $valor = $rows_km['valor'];
+
     $menu = $rows_km;
 };
 
