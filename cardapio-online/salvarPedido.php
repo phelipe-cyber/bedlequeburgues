@@ -4,8 +4,6 @@ include '.././pdv/mvc/model/conexao.php';
 date_default_timezone_set('America/Sao_Paulo');
 $data_hora = date('Y-m-d H:i');
 $hora_pedido = date('H:i');
-// print_r($_POST);
-// die();
 
 $valores = $_POST['pedido'];
 $dadoscliennte = $_POST['dadoscliennte'];
@@ -66,6 +64,23 @@ if ($resultado_telefone->num_rows == 0) {
     }
 }
    
+    $frete = $_POST['frete'];
+
+    if( $frete <> "" ){
+        
+            $pedido = 'Frete';
+            $preco_venda = $frete;
+            $quantidade = '1';
+    
+            $insert_table_frete = "INSERT INTO pedido (numeropedido, delivery,cliente, idmesa, produto, quantidade, hora_pedido, valor, observacao, pgto, usuario, `data` , gorjeta, status ) VALUES
+            ('$numeropedido','','$id_cliente', '$id_mesa', '$pedido', '$quantidade', '$hora_pedido', '$preco_venda', '$observacoes', '$pgto','$user','$data_hora' ,'' , 2 )";
+          
+           $adiciona_pedido_frete = mysqli_query($conn, $insert_table_frete);
+        
+    }else{
+        
+    }
+
     $data = $_POST['pedido'];
 
     foreach ($data as $index => $elem) {

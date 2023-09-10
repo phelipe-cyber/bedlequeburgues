@@ -846,7 +846,8 @@ cardapio.metodos = {
                     var vMEU_CARRINHO = {
                         pedido: MEU_CARRINHO,
                         dadoscliennte: MEU_ENDERECO,
-                        telefone:phone
+                        telefone:phone,
+                        frete:VALOR_ENTREGA
                 };
 
                 $.ajax({
