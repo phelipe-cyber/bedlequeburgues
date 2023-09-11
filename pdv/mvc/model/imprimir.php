@@ -1,8 +1,11 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <style>
     .meu-elemento {
-        padding: 20px; /* Define o padding de 20 pixels em todos os lados do elemento */
+        padding: 5px; /* Define o padding de 20 pixels em todos os lados do elemento */
     }
 </style>
 
@@ -72,7 +75,7 @@ where numeropedido = '$id'";
     <label for="">06622-005</label>
 </div>
 
-<h1 class="text-center col-lg-1"><b>Pedido #<?php echo $id ?></b> </h1>
+<h2 class="text-center col-lg-1"><b>Pedido #<?php echo $id ?></b> </h2>
 
 <div class="row">
     <!--<a class="text-center col-lg-1"><b>Forma de Pgto: </b><?php echo $pgto; ?></a><br>-->
@@ -172,18 +175,16 @@ where numeropedido = '$id'";
         }
      if( $endereco != "" ){
         ?>
-            <hr>
-                <label for=""><b>Local da entrega:</b></label>
-                <hr>
-                <h3 class="text-center col-lg-1"><b><?php echo $endereco ?></b> </h3>
-                <label for=""> <b>Complemento:</b> <?php echo $complemento?> </label><br>
-                <label for=""> <b>Ponto Referecia: </b> <?php echo $ponto_referecia?> </label><br>
-                <label for=""> <b>Condominio</b> <?php echo $condominio ?> </label><br>
-                <label for=""> <b>Bloco / Torre: </b> <?php echo $bloco ?> </label> <br>
-                <label for=""> <b>Apto: </b> <?php echo $apartamento?> </label><br>
-                <label for=""> <?php echo $cep." | ". $bairro ." - ". $cidade ." - ".$estado?> </label><br>
-                <label for=""> <b> Contato: </b> <?php echo $tel1 ?> </label><br>
-                <label for=""> <?php echo $tel2 ?> </label><br>
+                <label for=""><b>Local da entrega:</b></label></br>
+                <label for=""><b><?php echo $endereco ?></b> </label></br></br>
+                <label for=""> <b>Complemento:</b> <?php echo $complemento?> </label></br>
+                <label for=""> <b>Ponto Referecia: </b> <?php echo $ponto_referecia?> </label></br>
+                <label for=""> <b>Condominio</b> <?php echo $condominio ?> </label></br>
+                <label for=""> <b>Bloco / Torre: </b> <?php echo $bloco ?> </label> </br>
+                <label for=""> <b>Apto: </b> <?php echo $apartamento?> </label></br>
+                <label for=""> <?php echo $cep." | ". $bairro ." - ". $cidade ." - ".$estado?> </label></br>
+                <label for=""> <b> Contato: </b> <?php echo $tel1 ?> </label></br>
+                <label for=""> <?php echo $tel2 ?> </label></br>
         <?php
      }   
         ?>
@@ -203,11 +204,6 @@ where numeropedido = '$id'";
 
 <?php
     echo "<META http-equiv='refresh' content='1;URL=/pdv/?views=todosPedidoBalcao' target='_blank'>";
-    // $fileToPrint = 'caminho/para/seu/arquivo.pdf';
-    // $printerName = 'nome_da_impressora';
-    
-    // $command = "lp -d $printerName $fileToPrint";
-    // exec($command);
 ?>
 
 
