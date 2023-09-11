@@ -1,16 +1,34 @@
-<?php
-session_start();
-?>
+<!DOCTYPE html>
 <html lang="pt-br">
-<!-- <title>Pedido - Balcão</title> -->
+<style>
+    .meu-elemento {
+        padding: 20px; /* Define o padding de 20 pixels em todos os lados do elemento */
+    }
+</style>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        @page {
+            size: 58mm auto; /* Define o tamanho do papel para a impressora térmica */
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* Outros estilos da sua página aqui */
+    </style>
+</head>
+<body>
+<div class="meu-elemento">
+
 <?php
 date_default_timezone_set('America/Sao_Paulo');
-// $data_hora = date('d/m/Y - H:i:s');
 $hora_pedido = date('H:i');
 include "conexao.php";
-
-// print_r($_POST);
-
 
 $id = $_POST['id'];
 $cliente = $_POST['cliente'];
@@ -21,14 +39,6 @@ if( empty($id) ){
     $id = $_SESSION['novoIdInserido'];
     $cliente = $_SESSION['cliente'];
 }
-
-// print_r($_SESSION);
-
-    // $data_pedido = $_POST['data_pedido'];
-
-    
-
-    //  $select_DB = "SELECT * FROM pedido WHERE numeropedido LIKE '$id'";
 
      $select_DB = "SELECT * FROM pedido p  
 left JOIN clientes c on c.id = p.cliente
@@ -51,33 +61,6 @@ where numeropedido = '$id'";
      
      ?>
 
-<!DOCTYPE html>
-<html>
-<head>
-<style>
-  /* Estilos gerais para a página */
-  body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 10px;
-  }
-
-  /* Estilos específicos para a versão de impressão */
-  @media print {
-    body {
-      padding: 0;
-    }
-
-    /* Estilos para a impressora térmica de 58mm */
-    @page {
-      size: 58mm auto; /* Define o tamanho do papel para a impressora térmica */
-    }
-
-    /* Outros estilos de impressão */
-    /* Certifique-se de ajustar tamanhos de fonte e layouts para caber no espaço limitado */
-  }
-</style>
-
 <div style="text-align: center;">
 
     <label for="">Bedlek Burgue's</label>
@@ -97,20 +80,10 @@ where numeropedido = '$id'";
     <label> <b>Forma de Pgto: </b><?php echo $pgto; ?> </label>
     <hr>
 
-
     <a class="text-center col-lg-2"><b>Cliente: </b><?php echo $cliente ?></a></br>
     <a class="text-center col-lg-2"><b>Data Hora: </b><?php echo $data_hora ?></a>
-    <!-- <hr> -->
-    <!--<table BORDER RULES=rows id="dtBasicExample" class="" cellspacing="0" width="100%"-->
-        <!--style="text-align: center">-->
         <thead>
             <tr >
-                <!--<th class="th-sm">#</th>-->
-                <!--<th class="th-sm">Descrição</th>-->
-                <!--<th class="th-sm">Valor Unit</th>-->
-                <!--<th class="th-sm">Qtde Unit</th>-->
-                <!--<th class="th-sm">Obs</th>-->
-                <!--<th class="th-sm">Total</th>-->
             </tr>
         </thead>
         <tbody>
@@ -168,10 +141,8 @@ where numeropedido = '$id'";
 
             <tr  >
                     <hr>
-                <!--<td class="th-sm"> <?php echo $index ?> </td>-->
                 <td class="th-sm"> <?php echo $produto ?> </td>
                 <br>
-                <!--<td class="th-sm"> <?php echo $valor ?> </td>-->
                 <td class="th-sm"> <b> <?php echo $quantidade ?> </b> Un. </td>
                 <td class="th-sm"> <?php echo $obs ?> </td>
                 &nbsp;&nbsp;&nbsp;&nbsp;
@@ -179,24 +150,6 @@ where numeropedido = '$id'";
 
             </tr>
             
-<br>
-
-            <!-- <a class="text-center col-lg-2"> # <?php echo $i; ?></a> -->
-            <!-- </br> -->
-            <!-- <b>
-                    <a class="text-center"><?php echo $produto; ?></a>    
-                </b>
-                &nbsp;&nbsp;
-            <a class="text-center col-lg-2">un.</a>
-            <a class="text-center"> <b> <?php echo $quantidade ?></a> </b>
-            &nbsp;&nbsp;
-            <a class="text-center">R$ <b><?php echo $total ?></b> </a>
-            </br>
-                <a class="text-center col-lg-2">Obs : <?php echo $obs; ?></a>
-             -->
-
-
-
             <?php
             $index ++;
            }
@@ -217,22 +170,27 @@ where numeropedido = '$id'";
     <a class="text-center">R$: <b><?php echo number_format($Total, 2); ?></b></a><br><br>
     <?php
         }
+     if( $endereco != "" ){
+        ?>
+            <hr>
+                <label for=""><b>Local da entrega:</b></label>
+                <hr>
+                <h3 class="text-center col-lg-1"><b><?php echo $endereco ?></b> </h3>
+                <label for=""> <b>Complemento:</b> <?php echo $complemento?> </label><br>
+                <label for=""> <b>Ponto Referecia: </b> <?php echo $ponto_referecia?> </label><br>
+                <label for=""> <b>Condominio</b> <?php echo $condominio ?> </label><br>
+                <label for=""> <b>Bloco / Torre: </b> <?php echo $bloco ?> </label> <br>
+                <label for=""> <b>Apto: </b> <?php echo $apartamento?> </label><br>
+                <label for=""> <?php echo $cep." | ". $bairro ." - ". $cidade ." - ".$estado?> </label><br>
+                <label for=""> <b> Contato: </b> <?php echo $tel1 ?> </label><br>
+                <label for=""> <?php echo $tel2 ?> </label><br>
+        <?php
+     }   
         ?>
 
 </div>
 
-<hr>
-<label for=""><b>Local da entrega:</b></label>
-<hr>
-<h3 class="text-center col-lg-1"><b><?php echo $endereco ?></b> </h3>
-<label for=""> <b>Complemento:</b> <?php echo $complemento?> </label><br>
-<label for=""> <b>Ponto Referecia: </b> <?php echo $ponto_referecia?> </label><br>
-<label for=""> <b>Condominio</b> <?php echo $condominio ?> </label><br>
-<label for=""> <b>Bloco / Torre: </b> <?php echo $bloco ?> </label> <br>
-<label for=""> <b>Apto: </b> <?php echo $apartamento?> </label><br>
-<label for=""> <?php echo $cep." | ". $bairro ." - ". $cidade ." - ".$estado?> </label><br>
-<label for=""> <b> Contato: </b> <?php echo $tel1 ?> </label><br>
-<label for=""> <?php echo $tel2 ?> </label><br>
+
 
 </body>
 
@@ -252,4 +210,7 @@ where numeropedido = '$id'";
     // exec($command);
 ?>
 
+
+</div>
+</body>
 </html>
