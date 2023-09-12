@@ -34,12 +34,13 @@
 
   			<label for="recipient-name" class="col-xl-12 text-center" style="font-size: 35px; background: #00739b; color: white; padding: 0%; ">Pedido: <?php echo $id; ?></label>
   			<div class="row" style="padding: 1%;">
-  				<div class="form-group col-md-12">
+  				<!-- <div class="form-group col-md-12">
   					<label for="recipient-name" class="col-xl-12 text-center" style="font-size: 25px; background: gray; color: white; ">Total Fatura R$ </label>
   					<input style="font-size: 25px" class="col-xl-12 col-md-6 mb-4 text-center" type="reset" name="pagamento" value="<?php echo number_format($total, 2); ?>" disabled>
   					<input type="hidden" name="total" id="total" value="<?php echo $total; ?>">
   					<input type="hidden" name="id" id="id" value="<?php echo $id; ?>">
-  				</div>
+  				</div> -->
+				  <input type="hidden" name="total" id="total" value="<?php echo $total; ?>">
 
   			</div>
 
@@ -87,21 +88,22 @@
 
   				<div id="valor_pago_style" class="form-group col-md-6" style="display: block;" >
   					<label for="recipient-name" class="col-xl-12 text-center" style="font-size: 25px; background: green; color: white; ">Valor Pago</label>
-  					<input autofocus required name="valor_pago" id="valor_pago" style="font-size: 25px" class="col-xl-12 col-md-6 mb-4 text-center" type="text" name="pagamento" value="<?php echo number_format($total, 2); ?>">
+  					<input autofocus required name="valor_pago" id="valor_pago" style="font-size: 25px" class="col-xl-12 col-md-6 mb-4 text-center" type="text" name="pagamento" value="">
   				</div>
 
   				<script>
   					$(document).ready(function() {
 
-  						$("#valor_pago").on('keydown', function(event) {
-
-  							if (event.keyCode === 9 || event.keyCode === 13) {
-
+  						$("#valor_pago").on('keyup', function(event) {
+								// console.log(event);
+  							// if (event.keyCode === 9 || event.keyCode === 13) {
+								
   								var valor_pago = document.getElementById("valor_pago").value;
 
   								var valor_frete = document.getElementById("valor_frete").value;
 
   								var total = document.getElementById("total").value;
+								//   console.log(valor_pago);
 
   								if (valor_frete == "") {
   									valor_frete = "0.00";
@@ -111,13 +113,16 @@
 
   									var total = (parseFloat(tarifa) - parseFloat(taxa));
 
-  									var arredonda = (Math.round(total * 100)) / 100;
-  									// console.log(arredonda);
+  									var arredonda = "R$ " + (Math.round(total * 100)) / 100;
+  									console.log(arredonda);
 
-  									var valor_pago = document.getElementById("troco").innerHTML = "R$ " + arredonda;
-
-  									document.getElementById('troco_display').style = 'display:block';
-
+									  if(valor_pago == '' || arredonda == 'NaN' ){
+											arredonda = null;
+											document.getElementById("troco").innerHTML =  null;
+										}else{
+											document.getElementById("troco").innerHTML =  arredonda;
+										}
+											document.getElementById('troco_display').style = 'display:block';
 
   								} else {
   									var valor_frete = document.getElementById("valor_frete").value;
@@ -126,30 +131,31 @@
   									var taxa = (valor_frete.replace(",", "."));
   									var total = (parseFloat(tarifa) - parseFloat(taxa));
 
-  									var arredonda = (Math.round(total * 100)) / 100;
+  									var arredonda = "R$ " + (Math.round(total * 100)) / 100;
   									// console.log(arredonda);
+									  if(valor_pago == '' || arredonda == 'NaN' ){
+											arredonda = null;
+											document.getElementById("troco").innerHTML =  null;
+										}else{
+											document.getElementById("troco").innerHTML =  arredonda;
+										}
+											document.getElementById('troco_display').style = 'display:block';
+  									};
 
-  									var valor_pago = document.getElementById("troco").innerHTML = "R$ " + arredonda;
-
-  									document.getElementById('troco_display').style = 'display:block';
-  								};
-
-
-
-  							};
+  							// };
 
   						});
   					});
   				</script>
 
   				<div id="valor_pago_style_total" class="form-group col-md-6">
-  					<label for="recipient-name" class="col-xl-12 text-center" style="font-size: 25px; background: blue; color: white; ">Valor Total</label>
+  					<label for="recipient-name" class="col-xl-12 text-center" style="font-size: 25px; background: blue; color: white; ">Valor Total \ Desconto</label>
   					<input autofocus name="valor_pago" id="valor_frete" style="font-size: 25px" class="col-xl-12 col-md-6 mb-4 text-center" type="text" name="pagamento" value="<?php echo number_format($total, 2); ?>">
   				</div>
 
   			</div>
 
-  			<div id="troco_display" class="row" style="display: none;">
+  			<div id="troco_display" class="row" style="display: block;">
 
   				<div class="col-xl-12 col-md-6 mb-4">
   					<div style="font-size: 25px; background: #fe422d; color: white;">

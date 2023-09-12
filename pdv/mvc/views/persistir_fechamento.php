@@ -12,7 +12,7 @@ $id = $_POST['id'];//id da mesa
 
 $data = date('d/m/Y');
 
-$total = $_POST['total'];
+$total = $_POST['valor_pago'];
 
 $total = str_replace(",",".", $total);
 
@@ -69,7 +69,7 @@ $venda = $total;
         // $Valor_format = number_format($resultado, 2);
 		// var_dump($Valor_format);
 		
-		$total = $_POST['total'];
+		$total = $_POST['valor_pago'];
 		$porcentagem = 1.99;
 		$resultado = $total - ($total * $porcentagem / 100);
 		// $R = $total - $resultado;
@@ -82,7 +82,7 @@ $venda = $total;
 			
 			// print_r( "Valor da venda R$ ". $_POST['total']);
 			// echo "<br>";
-			$total = $_POST['total'];
+			$total = $_POST['valor_pago'];
 			$pctm = 4.99;
 			$valor_descontado = $total - ($total * $pctm / 100);
 			$Valor_format = number_format($valor_descontado, 2);
@@ -195,7 +195,7 @@ if ($total > 0) {
 
 
 <div class="alert alert-danger text-center" role="alert">
-   <h4><b>Valor digitado Está Abaixo do Valor Original ! O valor <?php $valor_pago; ?> foi abatido do total</b></h4>
+   <h4><b>Valor digitado Está Abaixo do Valor Original ! O valor <?php $valor; ?> foi abatido do total</b></h4>
 </div>
 
   <?php
