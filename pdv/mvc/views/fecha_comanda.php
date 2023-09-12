@@ -279,8 +279,8 @@
 						}else{
 							?>
 							<script>
-  									document.getElementById('valor_pago_style').style = 'display:none';
-  									document.getElementById('valor_pago_style_total').style = 'display:none';
+  									document.getElementById('valor_pago_style').style = 'display:block';
+  									document.getElementById('valor_pago_style_total').style = 'display:block';
 									
 							</script>
 							<?php	
