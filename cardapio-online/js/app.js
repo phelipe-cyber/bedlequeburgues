@@ -420,7 +420,7 @@ cardapio.metodos = {
                                     $("#txtCEP").val(dados.cep);
                                     $("#txtNome").val(dados.nome);
                                     $("#txtComplemento").val(dados.complemento);
-                                    $("#txtNumero").focus();
+                                    // $("#txtNumero").focus();
                                     $(".searchCep").addClass('hidden');
 
                                     cardapio.metodos.mensagem('Seus dados foram inseridos, por favor validar!','green');
@@ -435,7 +435,7 @@ cardapio.metodos = {
                                     $("#txtNome").val('');
                                     $("#txtComplemento").val('');
                                     $("#txtNumero").val('');
-                                    $("#txtCEP").focus();
+                                    // $("#txtCEP").focus();
                                     $(".searchCep").removeClass('hidden');
 
                                 }
@@ -502,7 +502,7 @@ cardapio.metodos = {
                                                 $("#txtCEP").val(dados.cep);
                                                 $("#txtNome").val(dados.nome);
                                                 $("#txtComplemento").val(dados.complemento);
-                                                $("#txtNumero").focus();
+                                                // $("#txtNumero").focus();
                                                 // $(".searchCep").addClass('hidden');
                                                 $(".container-spinner").addClass('hidden');
             
@@ -517,7 +517,7 @@ cardapio.metodos = {
                                                 $("#txtNome").val('');
                                                 $("#txtComplemento").val('');
                                                 $("#txtNumero").val('');
-                                                $("#phone").focus();
+                                                // $("#phone").focus();
                                                 // $(".searchCep").removeClass('hidden');
                                                 $(".container-spinner").addClass('hidden');
 
@@ -578,7 +578,7 @@ cardapio.metodos = {
                         $("#txtBairro").val(dados.bairro);
                         $("#txtCidade").val(dados.localidade);
                         $("#ddlUf").val(dados.uf);
-                        $("#txtNome").focus();
+                        // $("#txtNome").focus();
 
                         var vData = {
                             cep: formattedCEP
@@ -712,14 +712,15 @@ cardapio.metodos = {
         let complemento = $("#txtComplemento").val().trim();
         let nome = $("#txtNome").val().trim();
 
-        if (phone.length <= 0) {
-            cardapio.metodos.mensagem('Informe o Telefone, por favor.');
-            $("#phone").focus();
-            return;
-        }
         if (cep.length <= 0) {
             cardapio.metodos.mensagem('Informe o CEP, por favor.');
             $("#txtCEP").focus();
+            return;
+        }
+
+        if (phone.length <= 0) {
+            cardapio.metodos.mensagem('Informe o Telefone, por favor.');
+            $("#phone").focus();
             return;
         }
 
