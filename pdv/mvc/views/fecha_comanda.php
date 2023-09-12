@@ -38,8 +38,8 @@
   					<label for="recipient-name" class="col-xl-12 text-center" style="font-size: 25px; background: gray; color: white; ">Total Fatura R$ </label>
   					<input style="font-size: 25px" class="col-xl-12 col-md-6 mb-4 text-center" type="reset" name="pagamento" value="<?php echo number_format($total, 2); ?>" disabled>
   					<input type="hidden" name="total" id="total" value="<?php echo $total; ?>">
-  					<input type="hidden" name="id" id="id" value="<?php echo $id; ?>">
-  				</div> -->
+				</div> -->
+				  <input type="hidden" name="id" id="id" value="<?php echo $id; ?>">
 				  <input type="hidden" name="total" id="total" value="<?php echo $total; ?>">
 
   			</div>
