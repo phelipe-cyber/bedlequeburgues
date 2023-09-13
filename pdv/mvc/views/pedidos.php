@@ -11,6 +11,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
+<button id="activateButton" style="display:none" >Ativar Notificações</button>
+
+<script>
+        // Verifique se o navegador suporta a API de Notificações
+        if ("Notification" in window) {
+          var activateButton = document.getElementById("activateButton");
+            console.log(Notification.permission)
+            if( Notification.permission == 'default' ){
+                document.getElementById("activateButton").style ='display:block;';
+            }
+          // Adicione um ouvinte de evento ao botão para solicitar permissão ao usuário
+          activateButton.addEventListener("click", function () {
+            // Verifique se as notificações já estão permitidas; se não, solicite permissão ao usuário
+            if (Notification.permission !== "granted") {
+
+                Notification.requestPermission().then(function (permission) {
+                // Se o usuário permitir, mostre uma mensagem de confirmação
+                if (permission === "granted") {
+                  alert("Notificações ativadas com sucesso!");
+                }
+              });
+            } else {
+              // Se as notificações já estiverem permitidas, mostre uma mensagem de confirmação
+              alert("Notificações já estão ativadas.");
+            }
+          });
+        }
+    </script>
+
+
     <?php
 
     include_once "../model/conexao.php";
@@ -46,27 +76,29 @@
                 $notificacao = "UPDATE pedido SET notificacao = 'false' WHERE numeropedido LIKE '$numeropedido' ";
                 $grava_notificacao = mysqli_query($conn, $notificacao) or die(mysqli_error($conn));
 
+
                 echo    '<script>
-                            if ("Notification" in window) {
-                                // Solicita permissão para exibir notificações
-                                Notification.requestPermission().then(function (permission) {
-                                    if (permission === "granted") {
-                                        // Cria uma nova notificação
-                                        var notificacao = new Notification("Novo pedido: ' .$numeropedido. ' ", {
-                                            // body: "Chegou um novo pedido ",
-                                            icon: "mvc/common/img/logo_bedlek.ico"
-                                        });
-                                        // Manipula o clique na notificação (opcional)
-                                        notificacao.onclick = function () {
-                                            window.open("/pdv/?view=todosPedidoBalcao");
-                                        };
-                                    } else {
-                                        alert("Permissão para notificações negada.");
-                                    }
-                                });
-                            } else {
-                                alert("Este navegador não suporta notificações.");
-                            }
+                            // if ("Notification" in window) {
+                            //     // Solicita permissão para exibir notificações
+                            //     Notification.requestPermission().then(function (permission) {
+                            //         if (permission === "granted") {
+                            //             // Cria uma nova notificação
+                            //                 var notificacao = new Notification("Novo pedido: ' .$numeropedido. ' ", {
+                            //                 // body: "Chegou um novo pedido ",
+                            //                 icon: "mvc/common/img/logo_bedlek.ico"
+                            //             });
+                            //             // Manipula o clique na notificação (opcional)
+                            //             notificacao.onclick = function () {
+                            //                 window.open("/pdv/?view=todosPedidoBalcao");
+                            //             };
+                            //         } else {
+                            //             alert("Permissão para notificações negada.");
+                            //         }
+                            //     });
+                            // } else {
+                            //     alert("Este navegador não suporta notificações.");
+                            // }
+                            
                         </script>';
 
         }
