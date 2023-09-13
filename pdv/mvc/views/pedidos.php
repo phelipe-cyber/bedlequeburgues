@@ -20,7 +20,7 @@
         // Verifique se o navegador suporta a API de Notificações
         if ("Notification" in window) {
           var activateButton = document.getElementById("activateButton");
-            console.log(Notification.permission)
+            // console.log(Notification.permission)
             if( Notification.permission == 'default' ){
                 document.getElementById("activateButton").style ='';
             }
@@ -76,31 +76,30 @@
 
         if( $statusNotificacao == 'true' ){
                 
-                // $notificacao = "UPDATE pedido SET notificacao = 'false' WHERE numeropedido LIKE '$numeropedido' ";
-                // $grava_notificacao = mysqli_query($conn, $notificacao) or die(mysqli_error($conn));
-
+                $notificacao = "UPDATE pedido SET notificacao = 'false' WHERE numeropedido LIKE '$numeropedido' ";
+                $grava_notificacao = mysqli_query($conn, $notificacao) or die(mysqli_error($conn));
 
                 echo    '<script>
-                            // if ("Notification" in window) {
-                            //     // Solicita permissão para exibir notificações
-                            //     Notification.requestPermission().then(function (permission) {
-                            //         if (permission === "granted") {
-                            //             // Cria uma nova notificação
-                            //                 var notificacao = new Notification("Novo pedido: ' .$numeropedido. ' ", {
-                            //                 // body: "Chegou um novo pedido ",
-                            //                 icon: "mvc/common/img/logo_bedlek.ico"
-                            //             });
-                            //             // Manipula o clique na notificação (opcional)
-                            //             notificacao.onclick = function () {
-                            //                 window.open("/pdv/?view=todosPedidoBalcao");
-                            //             };
-                            //         } else {
-                            //             alert("Permissão para notificações negada.");
-                            //         }
-                            //     });
-                            // } else {
-                            //     alert("Este navegador não suporta notificações.");
-                            // }
+                            if ("Notification" in window) {
+                                // Solicita permissão para exibir notificações
+                                Notification.requestPermission().then(function (permission) {
+                                    if (permission === "granted") {
+                                        // Cria uma nova notificação
+                                            var notificacao = new Notification("Novo pedido: ' .$numeropedido. ' ", {
+                                            // body: "Chegou um novo pedido ",
+                                            icon: "mvc/common/img/logo_bedlek.ico"
+                                        });
+                                        // Manipula o clique na notificação (opcional)
+                                        notificacao.onclick = function () {
+                                            window.open("/pdv/?view=todosPedidoBalcao");
+                                        };
+                                    } else {
+                                        alert("Permissão para notificações negada.");
+                                    }
+                                });
+                            } else {
+                                alert("Este navegador não suporta notificações.");
+                            }
                             
                         </script>';
 
