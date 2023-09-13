@@ -11,15 +11,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
-<button id="activateButton" style="display:none" >Ativar Notificações</button>
-
-<script>
+<!-- <button id="activateButton" style="display:none" >Ativar Notificações</button> -->
+<div class="col-12">
+    <button id="activateButton" style="display:none" type="submit" class="btn btn-outline-info" data-toggle="modal" data-target=""><b>Ativar Notificações</b></button>
+</div>
+    <br>
+    <script>
         // Verifique se o navegador suporta a API de Notificações
         if ("Notification" in window) {
           var activateButton = document.getElementById("activateButton");
             console.log(Notification.permission)
             if( Notification.permission == 'default' ){
-                document.getElementById("activateButton").style ='display:block;';
+                document.getElementById("activateButton").style ='';
             }
           // Adicione um ouvinte de evento ao botão para solicitar permissão ao usuário
           activateButton.addEventListener("click", function () {
@@ -73,8 +76,8 @@
 
         if( $statusNotificacao == 'true' ){
                 
-                $notificacao = "UPDATE pedido SET notificacao = 'false' WHERE numeropedido LIKE '$numeropedido' ";
-                $grava_notificacao = mysqli_query($conn, $notificacao) or die(mysqli_error($conn));
+                // $notificacao = "UPDATE pedido SET notificacao = 'false' WHERE numeropedido LIKE '$numeropedido' ";
+                // $grava_notificacao = mysqli_query($conn, $notificacao) or die(mysqli_error($conn));
 
 
                 echo    '<script>
