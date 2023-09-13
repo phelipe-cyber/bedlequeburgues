@@ -1,3 +1,7 @@
+<?php
+    session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -7,7 +11,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
-<body>
     <?php
 
     include_once "../model/conexao.php";
@@ -23,8 +26,55 @@
 
     $num_rows = mysqli_num_rows($mesas);
 
+    $tab_novo_pedido = "SELECT * FROM pedido p  where p.`status` = 2 limit 1";
+    $novo_pedido_conn = mysqli_query($conn, $tab_novo_pedido);
+    $rows_novo_pedido = mysqli_num_rows($novo_pedido_conn);
+    
+    while ($row = $novo_pedido_conn->fetch_assoc()) {
+        $numeropedido = $row['numeropedido'];
+        $statusNotificacao = $row['notificacao'];
+    };
 
-    ?>
+    if ($rows_novo_pedido != 0  ) {
+            
+        ?>
+            <audio src="mvc/common/som/som.mp3" type="audio/mp3" id="audio" autoplay="true" autostart="true"></audio>
+            <?php
+
+        if( $statusNotificacao == 'true' ){
+                
+                $notificacao = "UPDATE pedido SET notificacao = 'false' WHERE numeropedido LIKE '$numeropedido' ";
+                $grava_notificacao = mysqli_query($conn, $notificacao) or die(mysqli_error($conn));
+
+                echo    '<script>
+                            if ("Notification" in window) {
+                                // Solicita permissão para exibir notificações
+                                Notification.requestPermission().then(function (permission) {
+                                    if (permission === "granted") {
+                                        // Cria uma nova notificação
+                                        var notificacao = new Notification("Novo pedido: ' .$numeropedido. ' ", {
+                                            // body: "Chegou um novo pedido ",
+                                            icon: "mvc/common/img/logo_bedlek.ico"
+                                        });
+                                        // Manipula o clique na notificação (opcional)
+                                        notificacao.onclick = function () {
+                                            window.open("/pdv/?view=todosPedidoBalcao");
+                                        };
+                                    } else {
+                                        alert("Permissão para notificações negada.");
+                                    }
+                                });
+                            } else {
+                                alert("Este navegador não suporta notificações.");
+                            }
+                        </script>';
+
+        }
+    }else{
+
+    }
+?>
+
     <meta charset="utf-8">
 
     <div class="row">
@@ -34,13 +84,6 @@
 
         while ($rows_mesas = mysqli_fetch_assoc($mesas)) {
                 // print_r($rows_mesas);
-            if ($rows_mesas['status']  == 2 ) {
-                ?>
-                    <audio src="https://cdns-preview-8.dzcdn.net/stream/821246fb5d7e2ff6975f65ef7460a708-0.mp3" type="audio/wav" id="audio" autoplay="false" autostart="false"></audio>
-                <?php
-                }else{
-            
-                }
 
             $nome = ($rows_mesas['nome']);
 
@@ -100,7 +143,7 @@
         ?>
 
             <!--todo dado vindo do banco de dados deve ser trazido e tratado antes de ir para modal-->
-            <div class="col-lg-4" style="height: auto;">
+            <div class="col-lg-2" style="height: auto;">
                 <div class=" <?php echo $cor; ?> text-white shadow">
 
                     <div class="card-body" style="text-align: center;">

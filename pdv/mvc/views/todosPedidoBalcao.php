@@ -12,7 +12,7 @@ $("#div").load("./mvc/views/pedidos.php");
 
 setInterval(function() {
 atualiza();
-}, 1000); // A CADA 1 SEGUNDO RODA A FUNÇÃO atualiza
+}, 2500); // A CADA 1 SEGUNDO RODA A FUNÇÃO atualiza
 
 });
 </script> 
