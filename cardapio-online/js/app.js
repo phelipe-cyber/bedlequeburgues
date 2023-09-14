@@ -210,6 +210,10 @@ cardapio.metodos = {
     carregarEtapa: (etapa) => {
 
         if (etapa == 1) {
+            
+            if( VALOR_ENTREGA == 0){
+                cardapio.metodos.mensagem('Frete sera adicionado na proxima etapa', 'yellow')
+            }
             $("#lblTituloEtapa").text('Seu carrinho:');
             $("#itensCarrinho").removeClass('hidden');
             $("#localEntrega").addClass('hidden');

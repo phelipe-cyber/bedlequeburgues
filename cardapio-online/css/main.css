@@ -348,6 +348,7 @@ a.navbar-brand {
 }
 
 .card-item:hover .price-produto {
+    display: none;
     color: var(--color-black-heavy)!important;
     margin-top: 20px;
 }
@@ -834,6 +835,10 @@ select.form-control {
 
 .toast.green {
     background-color: var(--color-green);
+}
+
+.toast.yellow {
+    background-color: var(--color-primary);
 }
 
 .carrinho-vazio {
