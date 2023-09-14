@@ -252,7 +252,7 @@ a.navbar-brand {
 }
 
 .card-item .img-produto img {
-    width: 100%;
+    width: 80%;
     border-radius: 11px;
 }
 
@@ -274,7 +274,7 @@ a.navbar-brand {
 .card-item .add-carrinho {
     display: none;
     text-align: center;
-    height: 30px;
+    height: 34px;
     justify-content: center;
     align-items: center;
 }
@@ -354,10 +354,9 @@ a.navbar-brand {
 
 .card-item:hover .dsc-produto {
     display: contents;
-    margin-bottom:80px;
+    margin-bottom:revert;
     color: var(--color-black);
-    font-size: 16px;
-   
+    font-size: 18px;
 }
 
 

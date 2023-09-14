@@ -475,75 +475,75 @@ cardapio.metodos = {
             input.value = formattedNumber;
         }
 
-        if(rawPhone.length == 11 ){
-            $(".container-spinner").removeClass('hidden');
-            $(".searchPhone").addClass('hidden');
+        // if(rawPhone.length == 11 ){
+        //     $(".container-spinner").removeClass('hidden');
+        //     $(".searchPhone").addClass('hidden');
 
-            if (rawPhone != "") {
+        //     if (rawPhone != "") {
 
-                // Expressão regular para validar o Telefone
-                var validaphone = /^[0-9]{11}$|^[0-9]{10}$/ ;
+        //         // Expressão regular para validar o Telefone
+        //         var validaphone = /^[0-9]{11}$|^[0-9]{10}$/ ;
                   
-                        if (validaphone.test(rawPhone)) {
-                                var vData = {
-                                phone: rawPhone
-                                };
-                                $.ajax({
-                                    url: 'dadostel.php',
-                                    dataType: 'json',
-                                    type: 'POST',
-                                    data: vData,
-                                    success: function(dados) {
-                                            if (dados != null) {
-                                                $("#txtEndereco").val(dados.endereco);
-                                                $("#txtBairro").val(dados.bairro);
-                                                $("#txtCidade").val(dados.cidade);
-                                                $("#ddlUf").val(dados.estado);
-                                                $("#txtCEP").val(dados.cep);
-                                                $("#txtNome").val(dados.nome);
-                                                $("#txtComplemento").val(dados.complemento);
-                                                // $("#txtNumero").focus();
-                                                // $(".searchCep").addClass('hidden');
-                                                $(".container-spinner").addClass('hidden');
+        //                 if (validaphone.test(rawPhone)) {
+        //                         var vData = {
+        //                         phone: rawPhone
+        //                         };
+        //                         $.ajax({
+        //                             url: 'dadostel.php',
+        //                             dataType: 'json',
+        //                             type: 'POST',
+        //                             data: vData,
+        //                             success: function(dados) {
+        //                                     if (dados != null) {
+        //                                         $("#txtEndereco").val(dados.endereco);
+        //                                         $("#txtBairro").val(dados.bairro);
+        //                                         $("#txtCidade").val(dados.cidade);
+        //                                         $("#ddlUf").val(dados.estado);
+        //                                         $("#txtCEP").val(dados.cep);
+        //                                         $("#txtNome").val(dados.nome);
+        //                                         $("#txtComplemento").val(dados.complemento);
+        //                                         // $("#txtNumero").focus();
+        //                                         // $(".searchCep").addClass('hidden');
+        //                                         $(".container-spinner").addClass('hidden');
             
-                                                cardapio.metodos.mensagem('Seus dados foram inseridos, por favor validar!','green');
-                                            }else{
-                                                cardapio.metodos.mensagem('Cadastro não encontrado. Preencha as informações manualmente.');
-                                                $("#txtEndereco").val('');
-                                                $("#txtBairro").val('');
-                                                $("#txtCidade").val('');
-                                                $("#ddlUf").val('-1');
-                                                $("#txtCEP").val('');
-                                                $("#txtNome").val('');
-                                                $("#txtComplemento").val('');
-                                                $("#txtNumero").val('');
-                                                // $("#phone").focus();
-                                                // $(".searchCep").removeClass('hidden');
-                                                $(".container-spinner").addClass('hidden');
+        //                                         cardapio.metodos.mensagem('Seus dados foram inseridos, por favor validar!','green');
+        //                                     }else{
+        //                                         cardapio.metodos.mensagem('Cadastro não encontrado. Preencha as informações manualmente.');
+        //                                         $("#txtEndereco").val('');
+        //                                         $("#txtBairro").val('');
+        //                                         $("#txtCidade").val('');
+        //                                         $("#ddlUf").val('-1');
+        //                                         $("#txtCEP").val('');
+        //                                         $("#txtNome").val('');
+        //                                         $("#txtComplemento").val('');
+        //                                         $("#txtNumero").val('');
+        //                                         // $("#phone").focus();
+        //                                         // $(".searchCep").removeClass('hidden');
+        //                                         $(".container-spinner").addClass('hidden');
 
             
-                                            }
-                                    },
-                                    error: function(err) {
-                                    cardapio.metodos.mensagem('Telefone não localizado');
-                                    $("#phone").focus();
-                                    },
-                                });  
-                        }
-                        else {
-                            cardapio.metodos.mensagem('Formato do Telefone inválido.');
-                            $("#phone").focus();
-                        }
+        //                                     }
+        //                             },
+        //                             error: function(err) {
+        //                             cardapio.metodos.mensagem('Telefone não localizado');
+        //                             $("#phone").focus();
+        //                             },
+        //                         });  
+        //                 }
+        //                 else {
+        //                     cardapio.metodos.mensagem('Formato do Telefone inválido.');
+        //                     $("#phone").focus();
+        //                 }
     
-            }
-            else {
-                cardapio.metodos.mensagem('Informe o Telefone, por favor.');
-                $("#phone").focus();
-            }
-        }
-        if(rawPhone.length == 10){
-            $(".searchPhone").removeClass('hidden');
-        }
+        //     }
+        //     else {
+        //         cardapio.metodos.mensagem('Informe o Telefone, por favor.');
+        //         $("#phone").focus();
+        //     }
+        // }
+        // if(rawPhone.length == 10){
+        //     $(".searchPhone").removeClass('hidden');
+        // }
 
     },
 
