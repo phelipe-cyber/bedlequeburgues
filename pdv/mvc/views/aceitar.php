@@ -102,10 +102,10 @@ $msg4 = $msg . $itensConcatenados . $msg3;
     }
     });
 
-    xhr.open("POST", "http://localhost:8000/send-message");
+    // xhr.open("POST", "http://localhost:8000/send-message");
+    xhr.open("POST", "https://whatsapp-api-ph-b4d70f6eb4d2.herokuapp.com/send-message");
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.send(vData);
-    // xhr.open("POST", "https://whatsapp-api-ph-b4d70f6eb4d2.herokuapp.com/send-message");
 
 </script>
 
