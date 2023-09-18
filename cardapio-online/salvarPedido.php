@@ -50,9 +50,11 @@ if ($resultado_telefone->num_rows == 0) {
     $nome = $dadoscliennte['nome'];
     $cidade = $dadoscliennte['cidade'];
 
+    $endNumber = $endereco.", ".$numero;
+
     $insert_table_cliente = "INSERT INTO `clientes` (`id`, `nome`, `endereco`, `bairro`, `cidade`, `estado`, `complemento`, `cep`, `ponto_referecia`, `tel1`, 
     `tel2`, `email`, `cpf_cnpj`, `rg`, `condominio`, `bloco`, `apartamento`, `local_entrega`, `observacoes`) VALUES
-    (null,'$nome','$endereco','$bairro','$cidade','$uf','$complemento','$cep','','$telefone','','','','','','','','','')";
+    (null,'$nome','$endNumber','$bairro','$cidade','$uf','$complemento','$cep','','$telefone','','','','','','','','','')";
 
     $adiciona_cliente = mysqli_query($conn, $insert_table_cliente);
 

@@ -35,17 +35,22 @@ while ($rows_cliente = mysqli_fetch_assoc($cliente)) {
 };
 
 
-$msg = "Ola. $nome%0A
-Recebemos seu Pedido: *$numeropedido*...
-%0A
--Pedido será *entregue* no endereço:
-%0A
-$endereco $bairro
-%0A
-$complemento
-%0A
-----------------------------------------
+if( $complemento != "" ){
+  $msg = "Ola. *$nome*%0A
+  Recebemos seu Pedido: *$numeropedido*...
+  Pedido será *entregue* no endereço:
+  $endereco $bairro
+  $complemento
+  ----------------------------------------
+  ";
+}else{
+  $msg = "Ola. $nome%0A
+  Recebemos seu Pedido: *$numeropedido*...
+  -Pedido será *entregue* no endereço:
+  $endereco $bairro
+  ----------------------------------------
 ";
+}
 
 $produto[] = "";
 $index = 1;
@@ -72,9 +77,6 @@ $valor_real = number_format($valor_total, 2);
 
 $msg3 = "
 ----------------------------------------
-%0A
-*Forma de pagamento:* $pgto
-%0A
 *Valor total:* $valor_real
 ";
 
@@ -96,16 +98,24 @@ $msg4 = $msg . $itensConcatenados . $msg3;
     var xhr = new XMLHttpRequest();
     xhr.withCredentials = true;
 
-    xhr.addEventListener("readystatechange", function() {
-    if(this.readyState === 4) {
-        console.log(this.responseText);
-    }
-    });
-
-    // xhr.open("POST", "http://localhost:8000/send-message");
-    xhr.open("POST", "https://whatsapp-api-ph-b4d70f6eb4d2.herokuapp.com/send-message");
+    xhr.open("POST", "http://localhost:8000/send-message");
+    // xhr.open("POST", "https://whatsapp-api-ph-b4d70f6eb4d2.herokuapp.com/send-message");
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.send(vData);
+
+    xhr.onload = function() {
+        // Manipular a resposta do servidor em caso de sucesso
+        if (xhr.status === 200) {
+          console.log("Requisição bem-sucedida. Resposta do servidor:", xhr.responseText);
+        } else {
+          console.error("Erro na solicitação. Código de status:", xhr.status);
+        }
+      };
+
+      xhr.onerror = function() {
+        // Lidar com erros de rede ou do servidor
+        console.error("Erro na solicitação. Não foi possível conectar ao servidor.");
+      };
 
 </script>
 

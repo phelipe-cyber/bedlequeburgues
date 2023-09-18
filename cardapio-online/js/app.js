@@ -300,7 +300,7 @@ cardapio.metodos = {
 
         }
         else {
-            $("#itensCarrinho").html('<p class="carrinho-vazio"><i class="fa fa-shopping-bag"></i> Seu carrinho está vazio.</p>');
+            $("#itensCarrinho").html('<p class="carrinho-vazio"><i class="fa fa-shopping-cart"></i> Seu carrinho está vazio.</p>');
             cardapio.metodos.carregarValores();
         }
 
@@ -962,7 +962,7 @@ cardapio.templates = {
                     <span class="btn-menos" onclick="cardapio.metodos.diminuirQuantidade('\${id}')"><i class="fas fa-minus"></i></span>
                     <span class="add-numero-itens" id="qntd-\${id}">0</span>
                     <span class="btn-mais" onclick="cardapio.metodos.aumentarQuantidade('\${id}')"><i class="fas fa-plus"></i></span>
-                    <span class="btn btn-add" onclick="cardapio.metodos.adicionarAoCarrinho('\${id}')"><i class="fa fa-shopping-bag"></i></span>
+                    <span class="btn btn-add" onclick="cardapio.metodos.adicionarAoCarrinho('\${id}')"><i class="fa fa-shopping-cart"></i></span>
                 </div>
             </div>
         </div>
