@@ -107,5 +107,5 @@ $msg4 = $msg . $itensConcatenados . $msg3;
 </script>
 <?php
   $conn->close();
-  // echo "<META HTTP-EQUIV=REFRESH CONTENT = '3;URL=/pdv/?view=todosPedidoBalcao'>";
+  echo "<META HTTP-EQUIV=REFRESH CONTENT = '3;URL=/pdv/?view=todosPedidoBalcao'>";
 ?>
