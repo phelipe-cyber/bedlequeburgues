@@ -126,7 +126,10 @@ if (isset($escolha)) {
 	if ($escolha == 3) {
 		$data = date('d/m/Y');
 
-
+		include "./mvc/model/conexao.php";
+		$tab_pgto = "SELECT * FROM `forma_pagamento` ORDER by id ASC" ;
+		$pgto = mysqli_query($conn, $tab_pgto);
+		
 	?>
 
 
@@ -158,8 +161,42 @@ if (isset($escolha)) {
 							<div class="row">
 
 								<div class="form-group col-md-4">
-									<label for="message-text" class="col-form-label">Rendimento:</label>
+									<label for="message-text" class="col-form-label">Rendimento Mesa ou Balcão:</label>
 									<input required= "" value="" name="rendimento" id="rendimento" class="form-control"></input>
+								</div>
+								<div class="form-group col-md-4">
+								<label for="message-text" class="col-form-label">Forma de Pagamento:</label>
+
+									<select style="width: 70%"  class="js-example-basic-single form-control" name="pgto" id="pgto" value="" required>
+										<?php while ($rows_pgto = mysqli_fetch_assoc($pgto)) {
+											?>
+											<option value=""></option>
+											<option value="<?php echo $rows_pgto['value']?>">
+											<?php 
+												echo  $rows_pgto['tipo']
+											?> 
+											</option>
+											
+											<?php
+											
+										}
+										?>
+									</select>
+										<script>
+											
+										// In your Javascript (external .js resource or <script> tag)
+										$(document).ready(function() {
+											$('.js-example-basic-single').select2({
+												width: 'resolve',
+												dropdownAutoWidth: true,
+												tags: true,
+												placeholder: "Selecionar a forma de pagamento",
+												allowClear: true,
+												theme: "classic"
+											});
+										});   
+
+										</script>
 								</div>
 
 								<div class="form-group col-md-4">

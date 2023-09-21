@@ -10,11 +10,10 @@ $dtfim = $_POST['dtfim'];
 if( $dtinicio != "" || $dtfim != "" ){
     $dtinicioFormatada = $_POST['dtinicio'];
      $dtfimFormatada = $_POST['dtfim'];
-   
 
 }else{
-    $dtinicio = date('Y-m-d');
-    $dtfim = date('Y-m-d');
+    $dtinicioFormatada = date('Y-m-d');
+    $dtfimFormatada = date('Y-m-d');
 }
 echo "<br>";
 
@@ -52,19 +51,6 @@ while ($rows_rendimento = mysqli_fetch_assoc($caixa_rendimento)) {
 <html>
 <head>
     <title>Fechamento de Caixa</title>
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.2/css/mdb.min.css" rel="stylesheet">
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.2/js/mdb.min.js"></script>
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.12.1/datatables.min.css" />
-<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.12.1/datatables.min.js"></script>
-<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
-<link rel="stylesheet" href="/resources/demos/style.css">
-<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-
 
 </head>
 <body>
