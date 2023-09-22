@@ -86,7 +86,7 @@ $caixa = mysqli_query($conn, $tab_caixa);
 $(document).ready(function() {
     $('#dtBasicExample').DataTable({
         "paging": true, // false to disable pagination (or any other option)
-        "ordering": true, // false to disable sorting (or any other option)
+        "ordering": false, // false to disable sorting (or any other option)
         "searching": true,
         "language": {
             "url": "https://cdn.datatables.net/plug-ins/1.12.1/i18n/pt-BR.json"
