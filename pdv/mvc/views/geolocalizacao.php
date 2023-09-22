@@ -4,38 +4,62 @@ date_default_timezone_set('America/Sao_Paulo');
 ini_set('display_errors', 0); //oculta  erros
 include "./mvc/model/conexao.php";
 
-$tab_frete = "SELECT * FROM `cep_coordinates` ORDER BY `cep_coordinates`.`id` DESC ";
 
-$frete = mysqli_query($conn, $tab_frete);
+if(isset($_POST['cep'])){
+	$cep = $_POST['cep'];
+	$tab_frete = "SELECT * FROM `cep_coordinates` where postcode = '$cep' ORDER BY `cep_coordinates`.`id` DESC ";
+	$frete = mysqli_query($conn, $tab_frete);
+}else{
+
+}
+
 
 ?>
 <h1 class="display-12">Geolocalização</h1>
 
 
 <div class="row">
-
-
 	<div class="col-4" id="mensagem" style="visibility: visible">
 		<?php
-
-
 		if (isset($_SESSION['msg'])) {
 			echo $_SESSION['msg'];
 			unset($_SESSION['msg']);
 		}
 		?>
 	</div>
-
 	<div class="col-6">
 	</div>
-
-	<div class="col-3">
+	<div class="col-2">
 		<button type="button" class="btn btn-xs btn-success" data-toggle="modal" data-target="#myModalcad">Cadastrar Novo</button>
-
 	</div>
-</div>
 
-<!-- CONSTRUÇÃO DO MODAL DE CADASTRO -->
+	
+</div>
+	<form method="POST" action="">
+		<div class="row">
+			<div class="col-2">
+				<label for="recipient-name" class="col-form-label">CEP:</label>
+				<input required placeholder="00000-000" id="txtCEP" type="text" name="cep" class="form-control" maxlength="9" value="" oninput="formatCEP()">
+			</div>
+			<div class="col-6" style="padding: 40px;" >
+				<button type="submit" class="btn btn-xs btn-success">Buscar CEP</button>
+			</div>
+		</div>
+		<script>
+			 function formatCEP() {	
+				const inputElement = document.getElementById('txtCEP');
+				let cep = inputElement.value.replace(/\D/g, '');
+
+				if (cep.length > 5) {
+					cep = cep.substring(0, 5) + '-' + cep.substring(5, 8);
+				}
+					inputElement.value = cep;
+				}
+
+		</script>
+	</form>
+
+	<!-- CONSTRUÇÃO DO MODAL DE CADASTRO -->
 <div class="modal fade bd-example-modal-xl" id="myModalcad" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	<div class="modal-dialog modal-xl" role="document">
 		<div class="modal-content">
@@ -65,20 +89,31 @@ $frete = mysqli_query($conn, $tab_frete);
 						</div>
 					</div>
 
-					<div class="row">
+					<div class="row text-center" >
 
-						<div class="form-group col-md-4">
+						<div class="form-group col-md-2">
 							<label for="recipient-name" class="col-form-label">CEP:</label>
-							<input name="cep" type="text" class="form-control">
+							<input required placeholder="00000-000" id="txtCEP_2" type="text" name="cep_2" class="form-control" maxlength="9" value="" oninput="formatCEP_2()">
 						</div>
+						<script>
+							function formatCEP_2() {	
+								const inputElement = document.getElementById('txtCEP_2');
+								let cep = inputElement.value.replace(/\D/g, '');
 
-						<div class="form-group col-md-6">
+								if (cep.length > 5) {
+									cep = cep.substring(0, 5) + '-' + cep.substring(5, 8);
+								}
+									inputElement.value = cep;
+								}
+
+						</script>
+						<div class="form-group col-md-2">
 							<label for="message-text" class="col-form-label">Longitude:</label>
-							<input id="longitude" name="longitude" type="text" class="form-control">
+							<input required placeholder="-46.8902651" id="longitude" name="longitude" type="text" class="form-control">
 						</div>
 						<div class="form-group col-md-2">
 							<label for="recipient-name" class="col-form-label">Latitude:</label>
-							<input id="Latitude" name="Latitude" type="text" class="form-control">
+							<input required placeholder="-23.4993162" id="latitude" name="latitude" type="text" class="form-control">
 						</div>
 						
 					</div>
