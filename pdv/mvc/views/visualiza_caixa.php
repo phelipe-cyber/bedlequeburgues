@@ -2,7 +2,7 @@
 include "./mvc/model/conexao.php";
 
 
-$tab_caixa = "SELECT * FROM caixa order by `data_hora` ASC ";
+$tab_caixa = "SELECT * FROM caixa order by `data_hora` DESC ";
 
 $caixa = mysqli_query($conn, $tab_caixa);
 
