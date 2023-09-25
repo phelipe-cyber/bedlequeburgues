@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="pt-br">
     <head>
         <title>Cardápio Online - Seja bem-vindo!</title>
         <meta charset="UTF-8" />
@@ -29,15 +28,13 @@
         <script type="text/javascript" src="./js/dados.js"></script>
         <script type="text/javascript" src="./js/app.js"></script>
 
-        <div class="container-mensagens" id="container-mensagens">
-
-        </div>
+        
+        <div class="container-mensagens" id="container-mensagens"></div>
 
         <div class="container-spinner hidden">
             <div class="spinner"></div>
-        </div>
-        
-
+            <img src="./img/logo_bedlek.jpeg" alt="" style="height: 330px;">
+        </div>        
 
         <a class="botao-carrinho animated bounceIn hidden" onclick="cardapio.metodos.abrirCarrinho(true)">
             <div class="badge-total-carrinho">0</div>
@@ -84,7 +81,9 @@
             </div>
         </section>
 
+
         <section class="banner">
+            <div class="background-cardapio-loja"></div>
             <div class="container">
                 <div class="row">
                     <div class="col-12 col-lg-6 col-md-6 col-sm-12 col-one">
@@ -394,8 +393,10 @@
             </div>
         </footer>
 
+        <img id="imgLogo" class="hidden" src="./img/logo_bedlek.jpeg" alt="" style="height: 330px;">
 
         <div class="modal-full animated fadeIn hidden" id="modalCarrinho">
+
 
             <div class="m-header">
                 <div class="container">
@@ -410,8 +411,14 @@
                     <p class="title-carrinho mt-4">
                         <b id="lblTituloEtapa">Seu carrinho:</b>
                     </p>
+                    
+                    <div id="tipoEntrega" class="mt-4 form-check form-switch hidden">
+                        <input name="tipoEntrega" class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked onclick="cardapio.metodos.tipoEntregaEtapa2()" value="delivery">
+                        <label class="form-check-label" id="form-check-label" for="flexSwitchCheckChecked">Entrega</label>
+                    </div>
                 </div>
             </div>
+         
 
             <div class="m-body">
                 <div class="container">
@@ -434,9 +441,9 @@
                         </div>
 
                         <div class="col-12 col-lg-6 col-md-6 col-sm-12">
-                            <div class="form-group container-cep">
+                            <div class="form-group">
                                 <label for="phone" >Telefone:</label>
-                                <input placeholder="(00) 00000-0000" oninput="cardapio.metodos.formatPhoneNumber(this)" type="tel" id="phone" name="phone" class="form-control" pattern="[0-9]{15}" maxlength="15" />
+                                <input  placeholder="(00) 00000-0000" oninput="cardapio.metodos.formatPhoneNumberBuscar(this)" type="tel" id="phone" name="phone" class="form-control" pattern="[0-9]{15}" maxlength="15" />
                                 <small>Informe um número de telefone com 11 dígitos.</small>
                                 <a class="btn btn-yellow btn-sm searchPhone hidden"  onclick="cardapio.metodos.buscarteldados()" >
                                     <i class="fa fa-search"></i>
@@ -447,7 +454,7 @@
                         <div class="col-8 no-mobile"></div>
 
                         <div class="col-12 col-lg-6 col-md-6 col-sm-12">
-                            <div class="form-group">
+                            <div  class="form-group">
                                 <label>Nome:</label>
                                 <input id="txtNome" type="text" class="form-control" />
                             </div>
@@ -526,6 +533,28 @@
 
                     </div>
 
+                    <div id="clienteRetira" class="row mr-0 ml-0 animated fadeIn hidden">
+
+                        <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                            <div class="form-group container-cep">
+                                <label for="phone" >Telefone:</label>
+                                <input  oninput="cardapio.metodos.formatPhoneNumber(this)" placeholder="(00) 00000-0000" type="tel" id="phoneRetira" name="phone" class="form-control" pattern="[0-9]{15}" maxlength="15" />
+                                <small>Informe um número de telefone com 11 dígitos.</small>
+                                <a class="btn btn-yellow btn-sm searchPhone hidden" >
+                                    <i class="fa fa-search"></i>
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                            <div  class="form-group">
+                                <label>Nome:</label>
+                                <input  id="txtNomeRetira" type="text" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                        
+
                     <div id="resumoCarrinho" class="row mr-0 ml-0 animated fadeIn hidden">
                         <div class="col-12">
                             <p class="title-carrinho mt-4">
@@ -543,13 +572,14 @@
                             <p class="title-carrinho mt-4">
                                 <b>Local da entrega:</b>
                             </p>
+                            <p id="entregaTipo"></p>
                         </div>
 
                         <div class="col-12 item-carrinho resumo">
                             <div class="img-map">
                                 <i class="fas fa-map-marked-alt"></i>
                             </div>
-                            <div class="dados-produto">
+                            <div id="resumoCarrinhoLocalEntrega" class="dados-produto">
                                 <p class="cidade-endereco-nome" id="resumonome"></p>
                                 <p class="texto-endereco">
                                     <b id="resumoEndereco"></b>
@@ -609,4 +639,4 @@
         
     </body>
     
-    </html>
+</html>

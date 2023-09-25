@@ -62,10 +62,12 @@
     $tab_novo_pedido = "SELECT * FROM pedido p  where p.`status` = 2 limit 1";
     $novo_pedido_conn = mysqli_query($conn, $tab_novo_pedido);
     $rows_novo_pedido = mysqli_num_rows($novo_pedido_conn);
-    
+
     while ($row = $novo_pedido_conn->fetch_assoc()) {
+        // print_r($row);
         $numeropedido = $row['numeropedido'];
         $statusNotificacao = $row['notificacao'];
+        $tipoEntrega = $row['delivery'];
     };
 
     if ($rows_novo_pedido != 0  ) {
@@ -73,40 +75,46 @@
         ?>
             <audio src="mvc/common/som/som.mp3" type="audio/mp3" id="audio" autoplay="true" autostart="true"></audio>
             <?php
-
-        if( $statusNotificacao == 'true' ){
+    }else{
+       
+    }
+           
+         $select_notificacao = "SELECT * FROM pedido p  where p.`notificacao` = 'true' limit 1";
+         $select_notificacao_conn = mysqli_query($conn, $select_notificacao);
+     
+         while ($row_notificacao = $select_notificacao_conn->fetch_assoc()) {
+                $numeropedido = $row_notificacao['numeropedido'];
+                $statusNotificacao = $row_notificacao['notificacao'];
+                $tipoEntrega = $row_notificacao['delivery'];
                 
                 $notificacao = "UPDATE pedido SET notificacao = 'false' WHERE numeropedido LIKE '$numeropedido' ";
                 $grava_notificacao = mysqli_query($conn, $notificacao) or die(mysqli_error($conn));
+                 
+                 echo    '<script>
+                             if ("Notification" in window) {
+                                 // Solicita permissão para exibir notificações
+                                 Notification.requestPermission().then(function (permission) {
+                                     if (permission === "granted") {
+                                         // Cria uma nova notificação
+                                         var notificacao = new Notification("Novo pedido: ' .$numeropedido. ' ", {
+                                             body: "Chegou um novo pedido para: '.$tipoEntrega.' ",
+                                             icon: "mvc/common/img/logo_bedlek.ico"
+                                         });
+                                         // Manipula o clique na notificação (opcional)
+                                         notificacao.onclick = function () {
+                                             window.open("/pdv/?view=todosPedidoBalcao");
+                                         };
+                                     } else {
+                                         alert("Permissão para notificações negada.");
+                                     }
+                                 });
+                             } else {
+                                 alert("Este navegador não suporta notificações.");
+                             }
+                             
+                             </script>';
+                };
 
-                echo    '<script>
-                            if ("Notification" in window) {
-                                // Solicita permissão para exibir notificações
-                                Notification.requestPermission().then(function (permission) {
-                                    if (permission === "granted") {
-                                        // Cria uma nova notificação
-                                            var notificacao = new Notification("Novo pedido: ' .$numeropedido. ' ", {
-                                            // body: "Chegou um novo pedido ",
-                                            icon: "mvc/common/img/logo_bedlek.ico"
-                                        });
-                                        // Manipula o clique na notificação (opcional)
-                                        notificacao.onclick = function () {
-                                            window.open("/pdv/?view=todosPedidoBalcao");
-                                        };
-                                    } else {
-                                        alert("Permissão para notificações negada.");
-                                    }
-                                });
-                            } else {
-                                alert("Este navegador não suporta notificações.");
-                            }
-                            
-                        </script>';
-
-        }
-    }else{
-
-    }
 ?>
 
     <meta charset="utf-8">
@@ -186,6 +194,7 @@
                         <form method="POST" action="?view=adicionar_pedido_balcao">
                             <input name="id" type="hidden" id="id" value="<?php echo $rows_mesas['numeropedido']; ?>">
                             <button type="submit" class="btn  btn-outline-light" style="text-align: center;" data-toggle="modal"> Abrir - Pedido <?php echo $rows_mesas['numeropedido']; ?></button>
+                            <h4 class="mb-10 text-center"><?php echo $rows_mesas['delivery']; ?></h4>
                         </form>
                         <?php
                         if ($rows_mesas['status']  == 2 ) {
@@ -193,6 +202,7 @@
                             <form method="POST" action="?view=aceitar">
                                 <input name="id" type="hidden" id="id" value="<?php echo $rows_mesas['numeropedido']; ?>">
                                 <button type="submit" class="btn  btn-outline-light" style="text-align: center;" data-toggle="modal"> Aceitar </button>
+
                             </form>
                             <?php
                         }else{

@@ -4,7 +4,7 @@ include '.././pdv/mvc/model/conexao.php';
 
 $tel = $_POST['phone'];
 
-$tab_telefone = "SELECT * FROM `clientes` where REPLACE(REPLACE(REPLACE(REPLACE(tel1, '(', ''), ')', ''), '-', ''),' ','') = '$tel' ORDER by id DESC limit 1" ;
+$tab_telefone = "SELECT * FROM `clientes` where REPLACE(REPLACE(REPLACE(REPLACE(tel1, '(', ''), ')', ''), '-', ''),' ','') = '$tel' and cep <> '' ORDER by id DESC limit 1" ;
 $resultado_telefone = mysqli_query($conn, $tab_telefone);
 // $menu = array();
 

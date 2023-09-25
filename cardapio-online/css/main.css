@@ -148,13 +148,13 @@ a.navbar-brand {
     background-color: #f4c949;
     position: absolute;
     right: 0;
-    top: -80px;
+    top: 345px;
 }
 
 .img-banner img {
     position: absolute;
     width: 570px;
-    top: 30px;
+    top: 376px;
     right: 15px;
 }
 

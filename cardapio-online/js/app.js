@@ -11,6 +11,7 @@ var MEU_ENDERECO = null;
 
 var VALOR_CARRINHO = 0;
 var VALOR_ENTREGA = 0.00;
+var VALOR_ENTREGA_2 = 0.00;
 
 var CELULAR_EMPRESA = '5511989655124';
 
@@ -157,7 +158,7 @@ cardapio.metodos = {
                     MEU_CARRINHO.push(item[0])
                 }      
                 
-                cardapio.metodos.mensagem('Item adicionado ao carrinho', 'green')
+                cardapio.metodos.mensagem('Item adicionado ao carrinho', 'success')
                 $("#qntd-" + id).text(0);
 
                 cardapio.metodos.atualizarBadgeTotal();
@@ -210,15 +211,12 @@ cardapio.metodos = {
     carregarEtapa: (etapa) => {
 
         if (etapa == 1) {
+           
+            if (VALOR_ENTREGA == 0 && MEU_CARRINHO.length > 0) {
+                cardapio.metodos.mensagem('O Frete é adicionado na próxima etapa', 'primary');
+            }
             
-            if( MEU_CARRINHO.length > 0  ){
-            }else{
-                cardapio.metodos.mensagem('O Frete é adicionado na próxima etapa', 'yellow')
-            }
-            if( VALOR_ENTREGA == 0 ){
-                cardapio.metodos.mensagem('O Frete é adicionado na próxima etapa', 'yellow')
-            }else{
-            }
+            $("#tipoEntrega").addClass('hidden');
             
             $("#lblTituloEtapa").text('Seu carrinho:');
             $("#itensCarrinho").removeClass('hidden');
@@ -237,40 +235,14 @@ cardapio.metodos = {
         }
         
         if (etapa == 2) {
-            $("#lblTituloEtapa").text('Endereço de entrega:');
-            $("#itensCarrinho").addClass('hidden');
-            $("#localEntrega").removeClass('hidden');
-            $("#resumoCarrinho").addClass('hidden');
 
-            $(".container-total").addClass('hidden');
+            cardapio.metodos.tipoEntregaEtapa2();
 
-            $(".etapa").removeClass('active');
-            $(".etapa1").addClass('active');
-            $(".etapa2").addClass('active');
-
-            $("#btnEtapaPedido").addClass('hidden');
-            $("#btnEtapaEndereco").removeClass('hidden');
-            $("#btnEtapaResumo").addClass('hidden');
-            $("#btnVoltar").removeClass('hidden');
         }
 
         if (etapa == 3) {
-            $("#lblTituloEtapa").text('Resumo do pedido:');
-            $("#itensCarrinho").addClass('hidden');
-            $("#localEntrega").addClass('hidden');
-            $("#resumoCarrinho").removeClass('hidden');
 
-            $(".container-total").removeClass('hidden');
-
-            $(".etapa").removeClass('active');
-            $(".etapa1").addClass('active');
-            $(".etapa2").addClass('active');
-            $(".etapa3").addClass('active');
-
-            $("#btnEtapaPedido").addClass('hidden');
-            $("#btnEtapaEndereco").addClass('hidden');
-            $("#btnEtapaResumo").removeClass('hidden');
-            $("#btnVoltar").removeClass('hidden');
+            cardapio.metodos.tipoEntregaEtapa3();
         }
 
     },
@@ -279,6 +251,7 @@ cardapio.metodos = {
     voltarEtapa: () => {
 
         let etapa = $(".etapa.active").length;
+        console.log(etapa -1);
         cardapio.metodos.carregarEtapa(etapa - 1);
 
     },
@@ -438,7 +411,7 @@ cardapio.metodos = {
                                     // $("#txtNumero").focus();
                                     $(".searchCep").addClass('hidden');
 
-                                    cardapio.metodos.mensagem('Seus dados foram inseridos, por favor validar!','green');
+                                    cardapio.metodos.mensagem('Seus dados foram inseridos, por favor validar!','success');
                                 }else{
                                     $(".container-spinner").addClass('hidden');
                                     cardapio.metodos.mensagem('Cadastro não encontrado. Preencha as informações manualmente.');
@@ -477,7 +450,7 @@ cardapio.metodos = {
    },
 
     //formatar dados telefone
-    formatPhoneNumber: (input) =>{
+    formatPhoneNumberBuscar: (input) =>{
 
         const rawNumber = input.value.trim().replace(/\D/g, ''); // Remove caracteres não numéricos
         const rawPhone = input.value.trim().replace(/\D/g, ''); // Remove caracteres não numéricos
@@ -510,12 +483,8 @@ cardapio.metodos = {
                                     data: vData,
                                     success: function(dados) {
                                             if (dados != null) {
-                                                dados.endereco
                                                 var frase = dados.endereco;
-                                                var palavras = frase.split(","); // Dividir a frase em palavras usando espaço como delimitador
-
-                                                console.log(palavras[0]);
-                                                console.log(palavras[1]);
+                                                var palavras = frase.split(",");
 
                                                 $("#txtEndereco").val(palavras[0]);
                                                 // $("#txtBairro").val(dados.bairro);
@@ -528,7 +497,7 @@ cardapio.metodos = {
                                                 // $(".searchCep").addClass('hidden');
                                                 $(".container-spinner").addClass('hidden');
             
-                                                cardapio.metodos.mensagem('Seus dados foram inseridos, por favor validar!','green');
+                                                cardapio.metodos.mensagem('Seus dados foram inseridos, por favor validar!','success');
                                             }else{
                                                 cardapio.metodos.mensagem('Cadastro não encontrado. Preencha as informações manualmente.');
                                                 // $("#txtEndereco").val('');
@@ -568,6 +537,44 @@ cardapio.metodos = {
         }
 
     },
+    //formatar dados telefone
+    formatPhoneNumber: (input) =>{
+
+        const rawNumber = input.value.trim().replace(/\D/g, ''); // Remove caracteres não numéricos
+        const rawPhone = input.value.trim().replace(/\D/g, ''); // Remove caracteres não numéricos
+        // Formatação para número de telefone no Brasil (exemplo: (11) 98765-4321)
+        if (rawNumber.length <= 10) {
+            const formattedNumber = rawNumber.replace(/(\d{2})(\d{4})(\d{4})/, '($1) $2-$3');
+            input.value = formattedNumber;
+        } else {
+            const formattedNumber = rawNumber.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+            input.value = formattedNumber;
+        }
+
+        if(rawPhone.length == 11 ){
+            $(".searchPhone").addClass('hidden');
+
+            if (rawPhone != "") {
+
+                // Expressão regular para validar o Telefone
+                var validaphone = /^[0-9]{11}$|^[0-9]{10}$/ ;
+                  
+                        if (validaphone.test(rawPhone)) {
+                                
+                        }
+                        else {
+                            cardapio.metodos.mensagem('Formato do Telefone inválido.');
+                            $("#phone").focus();
+                        }
+    
+            }
+            else {
+                cardapio.metodos.mensagem('Informe o Telefone, por favor.');
+                $("#phone").focus();
+            }
+        }
+
+    },
 
     //formatar dados CEP
     formatCEP: (input) =>{
@@ -593,7 +600,7 @@ cardapio.metodos = {
 
                     if (!("erro" in dados)) {
 
-                        cardapio.metodos.mensagem('CEP encontrado.  As informações foram preenchida.','green');
+                        cardapio.metodos.mensagem('CEP encontrado.  As informações foram preenchida.','success');
 
                         // Atualizar os campos com os valores retornados
                         $("#txtEndereco").val(dados.logradouro);
@@ -614,10 +621,11 @@ cardapio.metodos = {
                                      if (dados != null) {
                                          $(".container-spinner").addClass('hidden');
                                          VALOR_ENTREGA = parseFloat(dados.valor)
+                                         VALOR_ENTREGA_2 = parseFloat(dados.valor)
                                          
                                          $("#lblValorEntrega").text(`+ R$ ${VALOR_ENTREGA.toFixed(2).replace('.', ',')}`);
                                          $("#lblValorTotal").text(`R$ ${(VALOR_CARRINHO + VALOR_ENTREGA).toFixed(2).replace('.', ',')}`);
-                                         cardapio.metodos.mensagem('Entrega: R$ ' + VALOR_ENTREGA.toFixed(2).replace('.', ','),'green');
+                                         cardapio.metodos.mensagem('Entrega: R$ ' + VALOR_ENTREGA.toFixed(2).replace('.', ','),'success');
              
                                      }else{
                                          $(".container-spinner").addClass('hidden');
@@ -724,6 +732,12 @@ cardapio.metodos = {
     // validação antes de prosseguir para a etapa 3
     resumoPedido: () => {
 
+        var tipoEntrega = document.getElementById("flexSwitchCheckChecked").checked;
+
+        console.log(tipoEntrega)
+
+        if (tipoEntrega) {
+
         let phone = $("#phone").val().trim();
         let cep = $("#txtCEP").val().trim();
         let endereco = $("#txtEndereco").val().trim();
@@ -751,7 +765,7 @@ cardapio.metodos = {
             $("#txtNome").focus();
             return;
         }
-
+       
         if (endereco.length <= 0) {
             cardapio.metodos.mensagem('Informe o Endereço, por favor.');
             $("#txtEndereco").focus();
@@ -782,7 +796,6 @@ cardapio.metodos = {
             return;
         }
 
-
         MEU_ENDERECO = {
             cep: cep,
             endereco: endereco,
@@ -791,11 +804,33 @@ cardapio.metodos = {
             uf: uf,
             numero: numero,
             complemento: complemento,
-            nome: nome
+            nome: nome,
+            phone: phone
+
         }
 
         cardapio.metodos.carregarEtapa(3);
         cardapio.metodos.carregarResumo();
+    }else{
+
+        let nomeRetira = $("#txtNomeRetira").val().trim();
+        let phoneRetira = $("#phoneRetira").val().trim();
+
+        if (phoneRetira.length <= 0) {
+            cardapio.metodos.mensagem('Informe o Telefone, por favor.');
+            $("#phoneRetira").focus();
+            return;
+        }
+
+        if (nomeRetira.length <= 0) {
+            cardapio.metodos.mensagem('Informe o Nome, por favor.');
+            $("#txtNomeRetira").focus();
+            return;
+        }
+
+        cardapio.metodos.carregarEtapa(3);
+        cardapio.metodos.carregarResumo();
+    }
 
     },
 
@@ -863,32 +898,40 @@ cardapio.metodos = {
     //Validar click
     validateClick: () =>{
 
-        
+            $(".container-spinner").removeClass('hidden');
+            
             if (MEU_CARRINHO.length > 0 && MEU_ENDERECO != null) {
                 let phone = $("#phone").val().trim();
                 
-                    var vMEU_CARRINHO = {
-                        pedido: MEU_CARRINHO,
-                        dadoscliennte: MEU_ENDERECO,
-                        telefone:phone,
-                        frete:VALOR_ENTREGA
+                var vMEU_CARRINHO = {
+                    pedido: MEU_CARRINHO,
+                    dadoscliennte: MEU_ENDERECO,
+                    telefone:phone,
+                    frete:VALOR_ENTREGA,
+                    tipoEntrega:TIPO_ENTREGA
                 };
+                $("#modalCarrinho").html('');
+                $("#modalCarrinho").addClass('hidden');
+                $(".botao-carrinho").addClass('hidden');
+                $("#imgLogo").removeClass('hidden');
 
                 $.ajax({
                     url: 'salvarPedido.php',
                     dataType: 'json',
                     type: 'POST',
                     data: vMEU_CARRINHO,
-                    success: function(dados) {
-                            if (dados != null) {
-                                    
-                                    cardapio.metodos.mensagem('Seu Pedido: ' + dados + ' foi enviado ','green');
+                    success: function(pedidoNew) {
+                            if (pedidoNew != null) {
+                                    $(".container-spinner").addClass('hidden');
+                                    cardapio.metodos.mensagem('Seu Pedido: ' + pedidoNew + ' foi enviado ','success');
                                     cardapio.metodos.reload();
                             }else{
+                                    $(".container-spinner").addClass('hidden');
                                     cardapio.metodos.mensagem('Pedido não enviado!');
                             }
                     },
                     error: function(err) {
+                        $(".container-spinner").addClass('hidden');
                         cardapio.metodos.mensagem('Error',err);
                     },
                 });
@@ -931,11 +974,11 @@ cardapio.metodos = {
     },
 
     // mensagens
-    mensagem: (texto, cor = 'red', tempo = 3900) => {
+    mensagem: (texto, cor = 'danger', tempo = 3900) => {
 
         let id = Math.floor(Date.now() * Math.random()).toString();
 
-        let msg = `<div id="msg-${id}" class="animated fadeInDown toast ${cor}">${texto}</div>`;
+        let msg = `<div id="msg-${id}" role="alert" class="alert alert-${cor}"> ${texto}</div>`;
 
         $("#container-mensagens").append(msg);
 
@@ -952,11 +995,178 @@ cardapio.metodos = {
     reload: () => {
 
          setTimeout(function() {
-             location.reload();
-        }, 5000); // 5000 milissegundos = 5 segundos
+            location.reload(true);
+        }, 2000); // 5000 milissegundos = 5 segundos
 
-    }
+    },
 
+    tipoEntregaEtapa2: () => {
+
+        var tipoEntrega = document.getElementById("flexSwitchCheckChecked").checked;
+
+        if (tipoEntrega == true) {
+
+            var labe1 = document.getElementById('form-check-label');
+            labe1.innerText = "Entrega";
+            
+            document.getElementById('flexSwitchCheckChecked').value = 'Entrega'
+            TIPO_ENTREGA = 'Entrega';
+
+            VALOR_ENTREGA = VALOR_ENTREGA_2;
+            $("#lblValorEntrega").text(`+ R$ ${VALOR_ENTREGA.toFixed(2).replace('.', ',')}`);
+            $("#lblValorTotal").text(`R$ ${(VALOR_CARRINHO + VALOR_ENTREGA).toFixed(2).replace('.', ',')}`);
+
+            $("#itensCarrinho").addClass('hidden');
+            $("#entregaTipo").addClass(`hidden`);
+            
+            $("#lblTituloEtapa").text('Endereço de entrega:');
+            $("#localEntrega").removeClass('hidden');
+            $("#resumoCarrinho").addClass('hidden');
+            
+            $(".container-total").addClass('hidden');
+            
+            $(".etapa").removeClass('active');
+            $(".etapa1").addClass('active');
+            $(".etapa2").addClass('active');
+            
+            $("#btnEtapaPedido").addClass('hidden');
+            $("#clienteRetira").addClass('hidden');
+            $("#btnEtapaEndereco").removeClass('hidden');
+            $("#btnEtapaResumo").addClass('hidden');
+            $("#btnVoltar").removeClass('hidden');
+            
+            $("#resumoCarrinhoLocalEntrega").removeClass('hidden');
+            $("#tipoEntrega").removeClass('hidden');
+
+        } else {
+
+            $("#itensCarrinho").addClass('hidden');
+            
+            $("#lblTituloEtapa").text('Endereço de entrega:');
+            $("#localEntrega").addClass('hidden');
+            $("#resumoCarrinho").addClass('hidden');
+            
+            $(".container-total").addClass('hidden');
+            
+            $(".etapa").removeClass('active');
+            $(".etapa1").addClass('active');
+            $(".etapa2").addClass('active');
+            
+            $("#btnEtapaPedido").addClass('hidden');
+            $("#btnEtapaEndereco").removeClass('hidden');
+            $("#btnEtapaResumo").addClass('hidden');
+            $("#btnVoltar").removeClass('hidden');
+            
+            $("#resumoCarrinhoLocalEntrega").removeClass('hidden');
+            $("#tipoEntrega").removeClass('hidden');
+
+            var labe1 = document.getElementById('form-check-label');
+            labe1.innerText = "Retirar";
+            $("#entregaTipo").removeClass(`hidden`);
+            $("#entregaTipo").text(`Retirar`);
+            
+            $("#clienteRetira").removeClass('hidden');
+            
+
+            document.getElementById('flexSwitchCheckChecked').value = 'Retirar'
+            TIPO_ENTREGA = 'Retirar';
+            VALOR_ENTREGA = 0.00
+            $("#lblValorEntrega").text(`+ R$ ${VALOR_ENTREGA.toFixed(2).replace('.', ',')}`);
+            $("#lblValorTotal").text(`R$ ${(VALOR_CARRINHO + VALOR_ENTREGA).toFixed(2).replace('.', ',')}`);
+
+           
+        }
+    },
+
+    tipoEntregaEtapa3: () => {
+
+        var tipoEntrega = document.getElementById("flexSwitchCheckChecked").checked;
+
+        if (tipoEntrega == true) {
+
+            var labe1 = document.getElementById('form-check-label');
+            labe1.innerText = "Entrega";
+            document.getElementById('flexSwitchCheckChecked').value = 'Entrega';
+            TIPO_ENTREGA = 'Entrega';
+            
+            VALOR_ENTREGA = VALOR_ENTREGA_2;
+            $("#lblValorEntrega").text(`+ R$ ${VALOR_ENTREGA.toFixed(2).replace('.', ',')}`);
+            $("#lblValorTotal").text(`R$ ${(VALOR_CARRINHO + VALOR_ENTREGA).toFixed(2).replace('.', ',')}`);
+            
+            $("#entregaTipo").addClass(`hidden`);
+
+            $("#lblTituloEtapa").text('Resumo do pedido:');
+            $("#itensCarrinho").addClass('hidden');
+            $("#localEntrega").addClass('hidden');
+            $("#resumoCarrinho").removeClass('hidden');
+
+            $(".container-total").removeClass('hidden');
+
+            $(".etapa").removeClass('active');
+            $(".etapa1").addClass('active');
+            $(".etapa2").addClass('active');
+            $(".etapa3").addClass('active');
+
+            $("#btnEtapaPedido").addClass('hidden');
+            $("#btnEtapaEndereco").addClass('hidden');
+            
+            $("#btnEtapaResumo").removeClass('hidden');
+            $("#btnVoltar").removeClass('hidden');
+
+            $("#tipoEntrega").removeClass('hidden');
+
+            $("#clienteRetira").addClass('hidden');
+
+
+        } else {
+
+            $("#lblTituloEtapa").text('Resumo do pedido:');
+            $("#itensCarrinho").addClass('hidden');
+            $("#localEntrega").addClass('hidden');
+            $("#resumoCarrinho").removeClass('hidden');
+
+            $(".container-total").removeClass('hidden');
+
+            $(".etapa").removeClass('active');
+            $(".etapa1").addClass('active');
+            $(".etapa2").addClass('active');
+            $(".etapa3").addClass('active');
+
+            $("#btnEtapaPedido").addClass('hidden');
+            $("#btnEtapaEndereco").addClass('hidden');
+            
+            $("#btnEtapaResumo").removeClass('hidden');
+            $("#btnVoltar").removeClass('hidden');
+
+            $("#tipoEntrega").removeClass('hidden');
+
+            $("#resumoCarrinhoLocalEntrega").addClass('hidden');
+            
+            var labe1 = document.getElementById('form-check-label');
+            labe1.innerText = "Retirar";
+            document.getElementById('flexSwitchCheckChecked').value = 'Retirar';
+            TIPO_ENTREGA = 'Retirar';
+
+            $("#clienteRetira").addClass('hidden');
+            
+            let nome = $("#txtNomeRetira").val().trim();
+            let phone = $("#phoneRetira").val().trim();
+            
+            $("#entregaTipo").removeClass(`hidden`);
+            $("#entregaTipo").text(`Retirar: `+ nome);
+            
+            MEU_ENDERECO = {
+                nome: nome,
+                phone: phone
+            };
+
+            VALOR_ENTREGA = 0.00
+            $("#lblValorEntrega").text(`+ R$ ${VALOR_ENTREGA.toFixed(2).replace('.', ',')}`);
+            $("#lblValorTotal").text(`R$ ${(VALOR_CARRINHO + VALOR_ENTREGA).toFixed(2).replace('.', ',')}`);
+
+           
+        }
+    },
 }
 
 cardapio.templates = {
@@ -1029,4 +1239,5 @@ cardapio.templates = {
         <i class="fas fa-hamburger"></i>&nbsp; \${nome}
     </a>
     `,
+
 }

@@ -2,12 +2,16 @@
 include '.././pdv/mvc/model/conexao.php';
 
 date_default_timezone_set('America/Sao_Paulo');
-$data_hora = date('Y-m-d H:i');
+$data_hora = date('Y-m-d H:i:s');
 $hora_pedido = date('H:i');
 
 $valores = $_POST['pedido'];
 $dadoscliennte = $_POST['dadoscliennte'];
 $telefone = $_POST['telefone'];
+$tipoEntrega = $_POST['tipoEntrega'];
+
+// print_r($_POST);
+// die();
 
 $result_usuarios = ("SELECT MAX(numeropedido) as 'Pedido'FROM `pedido`ORDER BY numeropedido DESC limit 1 ");
 $recebidos = mysqli_query($conn, $result_usuarios);
@@ -31,14 +35,18 @@ if ($pedido == null) {
 };
 
 $numeropedido = $pedido;
-   
-$telefone = $_POST['telefone'];
 
-$tab_telefone = "SELECT id, tel1 FROM `clientes` where REPLACE(REPLACE(REPLACE(REPLACE(tel1, '(', ''), ')', ''), '-', ''),' ','') = REPLACE(REPLACE(REPLACE(REPLACE('$telefone', '(', ''), ')', ''), '-', ''),' ','') ORDER by id DESC limit 1" ;
+if($telefone == "" ){
+    $telefone = $_POST['dadoscliennte']['phone'];
+}else{
+    $telefone = $_POST['telefone'];
+}
+
+$tab_telefone = "SELECT id, tel1 FROM `clientes` where REPLACE(REPLACE(REPLACE(REPLACE(tel1, '(', ''), ')', ''), '-', ''),' ','') = REPLACE(REPLACE(REPLACE(REPLACE('$telefone', '(', ''), ')', ''), '-', ''),' ','') and cep <> '' ORDER by id DESC limit 1" ;
 $resultado_telefone = mysqli_query($conn, $tab_telefone);
 // $menu = array();
 
-if ($resultado_telefone->num_rows == 0) {
+if ($resultado_telefone->num_rows == 0 || $tipoEntrega == 'Retirar' ) {
 
     $dadoscliennte = $_POST['dadoscliennte'];
     $cep = $dadoscliennte['cep'];
@@ -61,21 +69,39 @@ if ($resultado_telefone->num_rows == 0) {
     $id_cliente = $conn->insert_id;
 
 }else{
+
+    $dadoscliennte = $_POST['dadoscliennte'];
+    $cep = $dadoscliennte['cep'];
+    $endereco = $dadoscliennte['endereco'];
+    $bairro = $dadoscliennte['bairro'];
+    $uf = $dadoscliennte['uf'];
+    $numero = $dadoscliennte['numero'];
+    $complemento = $dadoscliennte['complemento'];
+    $nome = $dadoscliennte['nome'];
+    $cidade = $dadoscliennte['cidade'];
+
+    $endNumber = $endereco.", ".$numero;
+
     while ($row = $resultado_telefone->fetch_assoc()) {
         $id_cliente = $row['id'];
+
+        $update = "UPDATE `clientes` SET `nome`='$nome',`endereco`='$endNumber',`bairro`='$bairro',`cidade`='$cidade',`estado`='$uf',
+        `complemento`='$complemento',`cep`='$cep',`tel1`='$telefone' WHERE id = '$id_cliente' ";
+        $update_cliente = mysqli_query($conn, $update);
+
     }
 }
    
     $frete = $_POST['frete'];
 
-    if( $frete <> "" ){
+    if( $frete <> "" && $frete != 0 ){
         
             $pedido = 'Frete';
             $preco_venda = $frete;
             $quantidade = '1';
     
             $insert_table_frete = "INSERT INTO pedido (numeropedido, delivery,cliente, idmesa, produto, quantidade, hora_pedido, valor, observacao, pgto, usuario, `data` , gorjeta, status ) VALUES
-            ('$numeropedido','','$id_cliente', '$id_mesa', '$pedido', '$quantidade', '$hora_pedido', '$preco_venda', '$observacoes', '$pgto','$user','$data_hora' ,'' , 2 )";
+            ('$numeropedido','$tipoEntrega','$id_cliente', '$id_mesa', '$pedido', '$quantidade', '$hora_pedido', '$preco_venda', '$observacoes', '$pgto','$user','$data_hora' ,'' , 2 )";
           
            $adiciona_pedido_frete = mysqli_query($conn, $insert_table_frete);
         
@@ -92,7 +118,7 @@ if ($resultado_telefone->num_rows == 0) {
         $quantidade = $elem['qntd'];
 
         $insert_table = "INSERT INTO pedido (numeropedido, delivery,cliente, idmesa, produto, quantidade, hora_pedido, valor, observacao, pgto, usuario, `data` , gorjeta, status ) VALUES
-        ('$numeropedido','','$id_cliente', '$id_mesa', '$pedido', '$quantidade', '$hora_pedido', '$preco_venda', '$observacoes', '$pgto','$user','$data_hora' ,'' , 2 )";
+        ('$numeropedido','$tipoEntrega','$id_cliente', '$id_mesa', '$pedido', '$quantidade', '$hora_pedido', '$preco_venda', '$observacoes', '$pgto','$user','$data_hora' ,'' , 2 )";
       
       $adiciona_pedido = mysqli_query($conn, $insert_table);
 

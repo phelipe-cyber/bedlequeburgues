@@ -173,7 +173,7 @@ where numeropedido = '$id'";
     <a class="text-center">R$: <b><?php echo number_format($Total, 2); ?></b></a><br><br>
     <?php
         }
-     if( $endereco != "" ){
+     if( $cep != "" ){
         ?>
                 <label for=""><b>Local da entrega:</b></label></br>
                 <label for=""><b><?php echo $endereco ?></b> </label></br></br>
@@ -197,9 +197,8 @@ where numeropedido = '$id'";
 
 <script>
     window.print();
-    // window.addEventListener("afterprint", function(event) { window.close(); });
-    // window.onafterprint();
-    // window.location.href = '/pdv/?views=todosPedidoBalcao';
+    window.addEventListener("afterprint", function(event) { window.close(); });
+    window.onafterprint();
 </script>
 
 <?php
