@@ -1236,7 +1236,7 @@ cardapio.templates = {
     `,
 
     categoriamenu: `
-    <a id="menu-\${id}" class="btn btn-white btn-sm mr-3" onclick="cardapio.metodos.obterItensCardapio('\${nome}')">
+    <a id="menu-\${id}" class="btn-group btn btn-white btn-sm mr-3"  onclick="cardapio.metodos.obterItensCardapio('\${nome}')">
         <i class="fas fa-hamburger"></i>&nbsp; \${nome}
     </a>
     `,

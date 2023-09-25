@@ -147,15 +147,15 @@ a.navbar-brand {
     border-radius: 170px;
     background-color: #f4c949;
     position: absolute;
-    right: 0;
-    top: -80;
+    right: 370px;
+    top: 294px;
 }
 
 .img-banner img {
     position: absolute;
     width: 570px;
-    top: 30px;
-    right: 15px;
+    top: 376px;
+    right: 450;
 }
 
 .card {
@@ -325,7 +325,6 @@ a.navbar-brand {
     background-color: var(--color-black-heavy);
     margin-left: 15px;
 }
-
 .btn-add:hover {
     border: 2px solid var(--color-black-heavy);
     font-size: 16px;
@@ -335,7 +334,6 @@ a.navbar-brand {
     background-color: var(--color-black-heavy);
     margin-left: 15px;
 }
-
 
 .card-item:hover {
     background-color: var(--color-primary);
