@@ -22,6 +22,7 @@ cardapio.eventos = {
         cardapio.metodos.obterItensCardapio();
         cardapio.metodos.carregarBotaoLigar();
         cardapio.metodos.carregarBotaoReserva();
+        
     }
 
 }
