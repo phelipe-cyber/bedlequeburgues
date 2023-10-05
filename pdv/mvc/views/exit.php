@@ -46,21 +46,6 @@ $despesa = mysqli_query($conn, $tab_despesa);
 while ($rows_rendimento = mysqli_fetch_assoc($caixa_rendimento)) { 
     $rendimento =  $rows_rendimento['Rendimento'];
 }
-
-$tab_caixa = "SELECT * FROM caixa order by `data_hora` DESC ";
-
-$caixa = mysqli_query($conn, $tab_caixa);
-while ($rows_caixa = mysqli_fetch_assoc($caixa)) {
-    $dataHora = date('d/m/Y H:i:s', strtotime($rows_caixa['data_hora']));
-    $update_at = $rows_caixa['update_at'];
-    if($update_at == NULL){
-        $update_at == '';
-    }else{
-        $update_at = date('d/m/Y H:i:s', strtotime($rows_caixa['update_at']));
-    }
-      $valor_abertura = $rows_caixa['valor_abertura'];
-    
-}
 ?>
 <!DOCTYPE html>
 <html>
@@ -75,24 +60,16 @@ while ($rows_caixa = mysqli_fetch_assoc($caixa)) {
         <div class="row">
             <div class="col-4" id="mensagem" style="visibility: visible"><?php if (isset($_SESSION['msg'])) {echo $_SESSION['msg'];  unset($_SESSION['msg']); }?></div>
         </div>
-            <div class="row">
-            
-            <div class="form-group col-2">
-                <label for="recipient-name" class="col-form-label">Valor Fechamento Caixa:</label>
-                <!-- <input required type="text" name="valor_final" id="valor_final" class="form-control"> -->
-                <input readonly type="text" name="valor_final" value="<?php echo $rendimento ?>" id="valor_final" class="form-control" onkeyup="formatarMoeda();">
-            </div>
-            
-            <div class="form-group col-2">
-                <label for="recipient-name" class="col-form-label">Valor De Abertura Caixa:</label>
-                <!-- <input required type="text" name="valor_final" id="valor_final" class="form-control"> -->
-                <input readonly type="text" name="valor_final" value="<?php echo $valor_abertura ?>" id="valor_final" class="form-control" onkeyup="formatarMoeda();">
-            </div>
-            
-            <div class="form-group col-2">
-                <div class="col-2">
-                    <button type="submit" class="btn btn-success">Fechar Caixa</button>
-                </div> 
+
+        <div class="form-group col-md-2">
+            <label for="recipient-name" class="col-form-label">Valor Final:</label>
+            <!-- <input required type="text" name="valor_final" id="valor_final" class="form-control"> -->
+            <input readonly type="text" name="valor_final" value="<?php echo $rendimento ?>" id="valor_final" class="form-control" onkeyup="formatarMoeda();">
+        </div>
+       
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-success">Fechar Caixa</button>
             </div>
         </div>
         <script>
