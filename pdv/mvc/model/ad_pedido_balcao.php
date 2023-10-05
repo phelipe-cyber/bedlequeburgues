@@ -6,7 +6,6 @@ $hora_pedido = date('H:i');
 
 include_once ("conexao.php");
 
-
 if( $_POST['pedido'] <> ""){
   // print_r($_POST);
  
@@ -31,6 +30,8 @@ $cliente_2 = $_POST['nomecliente'];
   $pedido =     ($rows_previa['produto']);
   $preco_venda = $rows_previa['valor'];
   $observacoes = $rows_previa['observacao'];
+  $id_produto = $rows_previa['id_produto'];
+
 
    $insert_table = "INSERT INTO pedido (numeropedido, delivery,cliente, idmesa, produto, quantidade, hora_pedido, valor, observacao, pgto ,usuario, `data`, gorjeta, status) VALUES
   ('$numeropedido','','$id_cliente', '$id_mesa', '$pedido', '$quantidade', '$hora_pedido', '$preco_venda', '$observacoes','$pgto','$user', '$data_hora','', 1 )";
@@ -39,6 +40,17 @@ $cliente_2 = $_POST['nomecliente'];
   
   $insert_table = "UPDATE mesas SET status = '2', nome = '$cliente', id_pedido = '$numeropedido' WHERE id_mesa = $id_mesa";
   $adiciona_pedido_2 = mysqli_query($conn, $insert_table);
+  $tab_produtos = "SELECT * FROM `produtos` where nome <> 'Frete' and id = '$id_produto' ORDER by id ASC" ;
+  $produtos = mysqli_query($conn, $tab_produtos);
+  
+  while ($rows_produtos = mysqli_fetch_assoc($produtos)) {
+         $estoque_atual = $rows_produtos['estoque_atual'];
+  }
+  
+    $quantidadeAtual = $estoque_atual - $quantidade;
+  
+   $update = "UPDATE `produtos` SET `estoque_atual` = '$quantidadeAtual' WHERE `produtos`.`id` = '$id_produto' ";
+   $updatequantidade = mysqli_query($conn, $update);
 
 };
 
@@ -109,6 +121,8 @@ $hashpagina = $_POST['hashpagina'];
   $pedido =     ($rows_previa['produto']);
   $preco_venda = $rows_previa['valor'];
   $observacoes = $rows_previa['observacao'];
+  $id_produto = $rows_previa['id_produto'];
+
   
   $insert_table = "INSERT INTO pedido (numeropedido, delivery,cliente, idmesa, produto, quantidade, hora_pedido, valor, observacao, pgto, usuario, `data` , gorjeta, status ) VALUES
   ('$numeropedido','','$cliente', '$id_mesa', '$pedido', '$quantidade', '$hora_pedido', '$preco_venda', '$observacoes', '$pgto','$user','$data_hora' ,'' , 1 )";
@@ -120,6 +134,19 @@ $adiciona_pedido_2 = mysqli_query($conn, $insert_table);
 
 };
 //  die();
+
+$tab_produtos = "SELECT * FROM `produtos` where nome <> 'Frete' and id = '$id_produto' ORDER by id ASC" ;
+$produtos = mysqli_query($conn, $tab_produtos);
+
+while ($rows_produtos = mysqli_fetch_assoc($produtos)) {
+       $estoque_atual = $rows_produtos['estoque_atual'];
+}
+
+  $quantidadeAtual = $estoque_atual - $quantidade;
+
+ $update = "UPDATE `produtos` SET `estoque_atual` = '$quantidadeAtual' WHERE `produtos`.`id` = '$id_produto' ";
+ $updatequantidade = mysqli_query($conn, $update);
+
 
 $novoIdInserido = $conn->insert_id;
 

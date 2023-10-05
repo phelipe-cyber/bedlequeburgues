@@ -8,7 +8,7 @@ $mesa = $_POST['mesa'];
 $idproduto = $_POST['idproduto'];
 
 
-echo $exclude_table = "DELETE FROM pedido WHERE idpedido = '$idproduto' and numeropedido = '$id' ";
+$exclude_table = "DELETE FROM pedido WHERE idpedido = '$idproduto' and numeropedido = '$id' ";
 
 $produto_excluido = mysqli_query($conn, $exclude_table);
 

@@ -2,8 +2,8 @@
 session_start();
 include_once("conexao.php");
 
-// print_r($_POST);
-// exit();
+print_r($_POST);
+exit();
 
 $user =  $_SESSION['user'];
 $hora_pedido = date('H:i');
@@ -67,6 +67,7 @@ if($mesa == 'delivery'){
   $pedido =     ($rows_previa['produto']);
   $preco_venda = $rows_previa['valor'];
   $observacoes = $rows_previa['observacoes'];
+  $id_produto = $rows_previa['id_produto'];
 
  $insert_table = "INSERT INTO pedido ( numeropedido, delivery,cliente, idmesa, produto, quantidade, hora_pedido, valor, observacao, usuario, gorjeta, status) 
  VALUES ('$numeropedido','','$cliente', '$mesa', '$pedido', '$quantidade', '$hora_pedido', '$preco_venda', '$observacoes', '$user', '', $status )";
@@ -78,6 +79,19 @@ if($mesa == 'delivery'){
   $update_table = "UPDATE mesas SET status = '2', nome = '$cliente', id_pedido = '$numeropedido' WHERE id_mesa = $id_mesa";
   $update_pedido = mysqli_query($conn, $update_table);
  
+  $tab_produtos = "SELECT * FROM `produtos` where nome <> 'Frete' and id = '$id_produto' ORDER by id ASC" ;
+  $produtos = mysqli_query($conn, $tab_produtos);
+
+  while ($rows_produtos = mysqli_fetch_assoc($produtos)) {
+         $estoque_atual = $rows_produtos['estoque_atual'];
+  }
+
+    $quantidadeAtual = $estoque_atual - $quantidade;
+
+   $update = "UPDATE `produtos` SET `estoque_atual` = '$quantidadeAtual' WHERE `produtos`.`id` = '$id_produto' ";
+   $updatequantidade = mysqli_query($conn, $update);
+
+
   header("Location: /pdv/?view=pedidos_delivery");
 
   $conn->close();
