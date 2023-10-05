@@ -2,9 +2,6 @@
 session_start();
 include_once("conexao.php");
 
-print_r($_POST);
-exit();
-
 $user =  $_SESSION['user'];
 $hora_pedido = date('H:i');
 // $pedido = $_POST['pedido'];

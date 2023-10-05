@@ -46,11 +46,16 @@ $cliente_2 = $_POST['nomecliente'];
   while ($rows_produtos = mysqli_fetch_assoc($produtos)) {
          $estoque_atual = $rows_produtos['estoque_atual'];
   }
-  
+
+  if( $estoque_atual == "" ){
+  }else{
+
     $quantidadeAtual = $estoque_atual - $quantidade;
-  
-   $update = "UPDATE `produtos` SET `estoque_atual` = '$quantidadeAtual' WHERE `produtos`.`id` = '$id_produto' ";
-   $updatequantidade = mysqli_query($conn, $update);
+    $update = "UPDATE `produtos` SET `estoque_atual` = '$quantidadeAtual' WHERE `produtos`.`id` = '$id_produto' ";
+    $updatequantidade = mysqli_query($conn, $update);
+
+  }
+
 
 };
 
@@ -142,11 +147,14 @@ while ($rows_produtos = mysqli_fetch_assoc($produtos)) {
        $estoque_atual = $rows_produtos['estoque_atual'];
 }
 
-  $quantidadeAtual = $estoque_atual - $quantidade;
+if( $estoque_atual == "" ){
+  }else{
 
- $update = "UPDATE `produtos` SET `estoque_atual` = '$quantidadeAtual' WHERE `produtos`.`id` = '$id_produto' ";
- $updatequantidade = mysqli_query($conn, $update);
+    $quantidadeAtual = $estoque_atual - $quantidade;
+    $update = "UPDATE `produtos` SET `estoque_atual` = '$quantidadeAtual' WHERE `produtos`.`id` = '$id_produto' ";
+    $updatequantidade = mysqli_query($conn, $update);
 
+  }
 
 $novoIdInserido = $conn->insert_id;
 
