@@ -146,7 +146,7 @@ where numeropedido = '$id'";
                     <hr>
                 <td class="th-sm"> <?php echo $produto ?> </td>
                 <br>
-                <td class="th-sm"> <b> <?php echo $quantidade ?> </b> Un. </td>
+                <td class="th-sm"> <b> <?php echo $quantidade ?> </b> Unidade. </td>
                 <br>
                 <td class="th-sm"> <?php echo "Obs.". $obs ?> </td>
                 <br>
