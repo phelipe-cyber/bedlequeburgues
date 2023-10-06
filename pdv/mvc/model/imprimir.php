@@ -146,10 +146,17 @@ where numeropedido = '$id'";
                     <hr>
                 <td class="th-sm"> <?php echo $produto ?> </td>
                 <br>
-                <td class="th-sm"> <b> <?php echo $quantidade ?> </b> Unidade. </td>
+                <td class="th-sm"> <b> <?php echo $quantidade ?> </b> Unidade </td>
                 <br>
-                <td class="th-sm"> <?php echo "Obs.". $obs ?> </td>
-                <br>
+                <?php
+                    if( $obs != "" ){
+                        ?>        
+                            <td class="th-sm"> <b> Obs.: </b> <?php echo $obs ?> </td>
+                            <br>
+                        <?php
+                    }else{
+                    }
+                ?>
                 <td class="th-sm"> <?php echo "R$ ". $total ?> </td>
 
             </tr>
