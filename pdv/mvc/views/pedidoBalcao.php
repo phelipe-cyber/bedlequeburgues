@@ -175,6 +175,43 @@ $(document).ready(function() {
                     });
                     </script>
 
+                    <label for="">* TIPO:</label>
+
+                    <div class="custom-control custom-switch">
+                        <input checked value="" type="checkbox" name="tipo" class="custom-control-input" id="customSwitch">
+                        <label id="custom-control-label" class="custom-control-label" for="customSwitch">Local</label>
+                    </div>
+                        
+                        <script>
+
+                            $(document).ready(function() {
+                                $("#customSwitch").click(function() {
+
+                                    var isChecked = document.getElementById("customSwitch").checked;
+                                    console.log(isChecked);
+
+                                    if (isChecked == false) {
+
+                                            var labe1 = document.getElementById('custom-control-label');
+                                            labe1.innerText = "Levar";
+                                            
+                                            document.getElementById('customSwitch').value = 'Levar'
+                                            
+
+                                    } else {
+
+                                        var labe1 = document.getElementById('custom-control-label');
+                                            labe1.innerText = "Local";
+                                            
+                                            document.getElementById('customSwitch').value = 'Local'
+
+                                    }
+
+                                });
+                            });
+                        </script>
+                    
+
                 <b>
                     <label for="">* Forma de Pagamento:</label>
                 </b>

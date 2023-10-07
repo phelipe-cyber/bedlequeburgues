@@ -19,6 +19,7 @@ $user =  $_SESSION['user'];
 $detalhes =  $_POST['detalhes'];
 $pgto = $_POST['pgto'];
 $cliente_2 = $_POST['nomecliente'];
+$tipo = $_POST['tipo'];
 
  $sql_previa = "SELECT * FROM `pedido_previa` where quantidade <> '' and hashpagina = '$hashpagina' GROUP BY id_produto order by id ASC";
     $pedido_previa = mysqli_query($conn, $sql_previa);
@@ -34,7 +35,7 @@ $cliente_2 = $_POST['nomecliente'];
 
 
    $insert_table = "INSERT INTO pedido (numeropedido, delivery,cliente, idmesa, produto, quantidade, hora_pedido, valor, observacao, pgto ,usuario, `data`, gorjeta, status) VALUES
-  ('$numeropedido','','$id_cliente', '$id_mesa', '$pedido', '$quantidade', '$hora_pedido', '$preco_venda', '$observacoes','$pgto','$user', '$data_hora','', 1 )";
+  ('$numeropedido','$tipo','$id_cliente', '$id_mesa', '$pedido', '$quantidade', '$hora_pedido', '$preco_venda', '$observacoes','$pgto','$user', '$data_hora','', 1 )";
  
   $adiciona_pedido = mysqli_query($conn, $insert_table);
   
@@ -98,6 +99,7 @@ $user =  $_SESSION['user'];
 $cliente = ($_POST['cliente']);
 $cliente_2 = ($_POST['cliente']);
 $pgto = ($_POST['pgto']);
+$tipo = ($_POST['tipo']);
 $hashpagina = $_POST['hashpagina'];
 
 // foreach ($detalhes as $detalhesPedidos) {
@@ -130,7 +132,7 @@ $hashpagina = $_POST['hashpagina'];
 
   
   $insert_table = "INSERT INTO pedido (numeropedido, delivery,cliente, idmesa, produto, quantidade, hora_pedido, valor, observacao, pgto, usuario, `data` , gorjeta, status ) VALUES
-  ('$numeropedido','','$cliente', '$id_mesa', '$pedido', '$quantidade', '$hora_pedido', '$preco_venda', '$observacoes', '$pgto','$user','$data_hora' ,'' , 1 )";
+  ('$numeropedido','$tipo','$cliente', '$id_mesa', '$pedido', '$quantidade', '$hora_pedido', '$preco_venda', '$observacoes', '$pgto','$user','$data_hora' ,'' , 1 )";
 
 $adiciona_pedido = mysqli_query($conn, $insert_table);
 

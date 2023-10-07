@@ -54,6 +54,7 @@ where numeropedido = '$id'";
      $data_hora = date('d/m/Y H:i:s', strtotime( $rows_Result_pedido['data']));
      $pgto = $rows_Result_pedido['pgto'];
      $cliente = $rows_Result_pedido['nome'];
+     $tipo = $rows_Result_pedido['delivery'];
      
           if( empty($cliente) ){
              $cliente = ($rows_Result_pedido['cliente']);
@@ -84,7 +85,8 @@ where numeropedido = '$id'";
     <hr>
 
     <a class="text-center col-lg-2"><b>Cliente: </b><?php echo $cliente ?></a></br>
-    <a class="text-center col-lg-2"><b>Data Hora: </b><?php echo $data_hora ?></a>
+    <a class="text-center col-lg-2"><b>Data Hora: </b><?php echo $data_hora ?></a></br>
+    <a class="text-center col-lg-2"><b>Tipo: </b><?php echo $tipo ?></a>
         <thead>
             <tr >
             </tr>
