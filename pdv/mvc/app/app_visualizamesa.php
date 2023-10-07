@@ -55,8 +55,21 @@
 	<a style="background: #2d3339; height: 100%; width: 23%; color: white;" type="button" href="app_mesas.php" class="btn btn-outline-light"><h4>Voltar</h4></a>
 	<h3 class="mb-12 " style="background: #2d3339; width: 16%; " ></h3>
 
-	<h4 class="mb-12 text-center" style="color: white; width: 20%; ">Mesa <?php echo $id . " ". $rows_mesas['nome']; ?></h4>
-	<!-- <h4 class="mb-12 col-lg-12 text-center" style="color: white; width: 20%; "><?php echo  $rows_mesas['nome']; ?></h4> -->
+	<?php
+                if( $id_pedido <> 0 ){
+                  ?>
+				  	<h4 class="mb-12 text-center" style="color: white; width: 20%; "><?php echo  $rows_mesas['nome']; ?></h4>
+				   <?php
+                }else{
+                  ?>
+					  <h4 class="mb-12 text-center" style="color: white; width: 20%; ">Mesa <?php echo $id . " ". $rows_mesas['nome']; ?></h4>
+				   <?php
+
+                }
+              ?>
+
+
+
 
 	<h3 class="mb-12 " style="background: #2d3339; width: 36%; " ></h3>
 

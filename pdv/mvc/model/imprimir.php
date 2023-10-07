@@ -86,7 +86,7 @@ where numeropedido = '$id'";
 
     <a class="text-center col-lg-2"><b>Cliente: </b><?php echo $cliente ?></a></br>
     <a class="text-center col-lg-2"><b>Data Hora: </b><?php echo $data_hora ?></a></br>
-    <a class="text-center col-lg-2"><b>Tipo: </b><?php echo $tipo ?></a>
+    <a class="text-center col-lg-2"><b>* Tipo: </b><?php echo $tipo ?></a>
         <thead>
             <tr >
             </tr>
@@ -146,19 +146,16 @@ where numeropedido = '$id'";
 
             <tr  >
                     <hr>
-                <td class="th-sm"> <?php echo $produto ?> </td>
-                <br>
-                <td class="th-sm"> <b> <?php echo $quantidade ?> </b> Unidade </td>
-                <br>
                 <?php
                     if( $obs != "" ){
-                        ?>        
-                            <td class="th-sm"> <b> Obs.: </b> <?php echo $obs ?> </td>
-                            <br>
+                        ?>
+                           <font size="4"> <b> * Obs.: <?php echo $obs ?></b></font> <br/>
                         <?php
                     }else{
                     }
                 ?>
+                <font size="4"> <b> Item: </b><?php echo $produto ?></font><br/>
+                <font size="3">  Qtd.: <b> <?php echo $quantidade ?></b></font> <br/>
                 <td class="th-sm"> <?php echo "R$ ". $total ?> </td>
 
             </tr>

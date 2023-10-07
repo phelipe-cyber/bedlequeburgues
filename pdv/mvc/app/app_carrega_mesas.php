@@ -114,7 +114,15 @@ if ($i == 1) {
 
             <div class=" <?php echo $cor; ?> text-white shadow">
               <div class="card-body" style="text-align: center;">
-                <h4 class="mb-10 text-center">Mesa <?php echo $id_mesa ?></h4>
+
+              <?php
+                if( $id_pedido <> 0 ){
+                  ?><h4 class="mb-10 text-center"> <?php echo $cliente ?></h4> <?php
+                }else{
+                  ?><h4 class="mb-10 text-center">Mesa <?php echo $id_mesa ?></h4> <?php
+
+                }
+              ?>
 
                 <button type="submit" class="btn  btn-outline-light" style="text-align: center;" data-toggle="modal"> Abrir <?php echo $rows_mesas['id_mesa']; ?></button>
               </div>

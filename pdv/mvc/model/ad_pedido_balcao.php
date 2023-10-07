@@ -41,6 +41,7 @@ $tipo = $_POST['tipo'];
   
   $insert_table = "UPDATE mesas SET status = '2', nome = '$cliente', id_pedido = '$numeropedido' WHERE id_mesa = $id_mesa";
   $adiciona_pedido_2 = mysqli_query($conn, $insert_table);
+  
   $tab_produtos = "SELECT * FROM `produtos` where nome <> 'Frete' and id = '$id_produto' ORDER by id ASC" ;
   $produtos = mysqli_query($conn, $tab_produtos);
   
