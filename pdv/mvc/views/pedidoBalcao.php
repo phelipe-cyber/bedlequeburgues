@@ -178,7 +178,7 @@ $(document).ready(function() {
                     <label for="">* TIPO:</label>
 
                     <div class="custom-control custom-switch">
-                        <input checked value="" type="checkbox" name="tipo" class="custom-control-input" id="customSwitch">
+                        <input checked value="Local" type="checkbox" name="tipo" class="custom-control-input" id="customSwitch">
                         <label id="custom-control-label" class="custom-control-label" for="customSwitch">Local</label>
                     </div>
                         
