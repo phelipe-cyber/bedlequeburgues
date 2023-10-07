@@ -146,6 +146,7 @@ where numeropedido = '$id'";
 
             <tr  >
                     <hr>
+                <font size="3"> <b><?php echo $quantidade . " x " .$produto ?></b></font><br/>
                 <?php
                     if( $obs != "" ){
                         ?>
@@ -154,8 +155,6 @@ where numeropedido = '$id'";
                     }else{
                     }
                 ?>
-                <font size="4"> <b> Item: </b><?php echo $produto ?></font><br/>
-                <font size="3">  Qtd.: <b> <?php echo $quantidade ?></b></font> <br/>
                 <td class="th-sm"> <?php echo "R$ ". $total ?> </td>
 
             </tr>
