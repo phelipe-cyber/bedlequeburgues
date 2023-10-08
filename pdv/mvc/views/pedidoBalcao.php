@@ -178,8 +178,9 @@ $(document).ready(function() {
                     <label for="">* TIPO:</label>
 
                     <div class="custom-control custom-switch">
-                        <input checked value="Local" type="checkbox" name="tipo" class="custom-control-input" id="customSwitch">
+                        <input checked value="Local" type="checkbox" class="custom-control-input" id="customSwitch">
                         <label id="custom-control-label" class="custom-control-label" for="customSwitch">Local</label>
+                        <input type="hidden" name="tipo" id="tipo" value="Local" >
                     </div>
                         
                         <script>
@@ -188,14 +189,14 @@ $(document).ready(function() {
                                 $("#customSwitch").click(function() {
 
                                     var isChecked = document.getElementById("customSwitch").checked;
-                                    console.log(isChecked);
+                                    // console.log(isChecked);
 
                                     if (isChecked == false) {
 
                                             var labe1 = document.getElementById('custom-control-label');
                                             labe1.innerText = "Levar";
                                             
-                                            document.getElementById('customSwitch').value = 'Levar'
+                                            document.getElementById('tipo').value = 'Levar'
                                             
 
                                     } else {
@@ -203,7 +204,7 @@ $(document).ready(function() {
                                         var labe1 = document.getElementById('custom-control-label');
                                             labe1.innerText = "Local";
                                             
-                                            document.getElementById('customSwitch').value = 'Local'
+                                            document.getElementById('tipo').value = 'Local'
 
                                     }
 

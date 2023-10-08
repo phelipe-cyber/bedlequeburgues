@@ -7,7 +7,13 @@ session_start();
 <?php
 include_once "../model/conexao.php";
 
-$tab_mesas = "SELECT * FROM mesas";
+// $tab_mesas = "SELECT * FROM mesas";
+// $tab_mesas = "SELECT * FROM pedido WHERE `status` <> 4";
+$tab_mesas = "SELECT * FROM pedido p  
+    left JOIN clientes c on c.id = p.cliente
+    where p.`status` <> 4 and p.status_cozinha <> 2
+    group by p.numeropedido
+    ORDER BY `p`.`numeropedido` ASC";
 
 $mesas = mysqli_query($conn, $tab_mesas);
 
@@ -18,16 +24,16 @@ $i = $_SESSION['loginapp'];
 if ($i == 1) {
 ?>
 
-  <div class="row text-center" style="background: #2d3339; height: 6%; ">
+  <div class="row" style="background: #2d3339; height: 6%;">    
+    
+    <!-- <h6 class="" style="color: black; width: 20%; ">Mesas</h6> -->
 
-    <a style=" font-size: 20px; color: #888888;" class="dropdown-item" href="app_cozinha.php">
-                  <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>Pedidos COZINHA
-    </a>
+	<a style="background: #2d3339; height: 100%; width: 23%; color: white;" type="button" href="app_mesas.php" class="btn btn-outline-light"><h4>Voltar</h4></a>
 
   </div>
 
 
-  <div class="mb-12 " style=" height: 5%;"></div>
+  <div class="mb-12" style=" height: 5%;"></div>
 
 
   <div class="container">
@@ -38,7 +44,7 @@ if ($i == 1) {
 
 
       while ($rows_mesas = mysqli_fetch_assoc($mesas)) {
-
+        // print_r($rows_mesas);
         $nome = utf8_encode($rows_mesas['nome']);
         $id_mesa = $rows_mesas['id_mesa'];
 
@@ -63,18 +69,10 @@ if ($i == 1) {
           $link_mesas = "mesasLivres";
         }
 
-
-        //inicia a seleção da tabela pedido
-        $tab_pedido = "SELECT * FROM pedido WHERE numeropedido = $id_pedido and `status` <> 4";
-        $pedido = mysqli_query($conn, $tab_pedido);
-
-        $total = 0;
-
-        while ($row = mysqli_fetch_assoc($pedido)) {
-
+            // print_r($row);
           //recebe e soma todos os pedidos
-          $quantidade = $row['quantidade'];
-          $valor = $row['valor'];
+          $quantidade = $rows_mesas['quantidade'];
+          $valor = $rows_mesas['valor'];
 
           if ($valor != NULL && $quantidade != NULL) {
 
@@ -82,14 +80,14 @@ if ($i == 1) {
             $total += $subtotal;
 
             //armazena o ultimo id de pedido feito pela mesma mesa
-            $idpedido = $row['idpedido'];
+            $idpedido = $rows_mesas['idpedido'];
 
             //recebe a hora do ultimo pedido
-            $hora = $row['hora_pedido'];
+            $hora = $rows_mesas['hora_pedido'];
             
-            $id_pedido = $row['numeropedido'];
+            $id_pedido = $rows_mesas['numeropedido'];
 
-            $cliente = $row['cliente'];
+            $cliente = $rows_mesas['cliente'];
             
             
         } else {
@@ -99,21 +97,17 @@ if ($i == 1) {
         
       ?>
 
-        <?php
-
-        }
-
-        ?>
 
         <div class="col-6" style="text-align: center;">
 
-          <form method="GET" action="app_visualizamesa.php">
+          <form method="GET" action="app_visualizapedido.php">
 
             <div class=" <?php echo $cor; ?> text-white shadow">
               <div class="card-body" style="text-align: center;">
 
               <?php
                 if( $id_pedido <> 0 ){
+                    ?><h4 class="mb-10 text-center"> <?php echo 'Pedido: '. $id_pedido ?></h4> <?php
                   ?><h4 class="mb-10 text-center"> <?php echo $cliente ?></h4> <?php
                 }else{
                   ?><h4 class="mb-10 text-center">Mesa <?php echo $id_mesa ?></h4> <?php
