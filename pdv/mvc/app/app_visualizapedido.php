@@ -36,7 +36,7 @@
     $tab_pedido = "SELECT * FROM pedido WHERE numeropedido = $id_pedido and `status` <> 4 ";
 
 	$pedidos = mysqli_query($conn, $tab_pedido);
-
+	$pedidos_2 = mysqli_query($conn, $tab_pedido);
 	// $tab_mesas = "SELECT * FROM mesas WHERE id_mesa = $id";
 
 	// $mesas = mysqli_query($conn, $tab_mesas);
@@ -76,8 +76,13 @@
 <div class="mb-12 " style=" height: 5%;" ></div>
 
 <?php if (mysqli_num_rows($pedidos) != 0 ){?>
-
-<h2 class="col-lg-12 text-center" style="color: black;"><?php echo 'Pedido: ' . $id_pedido; ?></h2>
+    <?php
+        while($rows_pedidos_2 = mysqli_fetch_assoc($pedidos_2)){
+            $delivery = $rows_pedidos_2['delivery'];
+        }
+    ?>
+<h2 class="col-lg-12 text-center" style="color: black;"><?php echo 'Pedido: ' . $id_pedido ; ?></h2>
+<h2 class="col-lg-12 text-center" style="color: black;"><?php echo 'Tipo: '. $delivery ; ?></h2>
 <h2 class="col-lg-12 text-center" style="color: #da7016;"><?php echo 'Horário: '.$hora; ?></h2>
 
 <div class="mb-12 " style=" height: 5%;" ></div>
@@ -97,7 +102,7 @@
 	</div>
 
 	<div class="col-12 " style="">
-
+   
 		<form method="GET" action="app_pedidofeito.php">
 			<input name="id" type="hidden" id="id" value="<?php echo $id; ?>">
             <input name="id_pedido" type="hidden" id="id_pedido" value="<?php echo $id_pedido; ?>">
@@ -129,7 +134,7 @@
 
 		  <!-- <td><b><?php echo $row;?></b></td> -->
           <td style="color: #ac4549; "><b><?php echo $rows_pedidos['produto'];?></b></td>
-          <td><?php echo $rows_pedidos['quantidade'];?></td>
+          <td><b><?php echo $rows_pedidos['quantidade']." x";?></b></td>
           <!-- <td>R$ <?php echo $rows_pedidos['valor'];?></td> -->
           <td><?php echo $rows_pedidos['observacao'];?></td>
           <!-- <td><?php echo $rows_pedidos['numeropedido'];?></td> -->
