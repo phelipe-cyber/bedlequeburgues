@@ -55,7 +55,7 @@ $clientes = mysqli_query($conn, $tab_clientes);
 					<div id="cep_select" class="row">
 
 						<div class="form-group col-md-2">
-							<label for="recipient-name" class="col-form-label">CEP:</label>
+							<label required for="recipient-name" class="col-form-label">CEP:</label>
 							<input id="cep" name="cep" type="text" class="form-control" maxlength="09" oninput="capturarDados()" >
 						</div>
 					</div>
