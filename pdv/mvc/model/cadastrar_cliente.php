@@ -27,11 +27,26 @@
 	$apartamento = mysqli_real_escape_string($conn, $_POST['apartamento']);
 	$localentrega = mysqli_real_escape_string($conn, $_POST['localentrega']);
 	$observacoes = mysqli_real_escape_string($conn, $_POST['observacoes']);
-	
+
 
 	$insert_table = "INSERT INTO clientes (nome, endereco, bairro, cidade, estado, complemento, cep, ponto_referecia, tel1, tel2, email, cpf_cnpj, rg, condominio, bloco, apartamento, local_entrega, observacoes) VALUES ('$nome', '$endereco', '$bairro', '$cidade', '$estado', '$complemento', '$cep', '$pontoreferencia', '$tel1', '$tel2', '$email', '$cpfcnpj', '$rg', '$condominio', '$blocoedificio', '$apartamento', '$localentrega', '$observacoes')";	
 	$cadastra_cliente = mysqli_query($conn, $insert_table);
 
+	$lat = mysqli_real_escape_string($conn, $_POST['lat']);
+	$long = mysqli_real_escape_string($conn, $_POST['long']);
+
+	$select_geo = "SELECT * FROM `cep_coordinates` WHERE postcode = '$cep' ";
+	$conn_geo = mysqli_query($conn, $select_geo);
+
+	while ($rows_geo = mysqli_fetch_assoc($conn_geo)) {
+		$postcode = $rows_geo['postcode'];
+	}
+		if($postcode == ""){
+			$insert_table_geo = "INSERT INTO `cep_coordinates`(`postcode`, `lon`, `lat`, `cd_geocodi`) VALUES ('$cep','$long','$lat','')";	
+			$cadastra_geo = mysqli_query($conn, $insert_table_geo);
+		}else{
+
+		}
 ?>
 
 <!DOCTYPE html>

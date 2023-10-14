@@ -110,6 +110,15 @@ $(document).ready(function() {
 
 
             <form id="Form" action="mvc/model/ad_pedido_balcao.php" method="POST">
+                    <div class="row" style="padding: 10px;" >
+                        <label for=""> <b>* TIPO:</label></b>&nbsp;&nbsp;
+                        <div class="custom-control custom-switch">
+                            <input checked value="Local" type="checkbox" class="custom-control-input" id="customSwitch">
+                            <label id="custom-control-label" class="custom-control-label" for="customSwitch">Local</label>
+                            <input type="hidden" name="tipo" id="tipo" value="Local" >
+                        </div>
+                    </div>
+                        
                 <input type="hidden" id="hash" name="hashpagina" value="<?php echo $hashpagina ?>">
                 
                 <input type="hidden" name="categoria" id="categoria" value="<?php echo $categoria; ?>">
@@ -174,14 +183,6 @@ $(document).ready(function() {
                         })
                     });
                     </script>
-
-                    <label for="">* TIPO:</label>
-
-                    <div class="custom-control custom-switch">
-                        <input checked value="Local" type="checkbox" class="custom-control-input" id="customSwitch">
-                        <label id="custom-control-label" class="custom-control-label" for="customSwitch">Local</label>
-                        <input type="hidden" name="tipo" id="tipo" value="Local" >
-                    </div>
                         
                         <script>
 

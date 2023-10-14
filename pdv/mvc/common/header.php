@@ -40,7 +40,7 @@ $usuario = $_SESSION['user'];
 
   <!-- Custom styles for this template-->
   <link href="mvc/common/css/sb-admin-2.min.css" rel="stylesheet">
-
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDa_Y_n8iDiTspZmmyPhbBWwDJ8IJbHtR8"></script>
 </head>
 
 

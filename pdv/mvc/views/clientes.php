@@ -56,7 +56,7 @@ $clientes = mysqli_query($conn, $tab_clientes);
 
 						<div class="form-group col-md-2">
 							<label for="recipient-name" class="col-form-label">CEP:</label>
-							<input id="cep" name="cep" type="text" class="form-control">
+							<input id="cep" name="cep" type="text" class="form-control" maxlength="09" oninput="capturarDados()" >
 						</div>
 					</div>
 
@@ -76,11 +76,38 @@ $clientes = mysqli_query($conn, $tab_clientes);
 					</div>
 
 					<script>
-						$(document).ready(function() {
+						
+						// $(document).ready(function() {
+							// $("#cep_select").on('oninput', function(event) {
+								function capturarDados(){
+										
+									const inputElement = document.getElementById("cep").value;
+									
+									const rawCEP = inputElement.trim().replace(/\D/g, ''); // Remove caracteres não numéricos
 
-							$("#cep_select").on('keydown', function(event) {
+									if( rawCEP.length == 8 ){
 
-								if (event.keyCode === 9 || event.keyCode === 13) {
+									// Formatação para número de CEP no Brasil (exemplo: 12345-678)
+									const formattedCEP = rawCEP.replace(/(\d{5})(\d{3})/, '$1-$2');
+									document.getElementById("cep").value = formattedCEP;
+									const geocoder = new google.maps.Geocoder();
+
+									geocoder.geocode({ 'address': rawCEP }, function (results, status) {
+										if (status === 'OK') {
+											const lat = results[0].geometry.location.lat();
+											const lng = results[0].geometry.location.lng();
+
+											document.getElementById("lat").value = lat;
+											document.getElementById("long").value = lng;
+
+										} else {
+											document.getElementById("lat").value = 'Não foi possível encontrar as coordenadas para o CEP informado.';
+										}
+									});
+
+									// console.log(rawCEP.length);
+
+									// if (event.keyCode === 9 || event.keyCode === 13) {
 
 									var cep_completo = document.getElementById("cep").value
 
@@ -91,7 +118,7 @@ $clientes = mysqli_query($conn, $tab_clientes);
 
 									var cep = cep_completo.replace(/[^0-9]/g, '');
 
-									console.log(cep);
+									// console.log(cep);
 
 									$.ajax({
 										url: 'https://brasilapi.com.br/api/cep/v2/' + cep,
@@ -141,8 +168,8 @@ $clientes = mysqli_query($conn, $tab_clientes);
 
 								};
 
-							});
-						});
+							};
+						// });
 					</script>
 
 					<div class="row">
@@ -209,6 +236,16 @@ $clientes = mysqli_query($conn, $tab_clientes);
 							<label for="message-text" class="col-form-label">Apartamento:</label>
 							<input name="apartamento" type="text" class="form-control"></input>
 						</div>
+						
+						<div class="form-group col-md-4">
+							<label for="message-text" class="col-form-label">Latitude:</label>
+							<input id="lat"  name="lat" class="form-control"></input>
+						</div>
+
+						<div class="form-group col-md-4">
+							<label for="message-text" class="col-form-label">Lontitude:</label>
+							<input id="long" name="long" class="form-control"></input>
+						</div>
 
 						<div class="form-group col-md-12">
 							<label for="message-text" class="col-form-label">Local de Entrega:</label>
@@ -218,6 +255,7 @@ $clientes = mysqli_query($conn, $tab_clientes);
 							<label for="message-text" class="col-form-label">Observações:</label>
 							<textarea name="observacoes" class="form-control"></textarea>
 						</div>
+
 					</div>
 
 					<div class="modal-footer">
