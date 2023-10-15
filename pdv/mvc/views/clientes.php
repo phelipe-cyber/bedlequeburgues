@@ -49,7 +49,7 @@ $clientes = mysqli_query($conn, $tab_clientes);
 
 			</div>
 			<div class="modal-body">
-
+			<div id="enderecoResultado" style="display: none;" ></div>
 				<!-- CRIA O FORMULÁRIO PARA CADASTRAR E ENVIAR PELO METODO POST PARA O SCRIPT "cadastrar_clientes.php" -->
 				<form method="POST" action="mvc/model/cadastrar_cliente.php">
 					<div id="cep_select" class="row">
@@ -86,22 +86,54 @@ $clientes = mysqli_query($conn, $tab_clientes);
 									const rawCEP = inputElement.trim().replace(/\D/g, ''); // Remove caracteres não numéricos
 
 									if( rawCEP.length == 8 ){
-
+									
+									document.getElementById("spiner").style = 'display:block;'
+									document.getElementById("enderecoResultado").style ='display:none'
 									// Formatação para número de CEP no Brasil (exemplo: 12345-678)
 									const formattedCEP = rawCEP.replace(/(\d{5})(\d{3})/, '$1-$2');
 									document.getElementById("cep").value = formattedCEP;
 									const geocoder = new google.maps.Geocoder();
 
+									document.getElementById("endereco").value = "";									
+									document.getElementById("cidade").value = "";
+									document.getElementById("bairro").value = "";
+									document.getElementById("estado").value = "";
+
 									geocoder.geocode({ 'address': rawCEP }, function (results, status) {
 										if (status === 'OK') {
+											document.getElementById("spiner").style = 'display:none;';
+											console.log(results);
 											const lat = results[0].geometry.location.lat();
 											const lng = results[0].geometry.location.lng();
+
+											let bairro, cidade, estado, endereco;
+											for (const component of results[0].address_components) {
+                                           if (component.types.includes("sublocality_level_1")) {
+                                                 bairro = component.long_name;
+                                          }
+                                           if (component.types.includes("administrative_area_level_2")) {
+                                                cidade = component.long_name;
+                                           }
+                                           if (component.types.includes("route")) {
+                                                end = component.long_name;
+                                           }
+                                           if (component.types.includes("administrative_area_level_1")) {
+                                                estado = component.long_name;
+                                           }
+										};
+
+											document.getElementById("endereco").value = end;
+											document.getElementById("cidade").value = cidade;
+											document.getElementById("bairro").value = bairro;
+											document.getElementById("estado").value = estado;
 
 											document.getElementById("lat").value = lat;
 											document.getElementById("long").value = lng;
 
 										} else {
-											document.getElementById("lat").value = 'Não foi possível encontrar as coordenadas para o CEP informado.';
+											document.getElementById("spiner").style = 'display:none;';
+											document.getElementById("enderecoResultado").style = 'display:block'
+											document.getElementById("enderecoResultado").textContent = `Não foi possível encontrar as coordenadas e o endereço para o CEP: ${formattedCEP} informado.`;
 										}
 									});
 
@@ -109,62 +141,62 @@ $clientes = mysqli_query($conn, $tab_clientes);
 
 									// if (event.keyCode === 9 || event.keyCode === 13) {
 
-									var cep_completo = document.getElementById("cep").value
+									// var cep_completo = document.getElementById("cep").value
 
-									document.getElementById("endereco").value = "";									
-									document.getElementById("cidade").value = "";
-									document.getElementById("bairro").value = "";
-									document.getElementById("estado").value = "";
+									// document.getElementById("endereco").value = "";									
+									// document.getElementById("cidade").value = "";
+									// document.getElementById("bairro").value = "";
+									// document.getElementById("estado").value = "";
 
-									var cep = cep_completo.replace(/[^0-9]/g, '');
+									// var cep = cep_completo.replace(/[^0-9]/g, '');
 
 									// console.log(cep);
 
-									$.ajax({
-										url: 'https://brasilapi.com.br/api/cep/v2/' + cep,
-										method: "GET",
-										beforeSend: () => document.getElementById("spiner").style = 'display:block;',
-										success: function(response) {
-											// console.log(response);
-											console.log(response.message);
-											document.getElementById("spiner").style = 'display:none;';
+									// $.ajax({
+									// 	url: 'https://brasilapi.com.br/api/cep/v2/' + cep,
+									// 	method: "GET",
+									// 	beforeSend: () => document.getElementById("spiner").style = 'display:block;',
+									// 	success: function(response) {
+									// 		// console.log(response);
+									// 		console.log(response.message);
+									// 		document.getElementById("spiner").style = 'display:none;';
 
-											endereco = response.street;
-											document.getElementById("endereco").value = endereco;
+									// 		endereco = response.street;
+									// 		document.getElementById("endereco").value = endereco;
 
-											cidade = response.city;
-											document.getElementById("cidade").value = cidade;
+									// 		cidade = response.city;
+									// 		document.getElementById("cidade").value = cidade;
 
-											bairro = response.neighborhood
-											document.getElementById("bairro").value = bairro;
+									// 		bairro = response.neighborhood
+									// 		document.getElementById("bairro").value = bairro;
 
-											estado = response.state
-											document.getElementById("estado").value = estado;
-
-
-											// document.getElementById("pedido").focus();
-										},
-										error: function(err) {
-											document.getElementById("spiner").style = 'display:none;';
-											// console.log(err.responseJSON.message);
-											// console.log(err.responseJSON.errors[0].message);
-											Erro = err.responseJSON.errors[0].message;
-
-											var labe1 = document.getElementById('mensagem_erro');
-											labe1.innerHTML = Erro;
-
-											$("#erro_cep").fadeTo(5000, 500).slideUp(500, function() {
-												$("#erro_cep").slideUp(500);
-											});
-
-											document.getElementById("cep").value = "";
-											document.getElementById("cep").focus();
+									// 		estado = response.state
+									// 		document.getElementById("estado").value = estado;
 
 
-										},
-										complete: () => document.getElementById("spiner").style = 'display:none;',
+									// 		// document.getElementById("pedido").focus();
+									// 	},
+									// 	error: function(err) {
+									// 		document.getElementById("spiner").style = 'display:none;';
+									// 		// console.log(err.responseJSON.message);
+									// 		// console.log(err.responseJSON.errors[0].message);
+									// 		Erro = err.responseJSON.errors[0].message;
 
-									});
+									// 		var labe1 = document.getElementById('mensagem_erro');
+									// 		labe1.innerHTML = Erro;
+
+									// 		$("#erro_cep").fadeTo(5000, 500).slideUp(500, function() {
+									// 			$("#erro_cep").slideUp(500);
+									// 		});
+
+									// 		document.getElementById("cep").value = "";
+									// 		document.getElementById("cep").focus();
+
+
+									// 	},
+									// 	complete: () => document.getElementById("spiner").style = 'display:none;',
+
+									// });
 
 								};
 
