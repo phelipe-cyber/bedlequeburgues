@@ -76,7 +76,7 @@ if ($i == 1) {
 
           if ($valor != NULL && $quantidade != NULL) {
 
-            $subtotal = $valor * $quantidade;
+            $subtotal = $valor;
             $total += $subtotal;
 
             //armazena o ultimo id de pedido feito pela mesma mesa
