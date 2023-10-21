@@ -12,8 +12,21 @@ if( $dtinicio != "" || $dtfim != "" ){
      $dtfimFormatada = $_POST['dtfim'];
 
 }else{
-    $dtinicioFormatada = date('Y-m-d');
-    $dtfimFormatada = date('Y-m-d');
+   echo  $dtinicioFormatada = date('Y-m-d');
+   echo  $dtfimFormatada = date('Y-m-d');
+   // Obtém a data atual
+    $dataAtual = new DateTime();
+
+    // Obtém o primeiro dia do mês
+    $primeiroDiaDoMes = new DateTime($dataAtual->format('Y-m-01'));
+
+    // Obtém o último dia do mês
+    $ultimoDiaDoMes = new DateTime($dataAtual->format('Y-m-t'));
+
+    // Formate as datas conforme necessário
+    $dtinicioFormatada = $primeiroDiaDoMes->format('Y-m-d');
+    $dtfimFormatada = $ultimoDiaDoMes->format('Y-m-d');
+
 }
 echo "<br>";
 
@@ -28,7 +41,7 @@ DATE_FORMAT(`data`, '%Y-%m-%d') >= '$dtinicioFormatada' and DATE_FORMAT(`data`, 
 GROUP by
  produto
 ORDER by
- `data` ASC ;
+ `qtde` desc ;
 ";
 
 $produto = mysqli_query($conn, $tab_produto);
