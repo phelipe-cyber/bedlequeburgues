@@ -212,10 +212,15 @@ $clientes = mysqli_query($conn, $tab_clientes);
 						</div>
 
 						<div class="form-group col-md-6">
-							<label for="message-text" class="col-form-label">Endereço (Rua e Número):</label>
+							<label for="message-text" class="col-form-label">Endereço:</label>
 							<input  id="endereco" name="endereco" type="text" class="form-control">
 						</div>
+
 						<div class="form-group col-md-2">
+							<label for="message-text" class="col-form-label">Número:</label>
+							<input required id="number" name="number" type="text" class="form-control">
+						</div>
+						<div class="form-group col-md-4">
 							<label for="recipient-name" class="col-form-label">Bairro:</label>
 							<input  id="bairro" name="bairro" type="text" class="form-control">
 						</div>
