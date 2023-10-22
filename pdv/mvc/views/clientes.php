@@ -56,7 +56,7 @@ $clientes = mysqli_query($conn, $tab_clientes);
 
 						<div class="form-group col-md-2">
 							<label required for="recipient-name" class="col-form-label">CEP:</label>
-							<input id="cep" name="cep" type="text" class="form-control" maxlength="09" oninput="capturarDados()" >
+							<input id="cep" name="cep" type="text" class="form-control" maxlength="09" oninput="initMap()" >
 						</div>
 					</div>
 
@@ -79,7 +79,7 @@ $clientes = mysqli_query($conn, $tab_clientes);
 						
 						// $(document).ready(function() {
 							// $("#cep_select").on('oninput', function(event) {
-								function capturarDados(){
+								function initMap(){
 										
 									const inputElement = document.getElementById("cep").value;
 									
