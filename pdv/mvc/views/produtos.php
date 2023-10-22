@@ -12,8 +12,8 @@ if( $dtinicio != "" || $dtfim != "" ){
      $dtfimFormatada = $_POST['dtfim'];
 
 }else{
-   echo  $dtinicioFormatada = date('Y-m-d');
-   echo  $dtfimFormatada = date('Y-m-d');
+     $dtinicioFormatada = date('Y-m-d');
+     $dtfimFormatada = date('Y-m-d');
    // Obtém a data atual
     $dataAtual = new DateTime();
 
