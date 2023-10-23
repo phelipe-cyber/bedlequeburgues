@@ -21,7 +21,13 @@ while ($rows_produtos = mysqli_fetch_assoc($produtos)) {
 	$produto = $rows_produtos['nome'];
 }
 
-echo $insert_table = "INSERT INTO despesas (valor, despesa, qtde, data) VALUES ('$valor', '$produto','$quantidade', '$data')";
+if( $produto == "" ){
+	$produto = $_POST['despesa'];
+}else{
+	$produto = $rows_produtos['nome'];
+}
+
+$insert_table = "INSERT INTO despesas (valor, despesa, qtde, data) VALUES ('$valor', '$produto','$quantidade', '$data')";
 $cadastra_despesa = mysqli_query($conn, $insert_table);
 
 $quantidadeAtual = $estoque_atual + $quantidade;
