@@ -150,7 +150,7 @@
 
   				<div id="valor_pago_style_total" class="form-group col-md-6">
   					<label for="recipient-name" class="col-xl-12 text-center" style="font-size: 25px; background: blue; color: white; ">Valor Total \ Desconto</label>
-  					<input autofocus name="valor_pago" id="valor_frete" style="font-size: 25px" class="col-xl-12 col-md-6 mb-4 text-center" type="text" name="pagamento" value="<?php echo number_format($total, 2); ?>">
+  					<input autofocus name="valor_pago" id="valor_frete" style="font-size: 25px" class="col-xl-12 col-md-6 mb-4 text-center" type="text" value="<?php echo number_format($total, 2); ?>">
   				</div>
 
   			</div>
