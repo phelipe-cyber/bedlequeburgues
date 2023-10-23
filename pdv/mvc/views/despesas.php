@@ -170,13 +170,18 @@ $despesas = mysqli_query($conn, $tab_despesas);
 				<label for="message-text" class="col-form-label">Data:</label>
 				<input id="datepicker3" value="<?= $data_hoje ?>" name="data" id="data" type="text" class="form-control">
 			</div>
+            <div class="form-group col-md-3">
+                <label for="message-text" class="col-form-label">Valor Unitario:</label>
+                <input required value="" type="text" id="valor" class="form-control" oninput="formatarInputComoMoeda()">
+            </div>
 			<div class="form-group col-md-2">
 				<label for="message-text" class="col-form-label">Quantidade:</label>
-				<input required value="" name="qtde"  type="number" class="form-control">
+				<input value="" name="qtde" id="quantidade"  type="number" class="form-control" oninput="somartotal()">
 			</div>
+            
 			<div class="form-group col-md-3">
-				<label for="message-text" class="col-form-label">Valor:</label>
-				<input required value="" name="valor" id="valor" type="text" class="form-control" oninput="formatarInputComoMoeda()">
+				<label for="message-text" class="col-form-label">Valor TOTAL:</label>
+				<input readonly value="" name="valor" id="valortotal" type="text" class="form-control">
 			</div>
             
 			<div class="form-group col-md-3" style="display: inherit;">
@@ -185,13 +190,32 @@ $despesas = mysqli_query($conn, $tab_despesas);
             
 			</div>
             <script>
+                function somartotal(){
+                        
+                    const quantidade = parseFloat(document.getElementById('quantidade').value);
+                    if(!isNaN(quantidade)  ){
+                        
+                        const valor = document.getElementById('valor').value;
+                        const string_sem_moeda = valor.replace(/R\$\s*/g, '');
+                        var stringComPonto = string_sem_moeda.replace(',', '.');
+                        const soma = quantidade * stringComPonto;
+                        const somaFormatada = soma.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+                        document.getElementById('valortotal').value = somaFormatada
+
+                    }else{
+                        document.getElementById('valortotal').value = "";
+                    }
+
+                }
+            </script>
+            <script>
                 function formatarInputComoMoeda() {
                     const inputElement = document.getElementById('valor');
                     
                     const valorEntrada = inputElement.value.replace(/\D/g, ''); // Remove tudo que não for dígito (números)
                     const valorNumerico = parseFloat(valorEntrada) / 100; // Dividido por 100 para tratar centavos
                     const valorFormatado = valorNumerico.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-                    console.log(valorEntrada);
+                    
                     document.getElementById('valor').value = valorFormatado;
 
                 }
