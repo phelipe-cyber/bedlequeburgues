@@ -111,7 +111,7 @@ $(document).ready(function() {
 
             <form id="Form" action="mvc/model/ad_pedido_balcao.php" method="POST">
                     <div class="row" style="padding: 10px;" >
-                        <label for=""> <b>* TIPO:</label></b>&nbsp;&nbsp;
+                        <label for=""> <b>********* TIPO: *********</label></b>&nbsp;&nbsp;
                         <div class="custom-control custom-switch">
                             <input checked value="Local" type="checkbox" class="custom-control-input" id="customSwitch">
                             <label id="custom-control-label" class="custom-control-label" for="customSwitch">Local</label>
