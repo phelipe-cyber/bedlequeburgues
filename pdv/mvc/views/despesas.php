@@ -176,7 +176,7 @@ $despesas = mysqli_query($conn, $tab_despesas);
             </div>
 			<div class="form-group col-md-2">
 				<label for="message-text" class="col-form-label">Quantidade:</label>
-				<input value="" name="qtde" id="quantidade"  type="number" class="form-control" oninput="somartotal()">
+				<input value="" name="qtde" id="quantidade"  type="text" class="form-control" oninput="somartotal()">
 			</div>
             
 			<div class="form-group col-md-3">
