@@ -690,8 +690,8 @@ if (isset($escolha)) {
 		</form>
 
 		<form style="padding: 1%;" method="POST" action="">
-			<input type="hidden" name="escolha" value="2">
-			<input style="font-size: 30px;" class="btn btn-danger" type="submit" value="Adicionar Despesas">
+			<!-- <input type="hidden" name="escolha" value="2"> -->
+			<!-- <input style="font-size: 30px;" class="btn btn-danger" type="submit" value="Adicionar Despesas"> -->
 		</form>
 
 		<form style="padding: 1%;" method="POST" action="">

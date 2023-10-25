@@ -23,8 +23,6 @@ while ($rows_produtos = mysqli_fetch_assoc($produtos)) {
 
 if( $produto == "" ){
 	$produto = $_POST['despesa'];
-}else{
-	$produto = $rows_produtos['nome'];
 }
 
 $insert_table = "INSERT INTO despesas (valor, despesa, qtde, data) VALUES ('$valor', '$produto','$quantidade', '$data')";
@@ -34,7 +32,6 @@ $quantidadeAtual = $estoque_atual + $quantidade;
 
 $update = "UPDATE `produtos` SET `estoque_atual` = '$quantidadeAtual' WHERE `produtos`.`id` = '$despesa' ";
 $updatequantidade = mysqli_query($conn, $update);
-// die();
 ?>
 
 <!DOCTYPE html>
@@ -47,15 +44,15 @@ $updatequantidade = mysqli_query($conn, $update);
 
 	<?php
 
-	if(mysqli_affected_rows($conn)!=-1){
+	// if(mysqli_affected_rows($conn)!=-1){
 
-		echo "<META HTTP-EQUIV=REFRESH CONTENT = '0;URL=/pdv/?view=despesas'>";
-		$_SESSION['msg'] = "<div class='alert alert-success' role='alert'>Despesa Cadastrada com Sucesso<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>";
-	}else{
+	// 	echo "<META HTTP-EQUIV=REFRESH CONTENT = '0;URL=/pdv/?view=despesas'>";
+	// 	$_SESSION['msg'] = "<div class='alert alert-success' role='alert'>Despesa Cadastrada com Sucesso<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>";
+	// }else{
 
-		echo "<META HTTP-EQUIV=REFRESH CONTENT = '0;URL=/pdv/?view=despesas'>";	
-		$_SESSION['msg'] = "<div class='alert alert-danger' role='alert'>Erro ao Cadastrar Despesa <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>";
-	}?>
+	// 	echo "<META HTTP-EQUIV=REFRESH CONTENT = '0;URL=/pdv/?view=despesas'>";	
+	// 	$_SESSION['msg'] = "<div class='alert alert-danger' role='alert'>Erro ao Cadastrar Despesa <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>";
+	// }?>
 
 		
 	</body>
