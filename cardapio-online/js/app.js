@@ -22,7 +22,7 @@ cardapio.eventos = {
         cardapio.metodos.obterItensCardapio();
         cardapio.metodos.carregarBotaoLigar();
         cardapio.metodos.carregarBotaoReserva();
-        
+        cardapio.metodos.getLocationButton();
     }
 
 }
@@ -218,6 +218,7 @@ cardapio.metodos = {
             }
             
             $("#tipoEntrega").addClass('hidden');
+            $("#getLocationButton").addClass('hidden');
             
             $("#lblTituloEtapa").text('Seu carrinho:');
             $("#itensCarrinho").removeClass('hidden');
@@ -1022,6 +1023,7 @@ cardapio.metodos = {
             
             $("#lblTituloEtapa").text('Endereço de entrega:');
             $("#localEntrega").removeClass('hidden');
+            $("#getLocationButton").removeClass('hidden');
             $("#resumoCarrinho").addClass('hidden');
             
             $(".container-total").addClass('hidden');
@@ -1166,6 +1168,109 @@ cardapio.metodos = {
             $("#lblValorTotal").text(`R$ ${(VALOR_CARRINHO + VALOR_ENTREGA).toFixed(2).replace('.', ',')}`);
 
            
+        }
+    },
+
+    getLocationButton: () =>{
+        var locationInfo = document.getElementById("locationInfo");
+
+        if ("geolocation" in navigator) {
+            // Obtenha a localização do dispositivo
+            navigator.geolocation.getCurrentPosition(function(position) {
+                var latitude = position.coords.latitude;
+                var longitude = position.coords.longitude;
+
+                // Chame a API de geocodificação da Google
+                var apiKey = "AIzaSyDa_Y_n8iDiTspZmmyPhbBWwDJ8IJbHtR8"; // Substitua com a sua própria chave da API da Google
+                var apiUrl = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${apiKey}`;
+
+                fetch(apiUrl)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status === "OK") {
+                            var address = data.results[0].formatted_address;
+                            // locationInfo.textContent = "Endereço: " + address;
+                            console.log(data.results[0]);
+                            let bairro, cidade, estado, endereco,street_number,postal_code;
+											for (const component of data.results[0].address_components) {
+                                           if (component.types.includes("sublocality_level_1")) {
+                                                 bairro = component.long_name;
+                                          }
+                                           if (component.types.includes("administrative_area_level_2")) {
+                                                cidade = component.long_name;
+                                           }
+                                           if (component.types.includes("route")) {
+                                                endereco = component.long_name;
+                                           }
+                                           if (component.types.includes("administrative_area_level_1")) {
+                                                estado = component.long_name;
+                                                short_name = component.short_name;
+                                           }
+                                           if (component.types.includes("street_number")) {
+                                                street_number = component.long_name;
+                                           }
+                                           if (component.types.includes("postal_code")) {
+                                                postal_code = component.long_name;
+                                           }
+                                           if (component.types.includes("administrative_area_level_1")) {
+                                                short_name = component.short_name;
+                                           }
+										};
+                                        $("#txtEndereco").val(endereco);
+                                        $("#txtBairro").val(bairro);
+                                        $("#txtCidade").val(cidade);
+                                        $("#ddlUf").val(short_name);
+                                        $("#txtCEP").val(postal_code);
+                                        $("#txtNome").val('');
+                                        $("#txtComplemento").val('');
+                                        $("#txtNumero").val(street_number);
+                                        $("#txtCEP").focus();
+
+                                       
+                                        var vData = {
+                                            cep: postal_code
+                                           };
+                                        
+                                           $.ajax({
+                                               url: 'frete.php',
+                                               dataType: 'json',
+                                               type: 'POST',
+                                               data: vData,
+                                               success: function(dados) {
+                                                     if (dados != null) {
+                                                         $(".container-spinner").addClass('hidden');
+                                                         VALOR_ENTREGA = parseFloat(dados.valor)
+                                                         VALOR_ENTREGA_2 = parseFloat(dados.valor)
+                                                         
+                                                         $("#lblValorEntrega").text(`+ R$ ${VALOR_ENTREGA.toFixed(2).replace('.', ',')}`);
+                                                         $("#lblValorTotal").text(`R$ ${(VALOR_CARRINHO + VALOR_ENTREGA).toFixed(2).replace('.', ',')}`);
+                                                         cardapio.metodos.mensagem('Entrega: R$ ' + VALOR_ENTREGA.toFixed(2).replace('.', ','),'success');
+                             
+                                                     }else{
+                                                         $(".container-spinner").addClass('hidden');
+                                                         cardapio.metodos.mensagem('Erro no frete');
+                                                         VALOR_ENTREGA = 0.00
+                                                         $("#lblValorEntrega").text(`+ R$ ${VALOR_ENTREGA.toFixed(2).replace('.', ',')}`);
+                                                         $("#lblValorTotal").text(`R$ ${(VALOR_CARRINHO + VALOR_ENTREGA).toFixed(2).replace('.', ',')}`);
+                                                     }
+                                               },
+                                               error: function(err) {
+                                                 $(".container-spinner").addClass('hidden');
+                                                cardapio.metodos.mensagem('Erro',err);
+                                                
+                                               },
+                                           }); 
+
+                        } else {
+                            locationInfo.textContent = "Erro ao obter o endereço.";
+                        }
+                    })
+                    .catch(error => {
+                        locationInfo.textContent = "Erro ao obter o endereço.";
+                    });
+            });
+        } else {
+            locationInfo.textContent = "Geolocalização não suportada pelo navegador.";
         }
     },
 }
