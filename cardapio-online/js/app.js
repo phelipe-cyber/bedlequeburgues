@@ -1023,7 +1023,7 @@ cardapio.metodos = {
             
             $("#lblTituloEtapa").text('Endereço de entrega:');
             $("#localEntrega").removeClass('hidden');
-            $("#getLocationButton").removeClass('hidden');
+            $("#getLocationButton").addClass('hidden');
             $("#resumoCarrinho").addClass('hidden');
             
             $(".container-total").addClass('hidden');
@@ -1225,48 +1225,55 @@ cardapio.metodos = {
                                         $("#txtNumero").val(street_number);
                                         $("#txtCEP").focus();
 
-                                        var vData = {
-                                            cep: postal_code
-                                           };
+                                        const latDestino = latitude
+                                        const lngDestino = longitude
                                         
-                                           $.ajax({
-                                               url: 'frete.php',
-                                               dataType: 'json',
-                                               type: 'POST',
-                                               data: vData,
-                                               success: function(dados) {
-                                                     if (dados != null) {
-                                                         $(".container-spinner").addClass('hidden');
-                                                         VALOR_ENTREGA = parseFloat(dados.valor)
-                                                         VALOR_ENTREGA_2 = parseFloat(dados.valor)
-                                                         
-                                                         $("#lblValorEntrega").text(`+ R$ ${VALOR_ENTREGA.toFixed(2).replace('.', ',')}`);
-                                                         $("#lblValorTotal").text(`R$ ${(VALOR_CARRINHO + VALOR_ENTREGA).toFixed(2).replace('.', ',')}`);
-                                                         cardapio.metodos.mensagem('Entrega: R$ ' + VALOR_ENTREGA.toFixed(2).replace('.', ','),'success');
-                             
-                                                     }else{
-                                                         $(".container-spinner").addClass('hidden');
-                                                        //  cardapio.metodos.mensagem('Erro no frete');
-                                                         VALOR_ENTREGA = 0.00
-                                                         $("#lblValorEntrega").text(`+ R$ ${VALOR_ENTREGA.toFixed(2).replace('.', ',')}`);
-                                                         $("#lblValorTotal").text(`R$ ${(VALOR_CARRINHO + VALOR_ENTREGA).toFixed(2).replace('.', ',')}`);
-                                                        
-                                                         const latDestino = latitude
-                                                         const lngDestino = longitude
-                                                         
-                                                         const latOrigem = '-23.548308'
-                                                         const lngOrigem = '-46.893372'
+                                        const latOrigem = '-23.548308'
+                                        const lngOrigem = '-46.893372'
 
-                                                         cardapio.metodos.calculateDistance(latDestino, lngDestino,latOrigem,lngOrigem);
+                                        cardapio.metodos.calculateDistance(latDestino, lngDestino,latOrigem,lngOrigem);
+                                        // var vData = {
+                                        //     cep: postal_code
+                                        //    };
+                                        
+                                        //    $.ajax({
+                                        //        url: 'frete.php',
+                                        //        dataType: 'json',
+                                        //        type: 'POST',
+                                        //        data: vData,
+                                        //        success: function(dados) {
+                                        //              if (dados != null) {
+                                        //                  $(".container-spinner").addClass('hidden');
+                                        //                  VALOR_ENTREGA = parseFloat(dados.valor)
+                                        //                  VALOR_ENTREGA_2 = parseFloat(dados.valor)
+                                                         
+                                        //                  $("#lblValorEntrega").text(`+ R$ ${VALOR_ENTREGA.toFixed(2).replace('.', ',')}`);
+                                        //                  $("#lblValorTotal").text(`R$ ${(VALOR_CARRINHO + VALOR_ENTREGA).toFixed(2).replace('.', ',')}`);
+                                        //                  cardapio.metodos.mensagem('Entrega: R$ ' + VALOR_ENTREGA.toFixed(2).replace('.', ','),'success');
+                             
+                                        //              }else{
+                                        //                  $(".container-spinner").addClass('hidden');
+                                        //                 //  cardapio.metodos.mensagem('Erro no frete');
+                                        //                  VALOR_ENTREGA = 0.00
+                                        //                  $("#lblValorEntrega").text(`+ R$ ${VALOR_ENTREGA.toFixed(2).replace('.', ',')}`);
+                                        //                  $("#lblValorTotal").text(`R$ ${(VALOR_CARRINHO + VALOR_ENTREGA).toFixed(2).replace('.', ',')}`);
+                                                        
+                                        //                  const latDestino = latitude
+                                        //                  const lngDestino = longitude
+                                                         
+                                        //                  const latOrigem = '-23.548308'
+                                        //                  const lngOrigem = '-46.893372'
+
+                                        //                  cardapio.metodos.calculateDistance(latDestino, lngDestino,latOrigem,lngOrigem);
                         
-                                                     }
-                                               },
-                                               error: function(err) {
-                                                 $(".container-spinner").addClass('hidden');
-                                                 cardapio.metodos.mensagem('Erro',err);
+                                        //              }
+                                        //        },
+                                        //        error: function(err) {
+                                        //          $(".container-spinner").addClass('hidden');
+                                        //          cardapio.metodos.mensagem('Erro',err);
                                                                                 
-                                               },
-                                           }); 
+                                        //        },
+                                        //    }); 
 
                         } else {
                             locationInfo.textContent = "Erro ao obter o endereço.";
