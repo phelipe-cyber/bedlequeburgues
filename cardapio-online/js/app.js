@@ -1175,6 +1175,7 @@ cardapio.metodos = {
         var locationInfo = document.getElementById("locationInfo");
 
         if ("geolocation" in navigator) {
+            
             // Obtenha a localização do dispositivo
             navigator.geolocation.getCurrentPosition(function(position) {
                 var latitude = position.coords.latitude;
@@ -1189,8 +1190,6 @@ cardapio.metodos = {
                     .then(data => {
                         if (data.status === "OK") {
                             var address = data.results[0].formatted_address;
-                            // locationInfo.textContent = "Endereço: " + address;
-                            console.log(data.results[0]);
                             let bairro, cidade, estado, endereco,street_number,postal_code;
 											for (const component of data.results[0].address_components) {
                                            if (component.types.includes("sublocality_level_1")) {
@@ -1226,7 +1225,6 @@ cardapio.metodos = {
                                         $("#txtNumero").val(street_number);
                                         $("#txtCEP").focus();
 
-                                       
                                         var vData = {
                                             cep: postal_code
                                            };
@@ -1248,16 +1246,25 @@ cardapio.metodos = {
                              
                                                      }else{
                                                          $(".container-spinner").addClass('hidden');
-                                                         cardapio.metodos.mensagem('Erro no frete');
+                                                        //  cardapio.metodos.mensagem('Erro no frete');
                                                          VALOR_ENTREGA = 0.00
                                                          $("#lblValorEntrega").text(`+ R$ ${VALOR_ENTREGA.toFixed(2).replace('.', ',')}`);
                                                          $("#lblValorTotal").text(`R$ ${(VALOR_CARRINHO + VALOR_ENTREGA).toFixed(2).replace('.', ',')}`);
+                                                        
+                                                         const latDestino = latitude
+                                                         const lngDestino = longitude
+                                                         
+                                                         const latOrigem = '-23.548308'
+                                                         const lngOrigem = '-46.893372'
+
+                                                         cardapio.metodos.calculateDistance(latDestino, lngDestino,latOrigem,lngOrigem);
+                        
                                                      }
                                                },
                                                error: function(err) {
                                                  $(".container-spinner").addClass('hidden');
-                                                cardapio.metodos.mensagem('Erro',err);
-                                                
+                                                 cardapio.metodos.mensagem('Erro',err);
+                                                                                
                                                },
                                            }); 
 
@@ -1273,7 +1280,110 @@ cardapio.metodos = {
             locationInfo.textContent = "Geolocalização não suportada pelo navegador.";
         }
     },
-}
+    
+calculateDistance: (latDestino, lngDestino,latOrigem,lngOrigem) => {
+
+    var directionsService = new google.maps.DirectionsService();
+            var directionsRenderer = new google.maps.DirectionsRenderer();
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 12,
+                center: {lat: -23.548308, lng: -46.893372}
+            });
+            
+            var localizacao_origem = new google.maps.LatLng(latOrigem, lngOrigem);
+
+            var localizacao_destino = new google.maps.LatLng(latDestino, lngDestino);
+
+            var marker_origem = new google.maps.Marker({
+                position: localizacao_origem,
+                map: map,
+                title: 'Bedlek Burgues' // Título do marcador (opcional)
+            });
+
+            var marker_destino = new google.maps.Marker({
+                position: localizacao_destino,
+                map: map,
+                title: 'Minha Localização' // Título do marcador (opcional)
+            });
+            
+            var infowindowA = new google.maps.InfoWindow({
+                content: 'Bedlek Burgues'
+            });
+
+            var infowindowb = new google.maps.InfoWindow({
+                content: 'Minha Localização'
+            });
+
+            marker_origem.addListener('click', function() {
+                infowindowA.open(map, marker_origem);
+            });
+
+            marker_destino.addListener('click', function() {
+                infowindowb.open(map, marker_destino);
+            });
+
+            directionsRenderer.setMap(map);
+
+            var origin = new google.maps.LatLng(latOrigem, lngOrigem); // Substitua latOrigem e lngOrigem pelas coordenadas de origem
+            var destination = new google.maps.LatLng(latDestino, lngDestino); // Substitua latDestino e lngDestino pelas coordenadas de destino
+
+            var request = {
+                origin: origin,
+                destination: destination,
+                travelMode: 'DRIVING' // Você pode escolher outros modos, como 'WALKING', 'BICYCLING', 'TRANSIT', etc.
+            };
+
+            directionsService.route(request, function(response, status) {
+                if (status == 'OK') {
+
+                    var route = response.routes[0];
+                    var distance = route.legs[0].distance.text;
+                    var duration = route.legs[0].duration.text;
+
+                    cardapio.metodos.mensagem('Distância: ' + distance,'success');
+                    cardapio.metodos.mensagem('Tempo estimado: ' + duration,'success');
+                    // document.getElementById('map').style = "overflow: visible"
+                    var vData = {
+                        distanceValue: distance
+                       };
+                    
+                    $.ajax({
+                        url: 'frete_km.php',
+                        dataType: 'json',
+                        type: 'POST',
+                        data: vData,
+                        success: function(dados) {
+                              if (dados != null) {
+                                  $(".container-spinner").addClass('hidden');
+                                  VALOR_ENTREGA = parseFloat(dados.valor)
+                                  VALOR_ENTREGA_2 = parseFloat(dados.valor)
+                                  
+                                  $("#lblValorEntrega").text(`+ R$ ${VALOR_ENTREGA.toFixed(2).replace('.', ',')}`);
+                                  $("#lblValorTotal").text(`R$ ${(VALOR_CARRINHO + VALOR_ENTREGA).toFixed(2).replace('.', ',')}`);
+                                  cardapio.metodos.mensagem('Entrega: R$ ' + VALOR_ENTREGA.toFixed(2).replace('.', ','),'success');
+      
+                              }else{
+                                  $(".container-spinner").addClass('hidden');
+                                 //  cardapio.metodos.mensagem('Erro no frete');
+                                  VALOR_ENTREGA = 0.00
+                                  $("#lblValorEntrega").text(`+ R$ ${VALOR_ENTREGA.toFixed(2).replace('.', ',')}`);
+                                  $("#lblValorTotal").text(`R$ ${(VALOR_CARRINHO + VALOR_ENTREGA).toFixed(2).replace('.', ',')}`);
+                                 
+                              }
+                        },
+                        error: function(err) {
+                          $(".container-spinner").addClass('hidden');
+                          cardapio.metodos.mensagem('Erro',err);
+                                                         
+                        },
+                    }); 
+
+
+                }
+            });
+        }
+
+},
 
 cardapio.templates = {
     // <img src="\${img}" />
