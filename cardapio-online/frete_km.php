@@ -5,11 +5,13 @@ include '.././pdv/mvc/model/conexao.php';
 
 $distanceValue = $_POST['distanceValue'];
 
-$search  = array(" km", ",", " ","0");
+$search  = array(" km");
 
 $stringSemUnidade =   str_replace($search, "",  $distanceValue);
 
-$tab_km = "SELECT * FROM `frete_valor` WHERE km LIKE '%$stringSemUnidade%' ";
+$distanceValue = explode($stringSemUnidade, ',');
+
+$tab_km = "SELECT * FROM `frete_valor` WHERE km LIKE '%$stringSemUnidade[0]%' ";
 $sql_km = mysqli_query($conn, $tab_km);
 
 while ($rows_km = mysqli_fetch_assoc($sql_km)) {
