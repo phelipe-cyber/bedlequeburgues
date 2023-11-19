@@ -189,6 +189,7 @@ $usuario = $_SESSION['user'];
             <a class="collapse-item" href="/pdv/?view=visualiza_caixa" style=" border-radius: 8px; font-size:18px;">Visualizar Caixa</a>
             <a class="collapse-item" href="/pdv/?view=produtos" style=" border-radius: 8px; font-size:18px;">Vendas Produtos</a>
             <a class="collapse-item" href="/pdv/?view=despesas" style=" border-radius: 8px; font-size:18px;">Add Despesas</a>
+            <a class="collapse-item" href="/pdv/?view=fiado" style=" border-radius: 8px; font-size:18px;">Fiados</a>
 
           </div>
         </div>

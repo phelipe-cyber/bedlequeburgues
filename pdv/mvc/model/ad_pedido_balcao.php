@@ -7,7 +7,6 @@ $hora_pedido = date('H:i');
 include_once ("conexao.php");
 
 if( $_POST['pedido'] <> ""){
-  // print_r($_POST);
  
 $numeropedido = $_POST['pedido'];
 $hashpagina = $_POST['hashpagina'];
@@ -33,8 +32,13 @@ $tipo = $_POST['tipo'];
   $observacoes = $rows_previa['observacao'];
   $id_produto = $rows_previa['id_produto'];
 
+  if ($pgto == 'Fiado'){
+    $insert_table_fiado = "INSERT INTO pedido_fiado (id, numeropedido, delivery,cliente, idmesa, produto, quantidade, hora_pedido, valor, observacao, pgto, usuario, `data` ,gorjeta, `status`) 
+    VALUES ( NULL, '$numeropedido','','$cliente', '$mesa', '$produto', '$quantidade', '$hora_pedido', '$valor', '$observacoes', '$pgto', '$usuario', '$data','', $status )";	
+    $adiciona_pedido_fiado = mysqli_query($conn, $insert_table_fiado);
+  }
 
-   $insert_table = "INSERT INTO pedido (numeropedido, delivery,cliente, idmesa, produto, quantidade, hora_pedido, valor, observacao, pgto ,usuario, `data`, gorjeta, status) VALUES
+  $insert_table = "INSERT INTO pedido (numeropedido, delivery,cliente, idmesa, produto, quantidade, hora_pedido, valor, observacao, pgto ,usuario, `data`, gorjeta, status) VALUES
   ('$numeropedido','$tipo','$id_cliente', '$id_mesa', '$pedido', '$quantidade', '$hora_pedido', '$preco_venda', '$observacoes','$pgto','$user', '$data_hora','', 1 )";
  
   $adiciona_pedido = mysqli_query($conn, $insert_table);
@@ -57,7 +61,6 @@ $tipo = $_POST['tipo'];
     $updatequantidade = mysqli_query($conn, $update);
 
   }
-
 
 };
 
@@ -131,6 +134,11 @@ $hashpagina = $_POST['hashpagina'];
   $observacoes = $rows_previa['observacao'];
   $id_produto = $rows_previa['id_produto'];
 
+  if ($pgto == 'Fiado'){
+    $insert_table_fiado = "INSERT INTO pedido_fiado (id, numeropedido, delivery,cliente, idmesa, produto, quantidade, hora_pedido, valor, observacao, pgto, usuario, `data` ,gorjeta, `status`) 
+    VALUES ( NULL, '$numeropedido', '$tipo' ,'$cliente', '$id_mesa', '$pedido', '$quantidade', '$hora_pedido', '$preco_venda', '$observacoes', '$pgto', '$user', '$data_hora','', 1 )";	
+    $adiciona_pedido_fiado = mysqli_query($conn, $insert_table_fiado);
+  }
   
   $insert_table = "INSERT INTO pedido (numeropedido, delivery,cliente, idmesa, produto, quantidade, hora_pedido, valor, observacao, pgto, usuario, `data` , gorjeta, status ) VALUES
   ('$numeropedido','$tipo','$cliente', '$id_mesa', '$pedido', '$quantidade', '$hora_pedido', '$preco_venda', '$observacoes', '$pgto','$user','$data_hora' ,'' , 1 )";
@@ -157,15 +165,11 @@ if( $estoque_atual == "" ){
     $update = "UPDATE `produtos` SET `estoque_atual` = '$quantidadeAtual' WHERE `produtos`.`id` = '$id_produto' ";
     $updatequantidade = mysqli_query($conn, $update);
 
-  }
+  }  
 
-$novoIdInserido = $conn->insert_id;
+  $novoIdInserido = $conn->insert_id;
 
-// header("Location: /pdv/?view=todosPedidoBalcao");
-// header("Location: /pdv/mvc/model/imprime_balcao.php");
 
-// echo "<script language='javascript'>window.open('/pdv/mvc/model/imprime_balcao.php','_blank');</script>";
-// $conn->close(); 
 echo "<META http-equiv='refresh' content='0;URL=/pdv/mvc/model/imprimir.php' target='_blank'>";
 
 $_SESSION['novoIdInserido'] = $numeropedido;

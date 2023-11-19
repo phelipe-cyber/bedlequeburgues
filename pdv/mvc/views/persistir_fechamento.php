@@ -1,7 +1,9 @@
 <?php
 session_start();
 date_default_timezone_set('America/Sao_Paulo');
-// $data_hora = date('Y-m-d H:i');
+
+$data = date('d/m/Y');
+
 $hora_pedido = date('H:i');
 
 ini_set( 'display_errors', 0 );//oculta  erros
@@ -108,10 +110,19 @@ if ($total > 0) {
 	$pedidos = mysqli_query($conn, $tab_pedidos);
 
 	while($rows_produtos = mysqli_fetch_assoc($pedidos)) {
+
 		$produto = $rows_produtos['produto'];
 		$valor = $rows_produtos['valor'];
 		$quantidade = $rows_produtos['quantidade'];
 		$cliente = $rows_produtos['cliente'];
+		$numeropedido = $rows_produtos['numeropedido'];
+		$delivery = $rows_produtos['delivery'];
+		$idmesa = $rows_produtos['idmesa'];
+		$hora_pedido = $rows_produtos['hora_pedido'];
+		$observacao = $rows_produtos['observacao'];
+		$usuario = $rows_produtos['usuario'];
+		$gorjeta = $rows_produtos['gorjeta'];
+		$status = $rows_produtos['status'];
 
 		$tab_produto = "SELECT * FROM produtos WHERE nome LIKE '$produto' AND preco_venda LIKE '$valor'";
 		$estoque = mysqli_query($conn, $tab_produto) or die(mysqli_error($conn));
@@ -126,23 +137,41 @@ if ($total > 0) {
 				$grava_atualização = mysqli_query($conn, $insert_table) or die(mysqli_error($conn));
 			}
 		}
+
 	}
 
-	$tab_mesas = "UPDATE mesas SET status = '1', nome = '', id_pedido = 0 WHERE id_mesa = $idmesa";
+	if( $pgto == 'Fiado' ){
+
+		$tab_mesas = "UPDATE mesas SET status = '1', nome = '', id_pedido = 0 WHERE id_mesa = $idmesa";
+		$mesas = mysqli_query($conn, $tab_mesas);
+
+		$alterar_table = "UPDATE `pedido` SET `status` = '4', `pgto` = '$pgto' WHERE `numeropedido` = '$id' ";
+		$produto_excluido = mysqli_query($conn, $alterar_table);
+		
+		echo "<META HTTP-EQUIV=REFRESH CONTENT = '0;URL=/pdv/?view=todosPedidoBalcao'>";
+		$_SESSION['msg'] = "<div class='alert alert-success text-center' role='alert'> Comanda da Mesa Fiado encerrada com sucesso!<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>";
 	
-	$mesas = mysqli_query($conn, $tab_mesas);
+		
+	}else{
 
-	$insert_table = "INSERT INTO vendas ( id_pedido, valor, valor_maquina, cliente, data, rendimento, pgto) VALUES ( '$id', '$venda', '$Valor_format', '$cliente', '$data', 'Mesa', '$pgto')";
+		$tab_mesas = "UPDATE mesas SET status = '1', nome = '', id_pedido = 0 WHERE id_mesa = $idmesa";
+		$mesas = mysqli_query($conn, $tab_mesas);
+	
+		$insert_table = "INSERT INTO vendas ( id_pedido, valor, valor_maquina, cliente, data, rendimento, pgto) VALUES ( '$id', '$venda', '$Valor_format', '$cliente', '$data', 'Mesa', '$pgto')";
+		$produtos_editados = mysqli_query($conn, $insert_table);
 
-	$produtos_editados = mysqli_query($conn, $insert_table);
-	// $exclude_table = "DELETE FROM pedido WHERE numeropedido = '$id'";	
-	// $exclude_table = "DELETE FROM pedido WHERE numeropedido = '$id'";	
-	 $alterar_table = "UPDATE `pedido` SET `status` = '4', `pgto` = '$pgto' WHERE `numeropedido` = '$id' ";
-	 $produto_excluido = mysqli_query($conn, $alterar_table);
+		$alterar_table = "UPDATE `pedido` SET `status` = '4', `pgto` = '$pgto' WHERE `numeropedido` = '$id' ";
+		$produto_excluido = mysqli_query($conn, $alterar_table);
 
-	echo "<META HTTP-EQUIV=REFRESH CONTENT = '0;URL=/pdv/?view=todosPedidoBalcao'>";
-	$_SESSION['msg'] = "<div class='alert alert-success text-center' role='alert'> Comanda da Mesa encerrada com sucesso!<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>";
-
+		$alterar_table_fiado = "UPDATE `pedido_fiado` SET `status` = '4' WHERE `numeropedido` = '$id' ";
+		$alt_fiado = mysqli_query($conn, $alterar_table_fiado);
+		
+		 
+		 echo "<META HTTP-EQUIV=REFRESH CONTENT = '0;URL=/pdv/?view=todosPedidoBalcao'>";
+		 $_SESSION['msg'] = "<div class='alert alert-success text-center' role='alert'> Comanda da Mesa encerrada com sucesso!<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>";
+	 
+	}
+	
 }else if ($total < 0) {
 
 	$tab_pedidos = "SELECT * FROM pedido WHERE idmesa = '$id' ";
@@ -154,6 +183,16 @@ if ($total > 0) {
 		$valor = $rows_produtos['valor'];
 		$quantidade = $rows_produtos['quantidade'];
 		$cliente = $rows_produtos['cliente'];
+		$numeropedido = $rows_produtos['numeropedido'];
+		$delivery = $rows_produtos['delivery'];
+		$idmesa = $rows_produtos['idmesa'];
+		$hora_pedido = $rows_produtos['hora_pedido'];
+		$observacao = $rows_produtos['observacao'];
+		$usuario = $rows_produtos['usuario'];
+		$gorjeta = $rows_produtos['gorjeta'];
+		$status = $rows_produtos['status'];
+		$pgto = $rows_produtos['pgto'];
+
 
 		$tab_produto = "SELECT * FROM produtos WHERE nome LIKE '$produto' AND preco_venda LIKE '$valor'";
 		$estoque = mysqli_query($conn, $tab_produto) or die(mysqli_error($conn));
@@ -170,26 +209,40 @@ if ($total > 0) {
 		}
 	}
 
-	// $exclude_table = "DELETE FROM pedido WHERE idmesa = '$id'";	
-	// $produto_excluido = mysqli_query($conn, $exclude_table);
+	if( $pgto == 'Fiado' ){
 
-	$alterar_table = "UPDATE `pedido` SET `status` = '4', `pgto` = '$pgto' WHERE `pedido`.`numeropedido` = '$id' ";
-	$produto_excluido = mysqli_query($conn, $alterar_table);
+		$tab_mesas = "UPDATE mesas SET status = '1', nome = '', id_pedido = 0 WHERE id_mesa = $idmesa";
+		$mesas = mysqli_query($conn, $tab_mesas);
 
-	$tab_mesas = "UPDATE mesas SET nome = '$cliente', status = '1'  WHERE id_mesa = $idmesa";
-	$mesas = mysqli_query($conn, $tab_mesas);
-
-	$insert_table = "INSERT INTO vendas ( id_pedido, valor, valor_maquina, cliente, data, rendimento, pgto) VALUES ( '$id', '$venda', '$Valor_format', '$cliente', '$data', 'Mesa', '$pgto')";
+		$alterar_table = "UPDATE `pedido` SET `status` = '4', `pgto` = '$pgto' WHERE `numeropedido` = '$id' ";
+		$produto_excluido = mysqli_query($conn, $alterar_table);
+		
+		echo "<META HTTP-EQUIV=REFRESH CONTENT = '0;URL=/pdv/?view=todosPedidoBalcao'>";
+		$_SESSION['msg'] = "<div class='alert alert-success text-center' role='alert'> Comanda da Mesa Fiado encerrada com sucesso!<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>";
 	
-	$produtos_editados = mysqli_query($conn, $insert_table);
+		
+	}else{
 
-	// $total = abs($total);?>
-	<!-- <h2 class="mb-10 text-center" style="color: black; padding: 20px;">Fechamento de Comanda Efetuado!</h2> -->
- 	<!-- <div class="form-group col-md-6"> -->
-  					<!-- <label for="recipient-name" class="col-xl-12 text-center" style="font-size: 25px; background: green; color: white; ">Valor Pago Cliente</label> -->
-  					<!-- <input autofocus name="valor_pago" id="valor_pago" style="font-size: 25px" class="col-xl-12 col-md-6 mb-4 text-center" type="text" name="pagamento" value=""> -->
-  				<!-- </div><h4 class="mb-10 text-center" style="color: red; padding: 20px; font-size: 30px;">TROCO: R$ <?php echo number_format($total, 2); ?></h4> -->
- 	<h4 class="text-center" ><a class="form-group col-md-6 btn btn-success" href="?view=Dashboard1" type="button" style="font-size: 25px;">VOLTAR</a></h4> 
+		$tab_mesas = "UPDATE mesas SET status = '1', nome = '', id_pedido = 0 WHERE id_mesa = $idmesa";
+		$mesas = mysqli_query($conn, $tab_mesas);
+	
+		$insert_table = "INSERT INTO vendas ( id_pedido, valor, valor_maquina, cliente, data, rendimento, pgto) VALUES ( '$id', '$venda', '$Valor_format', '$cliente', '$data', 'Mesa', '$pgto')";
+		$produtos_editados = mysqli_query($conn, $insert_table);
+
+		$alterar_table = "UPDATE `pedido` SET `status` = '4', `pgto` = '$pgto' WHERE `numeropedido` = '$id' ";
+		$produto_excluido = mysqli_query($conn, $alterar_table);
+		
+		$alterar_table_fiado = "UPDATE `pedido_fiado` SET `status` = '4' WHERE `numeropedido` = '$id' ";
+		$alt_fiado = mysqli_query($conn, $alterar_table_fiado);
+		 
+		 echo "<META HTTP-EQUIV=REFRESH CONTENT = '0;URL=/pdv/?view=todosPedidoBalcao'>";
+		 $_SESSION['msg'] = "<div class='alert alert-success text-center' role='alert'> Comanda da Mesa encerrada com sucesso!<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>";
+	 
+	}
+
+
+	?>
+	<h4 class="text-center" ><a class="form-group col-md-6 btn btn-success" href="?view=Dashboard1" type="button" style="font-size: 25px;">VOLTAR</a></h4> 
 
 <?php } else { ?>
 
