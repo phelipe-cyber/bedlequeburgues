@@ -2,7 +2,7 @@
 include "./mvc/model/conexao.php";
 
 
-$tab_clientes = "SELECT pf.id,  pf.numeropedido, c.nome, SUM(valor) as valor  FROM `pedido_fiado` pf LEFT join clientes c on c.id = pf.cliente where `status` = 1 GROUP by pf.numeropedido";
+$tab_clientes = "SELECT pf.id,  pf.numeropedido, c.nome as nome, pf.cliente as nome_cliente, SUM(valor) as valor  FROM `pedido_fiado` pf LEFT join clientes c on c.id = pf.cliente where `status` = 1 GROUP by pf.numeropedido";
 
 $clientes = mysqli_query($conn, $tab_clientes);
 
@@ -34,13 +34,24 @@ $clientes = mysqli_query($conn, $tab_clientes);
             <?php
                     $index = 0;
                     while ($rows_clientes = mysqli_fetch_assoc($clientes)) {
+                       $nome = $rows_clientes['nome'];
+                       $nome_cliente = $rows_clientes['nome_cliente']; 
                     ?>
 
             <tr>
 
                 <td><?php echo $rows_clientes['id'] ?></td>
                 <td><?php echo $rows_clientes['numeropedido'] ?></td>
-                <td><?php echo $rows_clientes['nome'] ?></td>
+                <td>
+                    <?php
+                        if( !$nome ){
+                            $nome = $rows_clientes['nome_cliente']; 
+                        }else{
+                            $nome = $rows_clientes['nome'];
+                        }
+                        echo $nome;
+                     ?>
+                 </td>
                 <td style="font-size: 20px; color: red;">R$ <?php echo number_format($rows_clientes['valor'], 2); ?></td>
 
                 <td>
