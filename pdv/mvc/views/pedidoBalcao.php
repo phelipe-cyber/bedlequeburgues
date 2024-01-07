@@ -254,7 +254,7 @@ $(document).ready(function() {
                             <tr>
                                 <th class="th-sm">Nome</th>
                                 <th class="th-sm">Qtde.</th>
-                                <!-- <th class="th-sm">Valor Total</th> -->
+                                <th class="th-sm">Estoque Atual</th>
                                 <th class="th-sm">Observação</th>
 
                             </tr>
@@ -264,6 +264,7 @@ $(document).ready(function() {
                     $index = 0;
                     
                     while ($rows_produtos = mysqli_fetch_assoc($produtos)) {
+                        
                     ?>
 
                             <tr>
@@ -474,8 +475,11 @@ $(document).ready(function() {
                                             class="bg-gradient-default text-center" style="width:50px;" name="" min="0"
                                             maxlength="5" name="quantity" value="0" type="hidden" disabled >
                                        
+                                <td>
+                                    <label for=""> <?php echo $rows_produtos['estoque_atual']?></label>
+                                </td>
 
-                                <td  >
+                                <td>
 
                                     <textarea name="detalhes[<?php echo $index ?>][observacoes]" class="form-control"
                                         id="detalhes[<?php echo $index ?>][observacoes]"></textarea>

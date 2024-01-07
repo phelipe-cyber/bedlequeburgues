@@ -32,7 +32,7 @@ if( $dtinicio != "" || $dtfim != "" ){
 $tab_produtos = "SELECT * FROM `produtos` where nome <> 'Frete'  ORDER by id ASC";
 $produtos = mysqli_query($conn, $tab_produtos);
 
- $tab_despesas = "SELECT id, valor, despesa, qtde, DATE_FORMAT(STR_TO_DATE(`data`, '%d/%m/%Y'), '%d/%m/%Y') as data FROM despesas where DATE_FORMAT(STR_TO_DATE(`data`, '%d/%m/%Y'), '%Y-%m-%d') >= '$dtinicioFormatada' and DATE_FORMAT(STR_TO_DATE(`data`, '%d/%m/%Y'), '%Y-%m-%d') <= '$dtfimFormatada' ";
+$tab_despesas = "SELECT id, valor, despesa, qtde, DATE_FORMAT(STR_TO_DATE(`data`, '%d/%m/%Y'), '%d/%m/%Y') as data FROM despesas where DATE_FORMAT(STR_TO_DATE(`data`, '%d/%m/%Y'), '%Y-%m-%d') >= '$dtinicioFormatada' and DATE_FORMAT(STR_TO_DATE(`data`, '%d/%m/%Y'), '%Y-%m-%d') <= '$dtfimFormatada' ";
 $despesas = mysqli_query($conn, $tab_despesas);
 
 ?>
@@ -197,7 +197,8 @@ $despesas = mysqli_query($conn, $tab_despesas);
                         
                         const valor = document.getElementById('valor').value;
                         const string_sem_moeda = valor.replace(/R\$\s*/g, '');
-                        var stringComPonto = string_sem_moeda.replace(',', '.');
+                        var stringSemPonto = string_sem_moeda.replace('.', '');
+                        var stringComPonto = stringSemPonto.replace(',', '.');
                         const soma = quantidade * stringComPonto;
                         const somaFormatada = soma.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
                         document.getElementById('valortotal').value = somaFormatada
@@ -274,31 +275,14 @@ $despesas = mysqli_query($conn, $tab_despesas);
 
                 ?>
 
-                <tr>
-                    <td class="text-center"></td>
-                    <td class="text-center"></td>
-                    <td class="text-center"></td>
-                    <td class="text-center"></td>
-                    <td class="text-center"></td>
-                    
-                </tr>
-
-                <tr>
-                    <td class="text-center">
-                        <h4 style="width: 100%; color: red;"><b>Total:</b></h4>
-                    </td>
-                    <td class="text-center"></td>
-                    <td class="text-center"></td>
-                    <td class="text-center">
-                        <h4 style="width: 100%; color: red;"><b>R$ -<?php echo number_format($total2, 2); ?></b></h4>
-                    </td>
-                    <td class="text-center"></td>
-                </tr>
-
-
             </tbody>
         </table>
     </div>
+
+    <div class="text-center">
+        <h4 style="width: 100%; color: red;"><b>Total: R$ -<?php echo number_format($total2, 2); ?></b></h4>
+    </div>
+    
 
 <script>
 $(document).ready(function() {
