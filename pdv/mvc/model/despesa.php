@@ -11,7 +11,8 @@ $data = $_POST['data'];
 $quantidade = $_POST['qtde'];
 
 $stringComR = $_POST['valor'];
-$valor = preg_replace("/[^0-9,]+/i", "", $stringComR);
+$string_formatada = preg_replace("/[^0-9,]+/i", "", $stringComR);
+$valor = str_replace(',', '.', $string_formatada);
 
  $tab_produtos = "SELECT * FROM `produtos` where nome <> 'Frete' and id = '$despesa' ORDER by id ASC" ;
 $produtos = mysqli_query($conn, $tab_produtos);
