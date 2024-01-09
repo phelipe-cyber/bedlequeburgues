@@ -32,7 +32,7 @@ if( $dtinicio != "" || $dtfim != "" ){
 $tab_produtos = "SELECT * FROM `produtos` where nome <> 'Frete'  ORDER by id ASC";
 $produtos = mysqli_query($conn, $tab_produtos);
 
-$tab_despesas = "SELECT id, valor, despesa, qtde, DATE_FORMAT(STR_TO_DATE(`data`, '%d/%m/%Y'), '%d/%m/%Y') as data FROM despesas where DATE_FORMAT(STR_TO_DATE(`data`, '%d/%m/%Y'), '%Y-%m-%d') >= '$dtinicioFormatada' and DATE_FORMAT(STR_TO_DATE(`data`, '%d/%m/%Y'), '%Y-%m-%d') <= '$dtfimFormatada' order by id desc ";
+$tab_despesas = "SELECT id, valor, valor_unitario despesa, qtde, DATE_FORMAT(STR_TO_DATE(`data`, '%d/%m/%Y'), '%d/%m/%Y') as data FROM despesas where DATE_FORMAT(STR_TO_DATE(`data`, '%d/%m/%Y'), '%Y-%m-%d') >= '$dtinicioFormatada' and DATE_FORMAT(STR_TO_DATE(`data`, '%d/%m/%Y'), '%Y-%m-%d') <= '$dtfimFormatada' order by id desc ";
 $despesas = mysqli_query($conn, $tab_despesas);
 
 ?>
