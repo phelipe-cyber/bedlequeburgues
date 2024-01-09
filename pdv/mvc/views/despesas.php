@@ -172,7 +172,7 @@ $despesas = mysqli_query($conn, $tab_despesas);
 			</div>
             <div class="form-group col-md-3">
                 <label for="message-text" class="col-form-label">Valor Unitario:</label>
-                <input required value="" type="text" id="valor" class="form-control" oninput="formatarInputComoMoeda()">
+                <input required value="" type="text" id="valor" name="valor_unitario" class="form-control" oninput="formatarInputComoMoeda()">
             </div>
 			<div class="form-group col-md-2">
 				<label for="message-text" class="col-form-label">Quantidade:</label>
@@ -239,6 +239,7 @@ $despesas = mysqli_query($conn, $tab_despesas);
                     <th class="text-center">Data</th>
 					<th class="text-center">Despesa</th>
 					<th class="text-center">Quantidade</th>
+					<th class="text-center">Valor Unitario</th>
 					<th class="text-center">Valor</th>
 					<th class="text-center">Categoria</th>
 
@@ -255,6 +256,7 @@ $despesas = mysqli_query($conn, $tab_despesas);
                     $data2 = $rows_despesas['data'];
                     $despesa2 = $rows_despesas['despesa'];
                     $quantidade = $rows_despesas['qtde'];
+                    $valor_unitario = $rows_despesas['valor_unitario'];
                     $valor2 = $rows_despesas['valor'];
                     $total2 += $valor2;
 
@@ -264,6 +266,7 @@ $despesas = mysqli_query($conn, $tab_despesas);
                         <td class="text-center"><b><?php echo $data2; ?></b></td>
                         <td class="text-center"><b><?php echo $despesa2; ?></b></td>
                         <td class="text-center"><b><?php echo $quantidade; ?></b></td>
+                        <td class="text-center" style="color: red;">R$ <?php echo ($valor_unitario); ?></td>
                         <td class="text-center" style="color: red;">R$ <?php echo ($valor2); ?></td>
                         <td class="text-center">
                             <div style="width: 100%; color: red;">Despesa</div>
