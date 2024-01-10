@@ -30,7 +30,7 @@ if( $produto == "" ){
 	$produto = $_POST['despesa'];
 }
 
-$insert_table = "INSERT INTO despesas (valor, despesa, qtde, data) VALUES ('$valor', '$valor_unitario','$produto','$quantidade', '$data')";
+$insert_table = "INSERT INTO despesas (valor, valor_unitario, despesa, qtde, data) VALUES ('$valor', '$valor_unitario','$produto','$quantidade', '$data')";
 $cadastra_despesa = mysqli_query($conn, $insert_table);
 
 $quantidadeAtual = $estoque_atual + $quantidade;
