@@ -15,7 +15,7 @@ $string_formatada = preg_replace("/[^0-9,]+/i", "", $stringComR);
 $valor = str_replace(',', '.', $string_formatada);
 
 $stringComR_VU = $_POST['valor_unitario'];
-$string_format_UV = preg_replace("/[^0-9,]+/i", "", $$stringComR_VU);
+$string_format_UV = preg_replace("/[^0-9,]+/i", "", $stringComR_VU);
 $valor_unitario = str_replace(',', '.', $string_format_UV);
 
 $tab_produtos = "SELECT * FROM `produtos` where nome <> 'Frete' and id = '$despesa' ORDER by id desc" ;
