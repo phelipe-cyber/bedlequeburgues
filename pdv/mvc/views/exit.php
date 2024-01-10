@@ -207,6 +207,7 @@ while ($rows_rendimento = mysqli_fetch_assoc($caixa_rendimento)) {
                 <?php
                     //  echo $rows_caixa['pgto']
                     if( $rows_caixa['pgto'] == 'Total'){ 
+                        $rendimento = $rows_caixa['Rendimento'];
                         ?> 
                             <td style="color: blue; height: 50px;"> <?php echo $rows_caixa['pgto'] ?></td>
                             <td style="color: blue; height: 50px;">R$ <?php echo number_format($rows_caixa['valor'], 2); ?></td>
@@ -215,6 +216,7 @@ while ($rows_rendimento = mysqli_fetch_assoc($caixa_rendimento)) {
                                 <td style="color: blue; height: 50px;"><?php echo $rows_caixa['data'] ?></td>
                          <?php
                     }else{
+                        $rendimento = $rows_caixa['Rendimento'];
                         ?> 
                                 <td > <?php echo $rows_caixa['pgto'] ?></td>
                                 <td >R$ <?php echo number_format($rows_caixa['valor'], 2); ?></td>
@@ -241,6 +243,7 @@ while ($rows_rendimento = mysqli_fetch_assoc($caixa_rendimento)) {
             <tr>
                 <th>Nome</th>
                 <th>Valor despesa</th>
+                <th>Valor Liquido</th>
                 <th>Data</th>
             </tr>
         </thead>
@@ -254,6 +257,7 @@ while ($rows_rendimento = mysqli_fetch_assoc($caixa_rendimento)) {
 
                 <td> <?php echo $rows_despesa['Total Despesa'] ?></td>
                <td style="color: red; height: 50px;" >R$ <?php echo number_format($rows_despesa['valor'], 2); ?></td>
+               <td style="color: red; height: 50px;" >R$ <?php echo number_format($rows_despesa['valor'] - $rendimento, 2); ?></td>
                <td> <?php echo $rows_despesa['data'] ?></td>
                
             </tr>
