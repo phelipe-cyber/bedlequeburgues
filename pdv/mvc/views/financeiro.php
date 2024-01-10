@@ -286,6 +286,7 @@ if (isset($escolha)) {
 					<th class="text-center">Data</th>
 					<th class="text-center">Pedido</th>
 					<th class="text-center">Imprimir</th>
+					<th class="text-center">Visualizar Pedido</th>
 					<th class="text-center">Rendimento</th>
 					<th class="text-center">Cliente</th>
 					<th class="text-center">Valor Venda</th>
@@ -337,6 +338,14 @@ if (isset($escolha)) {
 								<input name="cliente" type="hidden" value="<?php echo $cliente; ?>">
 								<input name="pgto" type="hidden" value="<?php echo $pgto; ?>">
 								<button type="submit" class="btn btn-outline-success">Imprimir</button>
+							</form>
+						</td>
+						<td class="text-center">
+							<form method="POST" action="?view=adicionar_pedido_balcao" target="_blank">
+								<input name="id" type="hidden" value="<?php echo $pedido ? $pedido : $id_venda ; ?>">
+								<input name="cliente" type="hidden" value="<?php echo $cliente; ?>">
+								<input name="pgto" type="hidden" value="<?php echo $pgto; ?>">
+								<button type="submit" class="btn btn-outline-success">Visualizar</button>
 							</form>
 						</td>
 						<td class="text-center"><?php echo $rendimento; ?></td>
