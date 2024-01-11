@@ -122,7 +122,7 @@ $hashpagina = $_POST['hashpagina'];
   // print_r($_POST['cliente']);
   // exit();
 
-  $sql_previa = "SELECT * FROM `pedido_previa` where quantidade <> '' and hashpagina = '$hashpagina' GROUP BY id_produto order by id ASC";
+  $sql_previa = "SELECT * FROM `pedido_previa` where quantidade <> '' and hashpagina = '$hashpagina' order by id ASC";
     $pedido_previa = mysqli_query($conn, $sql_previa);
 
  while ($rows_previa = mysqli_fetch_assoc($pedido_previa)) {
