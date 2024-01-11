@@ -269,8 +269,8 @@ $(document).ready(function() {
 
                             <tr>
                                 <td style="color: #4D4D4D;"><?php echo ($rows_produtos['nome']); ?>
-                                    <input name="detalhes[<?php echo $index ?>][pedido]" type="hidden"
-                                        class="form-control" id="detalhes[<?php echo $index ?>][pedido]"
+                                    <input name="detalhes[<?php echo $rows_produtos['id'] ?>][pedido]" type="hidden"
+                                        class="form-control" id="detalhes[<?php echo $rows_produtos['id'] ?>][pedido]"
                                         value="<?php echo ($rows_produtos['nome']); ?>">
                                     <p style="color: #4D4D4D;">
                                         <b>
@@ -288,63 +288,63 @@ $(document).ready(function() {
                                     ?>
 
 
-                                    <input id="detalhes[<?php echo $index ?>][preco_venda]"
-                                        name="detalhes[<?php echo $index ?>][preco_venda]" type="hidden"
+                                    <input id="detalhes[<?php echo $rows_produtos['id'] ?>][preco_venda]"
+                                        name="detalhes[<?php echo $rows_produtos['id'] ?>][preco_venda]" type="hidden"
                                         class="form-control" value="<?php echo ($rows_produtos['preco_venda']); ?>">
 
-                                    <input id="detalhes[<?php echo $index ?>][id]"
-                                        name="detalhes[<?php echo $index ?>][id]" type="hidden"
+                                    <input id="detalhes[<?php echo $rows_produtos['id'] ?>][id]"
+                                        name="detalhes[<?php echo $rows_produtos['id'] ?>][id]" type="hidden"
                                         class="form-control" value="<?php echo ($rows_produtos['id']); ?>">
                                 </td>
                                 <td style="text-align: center; display: flex;">
 
-                                    <input id="mais<?php echo $index ?>" class="bg-gradient-success" value="+"
+                                    <input id="mais<?php echo $rows_produtos['id'] ?>" class="bg-gradient-success" value="+"
                                         type="button">
                                     </input>
 
-                                    <input readonly id="detalhes[<?php echo $index ?>][quantidade]"
+                                    <input readonly id="detalhes[<?php echo $rows_produtos['id'] ?>][quantidade]"
                                         class="bg-gradient-default text-center" style="width:50px;"
-                                        name="detalhes[<?php echo $index ?>][quantidade]" min="0" maxlength="5"
+                                        name="detalhes[<?php echo $rows_produtos['id'] ?>][quantidade]" min="0" maxlength="5"
                                         name="quantity" value="0" type="number">
 
-                                    <input id="menos<?php echo $index ?>" class="bg-gradient-danger" value="-"
+                                    <input id="menos<?php echo $rows_produtos['id'] ?>" class="bg-gradient-danger" value="-"
                                         type="button">
                                     </input>
 
                                     <script>
                                         $(document).ready(function() {
-                                            $("#mais<?php echo $index ?>").click(function() {
+                                            $("#mais<?php echo $rows_produtos['id'] ?>").click(function() {
                                                 
                                                 Quantidade = document.getElementById(
-                                                        "detalhes[<?php echo $index ?>][quantidade]")
+                                                        "detalhes[<?php echo $rows_produtos['id'] ?>][quantidade]")
                                                     .value
 
                                                 Quantidade++;
 
                                                 Q = document.getElementById(
-                                                        "detalhes[<?php echo $index ?>][quantidade]")
+                                                        "detalhes[<?php echo $rows_produtos['id'] ?>][quantidade]")
                                                     .value = Quantidade;
 
                                                 valor = document.getElementById(
-                                                        "detalhes[<?php echo $index ?>][preco_venda]")
+                                                        "detalhes[<?php echo $rows_produtos['id'] ?>][preco_venda]")
                                                     .value
-                                                    total = Q * valor;
+                                                    total = valor;
 
                                                 pedido = document.getElementById(
-                                                        "detalhes[<?php echo $index ?>][pedido]")
+                                                        "detalhes[<?php echo $rows_produtos['id'] ?>][pedido]")
                                                     .value
                                                     
                                                 // console.log("Click " + total);
 
                                                 document.getElementById(
-                                                    "detalhes[<?php echo $index ?>][valor_unitario]"
+                                                    "detalhes[<?php echo $rows_produtos['id'] ?>][valor_unitario]"
                                                 ).value = total;
                                                
                                               obs =  document.getElementById(
-                                                    "detalhes[<?php echo $index ?>][observacoes]"
+                                                    "detalhes[<?php echo $rows_produtos['id'] ?>][observacoes]"
                                                 ).value;
                                               id =  document.getElementById(
-                                                    "detalhes[<?php echo $index ?>][id]"
+                                                    "detalhes[<?php echo $rows_produtos['id'] ?>][id]"
                                                 ).value;
                                                 hashpagina =  document.getElementById(
                                                     "hash"
@@ -353,13 +353,14 @@ $(document).ready(function() {
                                                 var vData = {
                                                     id: id,
                                                     pedido: pedido,
-                                                    Quantidade: Quantidade,
+                                                    Quantidade: 1,
                                                     valor: total,
                                                     obs: obs,
-                                                    hashpagina: hashpagina
+                                                    hashpagina: hashpagina,
+                                                    botao: 'mais'
                                                 }; 
 
-                                                console.log(vData);
+                                                console.table(vData);
 
                                                 $.ajax({
                                                     url: './mvc/model/ad_pedido_previa.php',
@@ -372,7 +373,7 @@ $(document).ready(function() {
                                                     },
                                                     success: function(html) {
                                                        console.log(html);
-
+                                                       document.getElementById("detalhes[<?php echo $rows_produtos['id'] ?>][observacoes]").value = '';
                                                     },
 
                                                     error: function(err) {
@@ -389,9 +390,9 @@ $(document).ready(function() {
                                     </script>
                                     <script>
                                         $(document).ready(function() {
-                                            $("#menos<?php echo $index ?>").click(function() {
+                                            $("#menos<?php echo $rows_produtos['id'] ?>").click(function() {
                                                 Quantidade = document.getElementById(
-                                                        "detalhes[<?php echo $index ?>][quantidade]")
+                                                        "detalhes[<?php echo $rows_produtos['id'] ?>][quantidade]")
                                                     .value
                                                 Quantidade--;
 
@@ -401,29 +402,29 @@ $(document).ready(function() {
 
 
                                                 Q = document.getElementById(
-                                                        "detalhes[<?php echo $index ?>][quantidade]")
+                                                        "detalhes[<?php echo $rows_produtos['id'] ?>][quantidade]")
                                                     .value = Quantidade;
 
                                                 valor = document.getElementById(
-                                                        "detalhes[<?php echo $index ?>][preco_venda]")
+                                                        "detalhes[<?php echo $rows_produtos['id'] ?>][preco_venda]")
                                                     .value
-                                                    total = Q * valor;
+                                                    total = valor;
 
                                                 pedido = document.getElementById(
-                                                        "detalhes[<?php echo $index ?>][pedido]")
+                                                        "detalhes[<?php echo $rows_produtos['id'] ?>][pedido]")
                                                     .value
                                                     
                                                 // console.log("Click " + total);
 
                                                 document.getElementById(
-                                                    "detalhes[<?php echo $index ?>][valor_unitario]"
+                                                    "detalhes[<?php echo $rows_produtos['id'] ?>][valor_unitario]"
                                                 ).value = total;
                                                
                                               obs =  document.getElementById(
-                                                    "detalhes[<?php echo $index ?>][observacoes]"
+                                                    "detalhes[<?php echo $rows_produtos['id'] ?>][observacoes]"
                                                 ).value;
                                               id =  document.getElementById(
-                                                    "detalhes[<?php echo $index ?>][id]"
+                                                    "detalhes[<?php echo $rows_produtos['id'] ?>][id]"
                                                 ).value;
                                                 hashpagina =  document.getElementById(
                                                     "hash"
@@ -435,11 +436,12 @@ $(document).ready(function() {
                                                     Quantidade: Quantidade,
                                                     valor: total,
                                                     obs: obs,
-                                                    hashpagina: hashpagina
+                                                    hashpagina: hashpagina,
+                                                    botao: 'menos'
                                                 }; 
 
 
-                                                console.log(vData);
+                                                console.table(vData);
 
                                                 $.ajax({
                                                     url: './mvc/model/ad_pedido_previa.php',
@@ -471,7 +473,7 @@ $(document).ready(function() {
                                 </td>
 
                                        
-                                            <input id="detalhes[<?php echo $index ?>][valor_unitario]"
+                                            <input id="detalhes[<?php echo $rows_produtos['id'] ?>][valor_unitario]"
                                             class="bg-gradient-default text-center" style="width:50px;" name="" min="0"
                                             maxlength="5" name="quantity" value="0" type="hidden" disabled >
                                        
@@ -481,8 +483,8 @@ $(document).ready(function() {
 
                                 <td>
 
-                                    <textarea name="detalhes[<?php echo $index ?>][observacoes]" class="form-control"
-                                        id="detalhes[<?php echo $index ?>][observacoes]"></textarea>
+                                    <textarea name="detalhes[<?php echo $rows_produtos['id'] ?>][observacoes]" class="form-control"
+                                        id="detalhes[<?php echo $rows_produtos['id'] ?>][observacoes]"></textarea>
 
                                 </td>
 
@@ -539,7 +541,7 @@ $(document).ready(function() {
 
     setInterval(function() {
     atualiza();
-    }, 100); // A CADA 1 SEGUNDO RODA A FUNÇÃO atualiza
+    }, 1000); // A CADA 1 SEGUNDO RODA A FUNÇÃO atualiza
 
     });
 </script> 
