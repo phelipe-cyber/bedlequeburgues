@@ -38,7 +38,11 @@ $cliente = $_POST['cliente'];
 
 <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.12.1/datatables.min.js"></script>
 
-
+<div class="d-flex justify-content-center">
+            <div id="spinner" class="spinner-border text-primary" role="status" style="display: none;">
+                <span class="sr-only">Loading...</span>
+            </div>
+    </div>
 
 <div class="row">
     <div class="col-xl-6 col-md-6 mb-4">
@@ -314,6 +318,7 @@ $(document).ready(function() {
                                     <script>
                                         $(document).ready(function() {
                                             $("#mais<?php echo $rows_produtos['id'] ?>").click(function() {
+                                                document.getElementById('spinner').style='display:flex;';
                                                 
                                                 Quantidade = document.getElementById(
                                                         "detalhes[<?php echo $rows_produtos['id'] ?>][quantidade]")
@@ -368,17 +373,19 @@ $(document).ready(function() {
                                                     type: 'POST',
                                                     data: vData,
                                                     beforeSend: function() {
-                                                        // document.getElementById('spiner').style =
-                                                        //     'display:block;';
+                                                        // document.getElementById('spinner').style='diplay:flex;';
+
                                                     },
                                                     success: function(html) {
-                                                       console.log(html);
-                                                       document.getElementById("detalhes[<?php echo $rows_produtos['id'] ?>][observacoes]").value = '';
+                                                    console.log(html);
+                                                    document.getElementById("detalhes[<?php echo $rows_produtos['id'] ?>][observacoes]").value = '';
+                                                    document.getElementById('spinner').style='display:none;';
+
                                                     },
 
                                                     error: function(err) {
-                                                        document.getElementById('spiner').style =
-                                                            'display:none;';
+                                                    document.getElementById('spinner').style='display:none;';
+
 
                                                     },
 
@@ -391,6 +398,8 @@ $(document).ready(function() {
                                     <script>
                                         $(document).ready(function() {
                                             $("#menos<?php echo $rows_produtos['id'] ?>").click(function() {
+                                                document.getElementById('spinner').style='display:flex;';
+
                                                 Quantidade = document.getElementById(
                                                         "detalhes[<?php echo $rows_produtos['id'] ?>][quantidade]")
                                                     .value
@@ -449,17 +458,17 @@ $(document).ready(function() {
                                                     type: 'POST',
                                                     data: vData,
                                                     beforeSend: function() {
-                                                        // document.getElementById('spiner').style =
-                                                        //     'display:block;';
                                                     },
                                                     success: function(html) {
                                                        console.log(html);
+                                                       document.getElementById('spinner').style='display:none;';
 
                                                     },
 
                                                     error: function(err) {
-                                                        document.getElementById('spiner').style =
-                                                            'display:none;';
+                                                        document.getElementById('spinner').style='display:none;';
+
+
 
                                                     },
 

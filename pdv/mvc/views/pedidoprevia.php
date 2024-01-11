@@ -66,7 +66,8 @@ $hashpagina = $_SESSION['hashpagina'];
                 <script>
                                         $(document).ready(function() {
                                             $("#id<?php echo $row_usuario['id'] ?>").click(function() {
-                                                
+                                                document.getElementById('spinner').style='display:flex;';
+
                                                 id_deletar = document.getElementById(
                                                         "id_deletar<?php echo $row_usuario['id'] ?>")
                                                     .value
@@ -89,10 +90,11 @@ $hashpagina = $_SESSION['hashpagina'];
                                                     type: 'POST',
                                                     data: vData,
                                                     beforeSend: function() {
-                                                        // document.getElementById('spiner').style =
-                                                        //     'display:block;';
                                                     },
                                                     success: function(html) {
+                                                        document.getElementById('spinner').style='display:none;';
+
+
                                                        console.table(html);
                                                        Quantidade = document.getElementById("detalhes[<?php echo $row_usuario['id_produto'] ?>][quantidade]").value
                                                        Quantidade-- ;
@@ -100,8 +102,8 @@ $hashpagina = $_SESSION['hashpagina'];
                                                     },
 
                                                     error: function(err) {
-                                                        document.getElementById('spiner').style =
-                                                            'display:none;';
+                                                        document.getElementById('spinner').style='display:none;';
+
 
                                                     },
 
