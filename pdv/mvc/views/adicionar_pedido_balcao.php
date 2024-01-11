@@ -24,6 +24,7 @@ while ($rows_cliente = mysqli_fetch_assoc($cliente)) {
   $pgto = $rows_cliente['pgto']; 
   $complemento = $rows_cliente['complemento']; 
   $id_cliente = $rows_cliente['cliente']; 
+  $tipo = $rows_cliente['delivery']; 
   //  $rows_cliente['tel1'];
   $tel = preg_replace("/[^0-9,]+/i", "", $rows_cliente['tel1']);
 };
@@ -144,6 +145,7 @@ if ($status == 1 || $status == 2 || $status == 3 || $status == 4 ) { ?>
     <input type="hidden" name="pgto" value="<?php echo $pgto; ?>">
     <input type="hidden" name="id_cliente" value="<?php echo $id_cliente?>">
     <input type="hidden" name="pgto" value="<?php echo $pgto; ?>">
+    <input type="hidden" name="tipo" value="<?php echo $tipo; ?>">
 
 </form>
 

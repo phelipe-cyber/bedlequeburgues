@@ -34,7 +34,7 @@ $tipo = $_POST['tipo'];
 
   if ($pgto == 'Fiado'){
     $insert_table_fiado = "INSERT INTO pedido_fiado (id, numeropedido, delivery,cliente, idmesa, produto, quantidade, hora_pedido, valor, observacao, pgto, usuario, `data` ,gorjeta, `status`) 
-    VALUES ( NULL, '$numeropedido','','$cliente', '$mesa', '$produto', '$quantidade', '$hora_pedido', '$valor', '$observacoes', '$pgto', '$usuario', '$data','', $status )";	
+    VALUES ( NULL, '$numeropedido','$tipo','$cliente', '$mesa', '$produto', '$quantidade', '$hora_pedido', '$valor', '$observacoes', '$pgto', '$usuario', '$data','', $status )";	
     $adiciona_pedido_fiado = mysqli_query($conn, $insert_table_fiado);
   }
 

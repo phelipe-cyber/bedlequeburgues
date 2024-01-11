@@ -14,14 +14,11 @@ $pesquisa = $_POST['pesquisa'];
 $mesa = $_POST['mesa'];
 $cliente = $_POST['cliente'];
 $id_cliente = $_POST['id_cliente'];
-
 $nomecliente = $_POST['nomecliente'];
 $pedido = $_POST['pedido'];
-
+$tipo = $_POST['tipo'];
 $pgto = $_POST['pgto'];
 
-
-// print_r($_POST);
 ?>
 <!-- Font Awesome -->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
@@ -122,6 +119,7 @@ $pgto = $_POST['pgto'];
                     
                     <input type="hidden" name="id_cliente" id="id_cliente" value="<?php echo $id_cliente?>">
                     <input type="hidden" name="nomecliente" id="nomecliente" value="<?php echo $nomecliente?>">
+                    <input type="hidden" name="tipo" id="tipo" value="<?php echo $tipo?>">
 
                     <div class="row">
                         <h4 class="col-lg-12">
