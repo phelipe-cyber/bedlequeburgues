@@ -54,7 +54,7 @@ $hashpagina = $_SESSION['hashpagina'];
                 $valor[] = number_format($row_usuario['valor'], 2);
                 // echo "<br>";
                 echo "<td>";
-                echo '<button id=id'.$row_usuario['id'].' type="button" class="btn-lg btn-block">X</button>';
+                echo '<button id=id'.$row_usuario['id'].' type="button" class="btn btn-primary btn-sm">X</button>';
                 echo "</td>";
 
                 echo "</tr>";

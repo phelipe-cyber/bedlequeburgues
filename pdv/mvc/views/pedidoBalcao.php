@@ -165,6 +165,7 @@ $(document).ready(function() {
                 <script>
                     $(document).ready(function() {
                         $("#cliente").change(function() {
+                            document.getElementById('spinner').style='display:flex;';
                             let id_cliente = document.getElementById("cliente").value;
                                 console.log(id_cliente);
                                 var vData = {
@@ -177,6 +178,7 @@ $(document).ready(function() {
                                     data: vData,
                                     success: function(html) {
                                         document.getElementById('frete').style = 'display:block;';
+                                        document.getElementById('spinner').style='display:none;';
                                         $('#frete').html(html);
                                     },
                                     error: function(err) {

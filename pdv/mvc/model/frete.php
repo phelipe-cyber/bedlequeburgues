@@ -102,6 +102,7 @@ if ($lon == "") {
     <script>
         $(document).ready(function() {
             $("#customSwitch<?php echo $id_cliente ?>").click(function() {
+                document.getElementById('spinner').style='display:flex;';
 
                 var isChecked = document.getElementById("customSwitch<?php echo $id_cliente ?>").checked;
                 console.log(isChecked);
@@ -112,11 +113,12 @@ if ($lon == "") {
                     let hashpagina =  document.getElementById( "hash").value;
 
                     var vData = {
-                        id: 0001,
+                        id: 1,
                         pedido: "FRETE",
                         Quantidade: 0,
                         valor: valor_frete,
-                        hashpagina: hashpagina,
+                        hashpagina: hashpagina
+
                     };
                     $.ajax({
                         url: './mvc/model/ad_pedido_previa.php',
@@ -124,8 +126,12 @@ if ($lon == "") {
                         type: 'POST',
                         data: vData,
                         success: function(html) {
+                            document.getElementById('spinner').style='display:none;';
+
                         },
                         error: function(err) {
+                            document.getElementById('spinner').style='display:none;';
+
                         },
                     });
 
@@ -134,13 +140,16 @@ if ($lon == "") {
 
                     let valor_frete = document.getElementById("valor_frete").value;
                     let hashpagina =  document.getElementById( "hash").value;
+                    document.getElementById('spinner').style='display:flex;';
 
                     var vData = {
-                        id: 0001,
+                        id: 1,
                         pedido: "FRETE",
                         Quantidade: 1,
                         valor: valor_frete,
                         hashpagina: hashpagina,
+                        botao: 'mais'
+
                     };
                     console.log(vData);
                     $.ajax({
@@ -149,8 +158,12 @@ if ($lon == "") {
                         type: 'POST',
                         data: vData,
                         success: function(html) {
+                            document.getElementById('spinner').style='display:none;';
+
                         },
                         error: function(err) {
+                            document.getElementById('spinner').style='display:none;';
+
                         },
                     });
 
