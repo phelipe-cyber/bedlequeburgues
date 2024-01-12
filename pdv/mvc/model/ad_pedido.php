@@ -12,7 +12,7 @@ $id_mesa = $_POST['id_mesa'];
 $cliente = $_POST['cliente'];
 $detalhes =  $_POST['detalhes'];
 $mesa =  $_POST['mesa'];
-
+$troco = $_POST['troco'];
 
 if($mesa == 'delivery'){
   $status = 5;
@@ -66,8 +66,8 @@ if($mesa == 'delivery'){
   $observacoes = $rows_previa['observacoes'];
   $id_produto = $rows_previa['id_produto'];
 
- $insert_table = "INSERT INTO pedido ( numeropedido, delivery,cliente, idmesa, produto, quantidade, hora_pedido, valor, observacao, usuario, gorjeta, status) 
- VALUES ('$numeropedido','','$cliente', '$mesa', '$pedido', '$quantidade', '$hora_pedido', '$preco_venda', '$observacoes', '$user', '', $status )";
+ $insert_table = "INSERT INTO pedido ( numeropedido, delivery,cliente, idmesa, produto, quantidade, hora_pedido, valor, observacao, troco, usuario, gorjeta, status) 
+ VALUES ('$numeropedido','','$cliente', '$mesa', '$pedido', '$quantidade', '$hora_pedido', '$preco_venda', '$observacoes', '$troco','$user', '', $status )";
 
 //  echo $insert_table;
 //  echo "<br>";

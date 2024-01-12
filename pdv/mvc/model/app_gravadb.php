@@ -35,6 +35,7 @@ $user =  $_SESSION['user'];
 $cliente = $_POST['cliente'];
 
 $hashpagina = $_POST['hashpagina'];
+$troco = $_POST['troco'];
 
 // echo($numeropedido);
 // exit();
@@ -86,8 +87,8 @@ $hashpagina = $_POST['app_hash'];
   $id_produto = $rows_previa['id_produto'];
 
   
-  $insert_table = "INSERT INTO pedido (numeropedido, delivery,cliente, idmesa, produto, quantidade, hora_pedido, valor, observacao, pgto, usuario, `data` , gorjeta, status ) VALUES
-  ('$numeropedido','Local','$cliente', '$id_mesa', '$pedido', '$quantidade', '$hora_pedido', '$preco_venda', '$observacoes', '$pgto','$user','$data_hora' ,'' , 1 )";
+  $insert_table = "INSERT INTO pedido (numeropedido, delivery,cliente, idmesa, produto, quantidade, hora_pedido, valor, observacao, troco, pgto, usuario, `data` , gorjeta, status ) VALUES
+  ('$numeropedido','Local','$cliente', '$id_mesa', '$pedido', '$quantidade', '$hora_pedido', '$preco_venda', '$observacoes', '$troco','$pgto','$user','$data_hora' ,'' , 1 )";
 
 $adiciona_pedido = mysqli_query($conn, $insert_table);
 
@@ -142,8 +143,8 @@ if( $estoque_atual == "" ){
 	  $id_produto = $rows_previa['id_produto'];
 	
 	
-	   $insert_table = "INSERT INTO pedido (numeropedido, delivery,cliente, idmesa, produto, quantidade, hora_pedido, valor, observacao, pgto ,usuario, `data`, gorjeta, status) VALUES
-	  ('$numeropedido','Local','$cliente', '$id_mesa', '$pedido', '$quantidade', '$hora_pedido', '$preco_venda', '$observacoes','$pgto','$user', '$data_hora','', 1 )";
+	   $insert_table = "INSERT INTO pedido (numeropedido, delivery,cliente, idmesa, produto, quantidade, hora_pedido, valor, observacao, troco, pgto ,usuario, `data`, gorjeta, status) VALUES
+	  ('$numeropedido','Local','$cliente', '$id_mesa', '$pedido', '$quantidade', '$hora_pedido', '$preco_venda', '$observacoes','$troco','$pgto','$user', '$data_hora','', 1 )";
 	 
 	  $adiciona_pedido = mysqli_query($conn, $insert_table);
 	  

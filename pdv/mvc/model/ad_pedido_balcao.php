@@ -19,6 +19,7 @@ $detalhes =  $_POST['detalhes'];
 $pgto = $_POST['pgto'];
 $cliente_2 = $_POST['nomecliente'];
 $tipo = $_POST['tipo'];
+$troco = $_POST['troco'];
 
  $sql_previa = "SELECT * FROM `pedido_previa` where quantidade <> '' and hashpagina = '$hashpagina' GROUP BY id_produto order by id ASC";
     $pedido_previa = mysqli_query($conn, $sql_previa);
@@ -33,13 +34,13 @@ $tipo = $_POST['tipo'];
   $id_produto = $rows_previa['id_produto'];
 
   if ($pgto == 'Fiado'){
-    $insert_table_fiado = "INSERT INTO pedido_fiado (id, numeropedido, delivery,cliente, idmesa, produto, quantidade, hora_pedido, valor, observacao, pgto, usuario, `data` ,gorjeta, `status`) 
-    VALUES ( NULL, '$numeropedido','$tipo','$cliente', '$mesa', '$produto', '$quantidade', '$hora_pedido', '$valor', '$observacoes', '$pgto', '$usuario', '$data','', $status )";	
+    $insert_table_fiado = "INSERT INTO pedido_fiado (id, numeropedido, delivery,cliente, idmesa, produto, quantidade, hora_pedido, valor, observacao,troco ,pgto, usuario, `data` ,gorjeta, `status`) 
+    VALUES ( NULL, '$numeropedido','$tipo','$cliente', '$mesa', '$produto', '$quantidade', '$hora_pedido', '$valor', '$observacoes','$troco' ,'$pgto', '$usuario', '$data','', $status )";	
     $adiciona_pedido_fiado = mysqli_query($conn, $insert_table_fiado);
   }
 
-  $insert_table = "INSERT INTO pedido (numeropedido, delivery,cliente, idmesa, produto, quantidade, hora_pedido, valor, observacao, pgto ,usuario, `data`, gorjeta, status) VALUES
-  ('$numeropedido','$tipo','$id_cliente', '$id_mesa', '$pedido', '$quantidade', '$hora_pedido', '$preco_venda', '$observacoes','$pgto','$user', '$data_hora','', 1 )";
+  $insert_table = "INSERT INTO pedido (numeropedido, delivery,cliente, idmesa, produto, quantidade, hora_pedido, valor, observacao, troco, pgto ,usuario, `data`, gorjeta, status) VALUES
+  ('$numeropedido','$tipo','$id_cliente', '$id_mesa', '$pedido', '$quantidade', '$hora_pedido', '$preco_venda', '$observacoes','$troco','$pgto','$user', '$data_hora','', 1 )";
  
   $adiciona_pedido = mysqli_query($conn, $insert_table);
   
@@ -105,6 +106,7 @@ $cliente_2 = ($_POST['cliente']);
 $pgto = ($_POST['pgto']);
 $tipo = ($_POST['tipo']);
 $hashpagina = $_POST['hashpagina'];
+$troco = $_POST['troco'];
 
 // foreach ($detalhes as $detalhesPedidos) {
 
@@ -135,13 +137,13 @@ $hashpagina = $_POST['hashpagina'];
   $id_produto = $rows_previa['id_produto'];
 
   if ($pgto == 'Fiado'){
-    $insert_table_fiado = "INSERT INTO pedido_fiado (id, numeropedido, delivery,cliente, idmesa, produto, quantidade, hora_pedido, valor, observacao, pgto, usuario, `data` ,gorjeta, `status`) 
-    VALUES ( NULL, '$numeropedido', '$tipo' ,'$cliente', '$id_mesa', '$pedido', '$quantidade', '$hora_pedido', '$preco_venda', '$observacoes', '$pgto', '$user', '$data_hora','', 1 )";	
+    $insert_table_fiado = "INSERT INTO pedido_fiado (id, numeropedido, delivery,cliente, idmesa, produto, quantidade, hora_pedido, valor, observacao,troco, pgto, usuario, `data` ,gorjeta, `status`) 
+    VALUES ( NULL, '$numeropedido', '$tipo' ,'$cliente', '$id_mesa', '$pedido', '$quantidade', '$hora_pedido', '$preco_venda', '$observacoes','$troco' ,'$pgto', '$user', '$data_hora','', 1 )";	
     $adiciona_pedido_fiado = mysqli_query($conn, $insert_table_fiado);
   }
   
-  $insert_table = "INSERT INTO pedido (numeropedido, delivery,cliente, idmesa, produto, quantidade, hora_pedido, valor, observacao, pgto, usuario, `data` , gorjeta, status ) VALUES
-  ('$numeropedido','$tipo','$cliente', '$id_mesa', '$pedido', '$quantidade', '$hora_pedido', '$preco_venda', '$observacoes', '$pgto','$user','$data_hora' ,'' , 1 )";
+  $insert_table = "INSERT INTO pedido (numeropedido, delivery,cliente, idmesa, produto, quantidade, hora_pedido, valor, observacao, troco, pgto, usuario, `data` , gorjeta, status ) VALUES
+  ('$numeropedido','$tipo','$cliente', '$id_mesa', '$pedido', '$quantidade', '$hora_pedido', '$preco_venda', '$observacoes', '$troco','$pgto','$user','$data_hora' ,'' , 1 )";
 
 $adiciona_pedido = mysqli_query($conn, $insert_table);
 

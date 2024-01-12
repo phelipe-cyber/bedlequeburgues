@@ -237,13 +237,20 @@ $(document).ready(function() {
                     </div>
                 <?php
                     }
-                ?>
-                    
-
+                ?>     
                 </div>
+                
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label for="message-text" class="col-form-label">Troco:</label>
+                        <input value="" name="troco" id="troco" type="text" class="form-control">
+                    </div>
+                    <div class="form-group col-md-6" style="display: inherit;">
+                        <input class="btn btn-outline-success" type="submit" name="enviar" value="Finalizar Pedido">
+                    </div>
+			    </div>
 
-                <input class="btn btn-outline-success" type="submit" name="enviar" value="Finalizar Pedido">
-
+                
                 <?php
     }
         ?>
