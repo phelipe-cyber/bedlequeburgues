@@ -17,13 +17,17 @@ if( $dtinicio != "" || $dtfim != "" ){
 }
 echo "<br>";
 
- $tab_caixa = "SELECT pgto 'pgto', sum(valor) 'valor', sum(valor_maquina) 'valor_maquina' , data, 
+$vendaspgto = "SELECT pgto, (CAST(valor AS DECIMAL(10, 2))) 'valor', (CAST(valor_maquina AS DECIMAL(10, 2))) 'valor_maquina' , data, (CASE WHEN valor_maquina IS NOT NULL AND valor_maquina != '' THEN CAST(valor_maquina AS DECIMAL(10, 2)) ELSE CAST(valor AS DECIMAL(10, 2)) END) AS Rendimento FROM `vendas` WHERE DATE_FORMAT(STR_TO_DATE(`data`, '%d/%m/%Y'), '%Y-%m-%d') >= '$dtinicioFormatada' and DATE_FORMAT(STR_TO_DATE(`data`, '%d/%m/%Y'), '%Y-%m-%d') <= '$dtfimFormatada' ORDER by DATE_FORMAT(STR_TO_DATE(`data`, '%d/%m/%Y'), '%Y-%m-%d'), pgto ASC";
+$vendaspgto_re = mysqli_query($conn, $vendaspgto);
+
+
+$tab_caixa = "SELECT pgto 'pgto', sum(valor) 'valor', sum(valor_maquina) 'valor_maquina' , data, 
 SUM(CASE
         WHEN valor_maquina IS NOT NULL AND valor_maquina != '' THEN CAST(valor_maquina AS DECIMAL(10, 2))
         ELSE CAST(valor AS DECIMAL(10, 2))
     END) AS Rendimento
 FROM `vendas` WHERE DATE_FORMAT(STR_TO_DATE(`data`, '%d/%m/%Y'), '%Y-%m-%d') >= '$dtinicioFormatada' and DATE_FORMAT(STR_TO_DATE(`data`, '%d/%m/%Y'), '%Y-%m-%d') <= '$dtfimFormatada' GROUP by pgto, DATE_FORMAT(STR_TO_DATE(`data`, '%d/%m/%Y'), '%Y-%m-%d')
-UNION 
+UNION
 SELECT 'Total', SUM(CAST(valor AS DECIMAL(10, 2))) 'valor', SUM(CAST(valor_maquina AS DECIMAL(10, 2))) 'valor_maquina' , data, 
 SUM(CASE
         WHEN valor_maquina IS NOT NULL AND valor_maquina != '' THEN CAST(valor_maquina AS DECIMAL(10, 2))
@@ -236,6 +240,8 @@ while ($rows_rendimento = mysqli_fetch_assoc($caixa_rendimento)) {
     </table>
 </div>
 
+<br>
+
 <h1>Despesas do dia</h1>
 <div class="table-responsive">
     <table id="dtBasicExample2" class="table table-striped table-bordered table-sm reponsive" cellspacing="0" width="100%">
@@ -270,6 +276,70 @@ while ($rows_rendimento = mysqli_fetch_assoc($caixa_rendimento)) {
         </tbody>
     </table>
 </div>
+
+<br>
+
+<h1>Vendas do dia Por ordem de pagamento</h1>
+<div class="table-responsive">
+    <table id="dtBasicExample" class="table table-striped table-bordered table-sm reponsive" cellspacing="0"
+        width="100%">
+        <thead>
+            <tr>
+                <th>Tipo de Pagamento</th>
+                <th>Valor Pago Cliente</th>
+                <th>Valor Maquininha</th>
+                <th>Rendimento C/ Desconto Maquininha</th>
+                <th>Data</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+                    $index = 0;
+                    while ($rows_vendaspgto = mysqli_fetch_assoc($vendaspgto_re)) { 
+                    ?>
+            <tr>
+                
+                <?php
+                    //  echo $rows_caixa['pgto']
+                    if( $rows_caixa['pgto'] == 'Total'){ 
+                        $rendimento = $rows_caixa['Rendimento'];
+                        ?> 
+                            <td style="color: blue; height: 50px;"> <?php echo $rows_vendaspgto['pgto'] ?></td>
+                            <td style="color: blue; height: 50px;">R$ <?php echo number_format($rows_vendaspgto['valor'], 2); ?></td>
+                            <td style="color: blue; height: 50px;">R$ <?php echo number_format($rows_vendaspgto['valor_maquina'], 2); ?></td>
+                            <td style="color: blue; height: 50px;">R$ <?php echo number_format($rows_vendaspgto['Rendimento'], 2); ?></td>
+                                <td style="color: blue; height: 50px;"><?php echo $rows_vendaspgto['data'] ?></td>
+                         <?php
+                    }else{
+                        $rendimento = $rows_vendaspgto['Rendimento'];
+                        ?> 
+                                <td > <?php echo $rows_vendaspgto['pgto'] ?></td>
+                                <td >R$ <?php echo number_format($rows_vendaspgto['valor'], 2); ?></td>
+                                <td >R$ <?php echo number_format($rows_vendaspgto['valor_maquina'], 2); ?></td>
+                                <td >R$ <?php echo number_format($rows_vendaspgto['Rendimento'], 2); ?></td>
+                                <td ><?php echo $rows_vendaspgto['data'] ?></td>
+                
+                <?php } ?>
+            </tr>
+
+
+            <?php $index++;
+                    } ?>
+
+
+        </tbody>
+    </table>
+</div>
+
+
+<?php
+
+
+
+
+?>
+
 
 <script>
 $(document).ready(function() {
