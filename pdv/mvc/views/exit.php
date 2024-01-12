@@ -242,43 +242,6 @@ while ($rows_rendimento = mysqli_fetch_assoc($caixa_rendimento)) {
 
 <br>
 
-<h1>Despesas do dia</h1>
-<div class="table-responsive">
-    <table id="dtBasicExample2" class="table table-striped table-bordered table-sm reponsive" cellspacing="0" width="100%">
-        <thead>
-            <tr>
-                <th>Nome</th>
-                <th>Valor despesa</th>
-                <th>Valor Liquido</th>
-                <th>Data</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php
-                    $index = 0;
-                    while ($rows_despesa = mysqli_fetch_assoc($despesa)) { 
-                        
-                    ?>
-            <tr>
-
-                <td> <?php echo $rows_despesa['Total Despesa'] ?></td>
-               <td style="color: red; height: 50px;" >R$ <?php echo number_format($rows_despesa['valor'], 2); ?></td>
-               <td style="color: red; height: 50px;" >R$ <?php echo number_format($rows_despesa['valor'] - $rendimento, 2); ?></td>
-               <td> <?php echo $rows_despesa['data'] ?></td>
-               
-            </tr>
-
-
-            <?php $index++;
-                    } ?>
-
-
-        </tbody>
-    </table>
-</div>
-
-<br>
-
 <h1>Vendas do dia Por ordem de pagamento</h1>
 <div class="table-responsive">
     <table id="dtBasicExample" class="table table-striped table-bordered table-sm reponsive" cellspacing="0"
@@ -332,14 +295,42 @@ while ($rows_rendimento = mysqli_fetch_assoc($caixa_rendimento)) {
     </table>
 </div>
 
+<br>
 
-<?php
+<h1>Despesas do dia</h1>
+<div class="table-responsive">
+    <table id="dtBasicExample2" class="table table-striped table-bordered table-sm reponsive" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Valor despesa</th>
+                <th>Valor Liquido</th>
+                <th>Data</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+                    $index = 0;
+                    while ($rows_despesa = mysqli_fetch_assoc($despesa)) { 
+                        
+                    ?>
+            <tr>
+
+                <td> <?php echo $rows_despesa['Total Despesa'] ?></td>
+               <td style="color: red; height: 50px;" >R$ <?php echo number_format($rows_despesa['valor'], 2); ?></td>
+               <td style="color: red; height: 50px;" >R$ <?php echo number_format($rows_despesa['valor'] - $rendimento, 2); ?></td>
+               <td> <?php echo $rows_despesa['data'] ?></td>
+               
+            </tr>
 
 
+            <?php $index++;
+                    } ?>
 
 
-?>
-
+        </tbody>
+    </table>
+</div>
 
 <script>
 $(document).ready(function() {
