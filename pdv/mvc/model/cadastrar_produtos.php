@@ -17,6 +17,10 @@
 	$preco_custo = str_replace(',', '.', $preco_custo);
 	$preco_venda = mysqli_real_escape_string($conn, $_POST['preco_venda']);
 	$preco_venda = str_replace(',', '.', $preco_venda);
+	
+	$preco_venda_ifood = mysqli_real_escape_string($conn, $_POST['preco_venda_ifood']);
+	$preco_venda_ifood = str_replace(',', '.', $preco_venda_ifood);
+	
 	$estoque_atual = mysqli_real_escape_string($conn, $_POST['estoque_atual']);
 	$estoque_minimo = mysqli_real_escape_string($conn, $_POST['estoque_minimo']);
 	$data_compra = mysqli_real_escape_string($conn, $_POST['data_compra']);
@@ -31,8 +35,8 @@
 	//echo "$id - $nome - $detalhes";
 
 	$insert_table = "INSERT INTO 
-	produtos (nome, categoria, detalhes, codigo, preco_custo, preco_venda, estoque_atual, estoque_minimo, data_compra, data_validade, unidade, marca, fornecedor, observacoes) VALUES 
-	('$nome','$categoria', '$detalhes', '$codigo', '$preco_custo', '$preco_venda', '$estoque_atual', '$estoque_minimo', '$data_compra', '$data_validade', '$unidade', '$marca', '$fornecedor', '$observacoes')";	
+	produtos (nome, categoria, detalhes, codigo, preco_custo, preco_venda, estoque_atual, estoque_minimo, data_compra, data_validade, unidade, marca, fornecedor, observacoes,preco_venda_ifood) VALUES 
+	('$nome','$categoria', '$detalhes', '$codigo', '$preco_custo', '$preco_venda', '$estoque_atual', '$estoque_minimo', '$data_compra', '$data_validade', '$unidade', '$marca', '$fornecedor', '$observacoes','$preco_venda_ifood')";	
 	$produtos_editados = mysqli_query($conn, $insert_table);
 	
 ?>

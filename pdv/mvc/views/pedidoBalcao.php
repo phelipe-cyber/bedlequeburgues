@@ -245,6 +245,12 @@ $(document).ready(function() {
                         <label for="message-text" class="col-form-label">Troco:</label>
                         <input value="" name="troco" id="troco" type="text" class="form-control">
                     </div>
+
+                    <div class="form-group col-md-6" id="frete_ifood_display" style="display: none;">
+                        <label for="message-text" class="col-form-label">Frete iFood:</label>
+                        <input value="" name="frete_ifood" id="frete_ifood" type="text" class="form-control">
+                    </div>
+                    
                     <div class="form-group col-md-6" style="display: inherit;">
                         <input class="btn btn-outline-success" type="submit" name="enviar" value="Finalizar Pedido">
                     </div>
@@ -305,6 +311,10 @@ $(document).ready(function() {
                                             name="detalhes[<?php echo $rows_produtos['id'] ?>][preco_venda]" type="hidden"
                                             class="form-control" value="<?php echo ($rows_produtos['preco_venda']); ?>">
 
+                                            <input id="detalhes[<?php echo $rows_produtos['id'] ?>][preco_venda_ifood]"
+                                            name="detalhes[<?php echo $rows_produtos['id'] ?>][preco_venda_ifood]" type="hidden"
+                                            class="form-control" value="<?php echo ($rows_produtos['preco_venda_ifood']); ?>">
+
                                         <input id="detalhes[<?php echo $rows_produtos['id'] ?>][id]"
                                             name="detalhes[<?php echo $rows_produtos['id'] ?>][id]" type="hidden"
                                             class="form-control" value="<?php echo ($rows_produtos['id']); ?>">
@@ -326,9 +336,42 @@ $(document).ready(function() {
 
                                         <script>
                                             $(document).ready(function() {
+
                                                 $("#mais<?php echo $rows_produtos['id'] ?>").click(function() {
                                                     document.getElementById('spinner').style='display:flex;';
                                                     
+                                                    var opcoesPagamento = document.getElementsByName('pgto');
+                                                    var algumSelecionado = false;
+
+                                                    // Iterar sobre os elementos de entrada de rádio
+                                                    for (var i = 0; i < opcoesPagamento.length; i++) {
+                                                        // Verificar se o rádio está marcado
+                                                        if (opcoesPagamento[i].checked) {
+                                                            // Exibir o valor selecionado
+                                                            algumSelecionado = true;
+                                                            // alert("Você selecionou: " + opcoesPagamento[i].value);
+                                                            tipopgto = opcoesPagamento[i].value
+                                                            // Você pode adicionar mais lógica aqui conforme necessário
+                                                        }
+                                                    }
+                                                    if (!algumSelecionado) {
+                                                        alert("Selecionar a forma de pagamento antes de selecionar o Item")
+                                                        document.getElementById('spinner').style='display:none;';
+                                                    }else{
+ 
+                                                    
+                                                    if( tipopgto == 'iFood' ){
+                                                        preco_venda_ifood = document.getElementById("detalhes[<?php echo $rows_produtos['id'] ?>][preco_venda_ifood]").value
+                                                        total = preco_venda_ifood;
+                                                        document.getElementById("frete_ifood_display").style = "display:block;"
+                                                        document.getElementById("frete_ifood").required = true;
+                                                    }else{
+                                                        document.getElementById("frete_ifood_display").style = "display:none;"
+                                                        document.getElementById("frete_ifood").required = false;
+                                                        valor = document.getElementById("detalhes[<?php echo $rows_produtos['id'] ?>][preco_venda]").value
+                                                        total = valor;
+                                                    }
+
                                                     Quantidade = document.getElementById(
                                                             "detalhes[<?php echo $rows_produtos['id'] ?>][quantidade]")
                                                         .value
@@ -338,11 +381,6 @@ $(document).ready(function() {
                                                     Q = document.getElementById(
                                                             "detalhes[<?php echo $rows_produtos['id'] ?>][quantidade]")
                                                         .value = Quantidade;
-
-                                                    valor = document.getElementById(
-                                                            "detalhes[<?php echo $rows_produtos['id'] ?>][preco_venda]")
-                                                        .value
-                                                        total = valor;
 
                                                     pedido = document.getElementById(
                                                             "detalhes[<?php echo $rows_produtos['id'] ?>][pedido]")
@@ -399,7 +437,7 @@ $(document).ready(function() {
                                                         },
 
                                                     });
-
+                                                };
 
                                                 });
                                             });

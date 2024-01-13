@@ -18,6 +18,8 @@ $preco_custo = mysqli_real_escape_string($conn, $_POST['preco_custo']);
 $preco_custo = str_replace(',', '.', $preco_custo);
 $preco_venda = mysqli_real_escape_string($conn, $_POST['preco_venda']);
 $preco_venda = str_replace(',', '.', $preco_venda);
+$preco_venda_ifood = mysqli_real_escape_string($conn, $_POST['preco_venda_ifood']);
+$preco_venda_ifood = str_replace(',', '.', $preco_venda_ifood);
 $estoque_atual = mysqli_real_escape_string($conn, $_POST['estoque_atual']);
 $estoque_minimo = mysqli_real_escape_string($conn, $_POST['estoque_minimo']);
 $data_compra = mysqli_real_escape_string($conn, $_POST['data_compra']);
@@ -56,7 +58,7 @@ if ($img_edit == "") {
 
 //echo "$id - $nome - $detalhes";
 
- $insert_table = "UPDATE produtos SET
+echo $insert_table = "UPDATE produtos SET
 	nome = '$nome', 
 	categoria = '$categoria', 
 	detalhes = '$detalhes', 
@@ -71,8 +73,9 @@ if ($img_edit == "") {
 	marca = '$marca', 
 	fornecedor = '$fornecedor', 
 	observacoes = '$observacoes',
+	preco_venda_ifood = '$preco_venda_ifood',
 	img = '$img_edit'
-	 WHERE id = '$id' ";
+	 WHERE id = $id ";
 
 $produtos_editados = mysqli_query($conn, $insert_table);
 

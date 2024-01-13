@@ -15,6 +15,8 @@
 
 		$idmesa = $rows_pedidos['idmesa'];
 		$pgto = $rows_pedidos['pgto'];
+		$frete_ifood = $rows_pedidos['$frete_ifood'];
+		
 	}
 
 	
@@ -41,6 +43,7 @@
 				</div> -->
 				  <input type="hidden" name="id" id="id" value="<?php echo $id; ?>">
 				  <input type="hidden" name="total" id="total" value="<?php echo $total; ?>">
+				  <input type="hidden" name="frete_ifood" id="frete_ifood" value="<?php echo $frete_ifood; ?>">
 
   			</div>
 

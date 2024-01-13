@@ -79,6 +79,10 @@ $produtos = mysqli_query($conn, $tab_produtos);
                             <input required name="preco_venda" type="text" class="form-control">
                         </div>
                         <div class="form-group col-md-2">
+                            <label for="recipient-name" class="col-form-label">Preço de Venda iFood:</label>
+                            <input required name="preco_venda_ifood" type="text" class="form-control">
+                        </div>
+                        <div class="form-group col-md-2">
                             <label for="recipient-name" class="col-form-label">Estoque Atual:</label>
                             <input name="estoque_atual" type="text" class="form-control">
                         </div>
@@ -142,6 +146,7 @@ $produtos = mysqli_query($conn, $tab_produtos);
                 <th>Detalhes</th>
                 <th>Preço de Custo</th>
                 <th>Preço de Venda</th>
+                <th>Preço de Venda iFood</th>
                 <th>Ação</th>
 
             </tr>
@@ -163,6 +168,7 @@ $produtos = mysqli_query($conn, $tab_produtos);
                 <td><?php echo ($rows_produtos['detalhes'])?></td>
                 <td><?php echo ($rows_produtos['preco_custo'])?></td>
                 <td><?php echo ($rows_produtos['preco_venda'])?></td>
+                <td><?php echo ($rows_produtos['preco_venda_ifood'])?></td>
                 <td>
                     <button type="button" class="btn btn-primary btn-icon-split btn-sm" data-toggle="modal"
                         data-target="#myModal<?php echo $rows_produtos['id']; ?>">Visualizar</button>
@@ -176,6 +182,7 @@ $produtos = mysqli_query($conn, $tab_produtos);
                         data-categoriaproduto="<?php echo $rows_produtos['categoria']; ?>"
                         data-custoproduto="<?php echo $rows_produtos['preco_custo']; ?>"
                         data-precoproduto="<?php echo $rows_produtos['preco_venda']; ?>"
+                        data-precoprodutoifood="<?php echo $rows_produtos['preco_venda_ifood']; ?>"
                         data-estoqueatualproduto="<?php echo $rows_produtos['estoque_atual']; ?>"
                         data-estoqueminimoproduto="<?php echo $rows_produtos['estoque_minimo']; ?>"
                         data-datacompraproduto="<?php echo $rows_produtos['data_compra']; ?>"
@@ -218,6 +225,7 @@ $produtos = mysqli_query($conn, $tab_produtos);
                             <p><b>Detalhe: </b><?php echo $rows_produtos['detalhes']; ?></p>
                             <p><b>Preço de Custo: </b><?php echo $rows_produtos['preco_custo']; ?></p>
                             <p><b>Preço de Venda: </b><?php echo $rows_produtos['preco_venda']; ?></p>
+                            <p><b>Preço de Venda iFood: </b><?php echo $rows_produtos['preco_venda_ifood']; ?></p>
                             <p><b>Estoque Atual: </b><?php echo $rows_produtos['estoque_atual']; ?></p>
                             <p><b>Estoque Mínimo: </b><?php echo $rows_produtos['estoque_minimo']; ?></p>
                             <p><b>Data da Compra: </b><?php echo $rows_produtos['data_compra']; ?></p>
@@ -256,6 +264,7 @@ $produtos = mysqli_query($conn, $tab_produtos);
                             <p><b>Detalhe: </b><?php echo $rows_produtos['detalhes']; ?></p>
                             <p><b>Preço de Custo: </b><?php echo $rows_produtos['preco_custo']; ?></p>
                             <p><b>Preço de Venda: </b><?php echo $rows_produtos['preco_venda']; ?></p>
+                            <p><b>Preço de Venda iFood: </b><?php echo $rows_produtos['preco_venda_ifood']; ?></p>
                             <p><b>Estoque Atual: </b><?php echo $rows_produtos['estoque_atual']; ?></p>
                             <p><b>Estoque Mínimo: </b><?php echo $rows_produtos['estoque_minimo']; ?></p>
                             <p><b>Data da Compra: </b><?php echo $rows_produtos['data_compra']; ?></p>
@@ -323,6 +332,10 @@ $produtos = mysqli_query($conn, $tab_produtos);
 					          	<div class="form-group col-md-2">
 					            	<label for="recipient-name" class="col-form-label">Preço de Venda:</label>
 					            	<input  name="preco_venda" type="text" class="form-control" id="preco-venda">
+					          	</div>
+					          	<div class="form-group col-md-2">
+					            	<label for="recipient-name" class="col-form-label">Preço de Venda iFood:</label>
+					            	<input  name="preco_venda_ifood" type="text" class="form-control" id="preco-venda-ifood">
 					          	</div>
 					          	<div class="form-group col-md-2">
 					            	<label for="recipient-name" class="col-form-label">Estoque Atual:</label>
@@ -467,6 +480,7 @@ $('#exampleModal').on('show.bs.modal', function (event) {
   var recipientmarca = button.data('marcaproduto')
   var recipientfornecedor = button.data('fornecedorproduto')
   var recipientobservacoes = button.data('observacoesproduto')
+  var recipientprecoprodutoifood = button.data('precoprodutoifood')
   var recipientimg = button.data('img')
   var recipientscr = button.data('srcimg')
 
@@ -488,6 +502,7 @@ $('#exampleModal').on('show.bs.modal', function (event) {
   modal.find('#marca').val(recipientmarca)
   modal.find('#fornecedor').val(recipientfornecedor)
   modal.find('#observacoes').val(recipientobservacoes)
+  modal.find('#preco-venda-ifood').val(recipientprecoprodutoifood)
   modal.find('#img').val(recipientimg)
   modal.find('#imgsrc').val(recipientscr)
 

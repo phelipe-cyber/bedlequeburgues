@@ -41,6 +41,7 @@ $venda = $total;
 // $total = $total - $valor_pago;
 
  $pgto = $_POST['pgto'];
+ $frete_ifood = $_POST['frete_ifood'];
 
  ?>
 
@@ -64,12 +65,6 @@ $venda = $total;
 	// Cartão Debito
 
 	if($pgto == "Cartão Debito" ){
-
-		// $valor_base = 190;
-		// $valor = 185.46;
-		// $resultado = ($valor / $valor_base) * 100;
-        // $Valor_format = number_format($resultado, 2);
-		// var_dump($Valor_format);
 		
 		$total = $_POST['valor_pago'];
 		$porcentagem = 1.99;
@@ -93,6 +88,34 @@ $venda = $total;
 		$valor_descontado = $total - ($total * $pctm / 100);
 		$Valor_format = number_format($valor_descontado, 2);
 
+	}elseif($pgto == 'iFood'){
+
+		$total = $_POST['valor_pago'];
+		
+		// Taxa de comissão do Repasse em 1 Semana
+		$pctmRepasse = 1.59;
+		$valor_descontado_Repasse = ($total * $pctmRepasse / 100);
+		$Valor_Repasse = number_format($valor_descontado_Repasse, 2);
+		
+		// Comissão iFood
+		$pctmComissao = 23.00;
+		$valor_descontado_Comissao = ($total * $pctmComissao / 100);
+		$Valor_Comisssao = number_format($valor_descontado_Comissao, 2);
+		
+		// Comissão pela transação do Pagamento
+		$pctmTransacao = 3.20;
+		$valor_descontado_Transacao = ($total * $pctmTransacao / 100);
+		$Valor_Transacao = number_format($valor_descontado_Transacao, 2);
+		
+		// Taxas e comissões
+		$taxascomissao = $Valor_Repasse + $Valor_Comisssao + $Valor_Transacao;
+		
+		$totalpedido = $total + $frete_ifood;
+
+		$valorliquido = $totalpedido - $frete_ifood -  $taxascomissao;
+		
+		$Valor_format = $valorliquido;
+		
 	}
 		
 		// $Valor_format = $Valor_format = $venda;
@@ -127,6 +150,7 @@ if ($total > 0) {
 		$usuario = $rows_produtos['usuario'];
 		$gorjeta = $rows_produtos['gorjeta'];
 		$status = $rows_produtos['status'];
+		$frete_ifood = $rows_produtos['frete_ifood'];
 
 		$tab_produto = "SELECT * FROM produtos WHERE nome LIKE '$produto' AND preco_venda LIKE '$valor'";
 		$estoque = mysqli_query($conn, $tab_produto) or die(mysqli_error($conn));
