@@ -58,7 +58,7 @@ if ($img_edit == "") {
 
 //echo "$id - $nome - $detalhes";
 
-echo $insert_table = "UPDATE produtos SET
+$insert_table = "UPDATE produtos SET
 	nome = '$nome', 
 	categoria = '$categoria', 
 	detalhes = '$detalhes', 
