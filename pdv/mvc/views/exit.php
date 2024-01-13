@@ -17,7 +17,30 @@ if( $dtinicio != "" || $dtfim != "" ){
 }
 echo "<br>";
 
-$vendaspgto = "SELECT pgto, (CAST(valor AS DECIMAL(10, 2))) 'valor', (CAST(valor_maquina AS DECIMAL(10, 2))) 'valor_maquina' , data, (CASE WHEN valor_maquina IS NOT NULL AND valor_maquina != '' THEN CAST(valor_maquina AS DECIMAL(10, 2)) ELSE CAST(valor AS DECIMAL(10, 2)) END) AS Rendimento FROM `vendas` WHERE DATE_FORMAT(STR_TO_DATE(`data`, '%d/%m/%Y'), '%Y-%m-%d') >= '$dtinicioFormatada' and DATE_FORMAT(STR_TO_DATE(`data`, '%d/%m/%Y'), '%Y-%m-%d') <= '$dtfimFormatada' ORDER by DATE_FORMAT(STR_TO_DATE(`data`, '%d/%m/%Y'), '%Y-%m-%d'), pgto ASC";
+$vendaspgto = "SELECT
+                        id_pedido,
+                        pgto,
+                        (CASE
+                            WHEN c.nome IS NULL THEN `vendas`.cliente 
+                            ELSE c.nome
+                        END) as cliente,
+                        (CAST(valor AS DECIMAL(10, 2))) 'valor',
+                        (CAST(valor_maquina AS DECIMAL(10, 2))) 'valor_maquina' ,
+                        data,
+                        (CASE
+                            WHEN valor_maquina IS NOT NULL
+                            AND valor_maquina != '' THEN CAST(valor_maquina AS DECIMAL(10, 2))
+                            ELSE CAST(valor AS DECIMAL(10, 2))
+                        END) AS Rendimento
+                        FROM
+                        `vendas`
+                        left join clientes c on c.id = `vendas`.cliente 
+                        WHERE
+                        DATE_FORMAT(STR_TO_DATE(`data`, '%d/%m/%Y'), '%Y-%m-%d') >= '2024-01-12'
+                        and DATE_FORMAT(STR_TO_DATE(`data`, '%d/%m/%Y'), '%Y-%m-%d') <= '2024-01-13'
+                        ORDER by
+                        DATE_FORMAT(STR_TO_DATE(`data`, '%d/%m/%Y'), '%Y-%m-%d'),
+                        pgto ASC";
 $vendaspgto_re = mysqli_query($conn, $vendaspgto);
 
 
@@ -34,7 +57,7 @@ SUM(CASE
         ELSE CAST(valor AS DECIMAL(10, 2))
     END) AS Rendimento
 FROM `vendas` WHERE DATE_FORMAT(STR_TO_DATE(`data`, '%d/%m/%Y'), '%Y-%m-%d') >= '$dtinicioFormatada' and DATE_FORMAT(STR_TO_DATE(`data`, '%d/%m/%Y'), '%Y-%m-%d') <= '$dtfimFormatada'
-GROUP by DATE_FORMAT(STR_TO_DATE(`data`, '%d/%m/%Y'), '%Y-%m-%d') ORDER by  DATE_FORMAT(STR_TO_DATE(`data`, '%d/%m/%Y'), '%Y-%m-%d'), pgto ASC";
+GROUP by DATE_FORMAT(STR_TO_DATE(`data`, '%d/%m/%Y'), '%Y-%m-%d') ";
 
 $caixa = mysqli_query($conn, $tab_caixa);
 $caixa_rendimento = mysqli_query($conn, $tab_caixa);
@@ -248,6 +271,9 @@ while ($rows_rendimento = mysqli_fetch_assoc($caixa_rendimento)) {
         width="100%">
         <thead>
             <tr>
+                <th>Qtde.</th>
+                <th>ID Pedido</th>
+                <th>Cliente</th>
                 <th>Tipo de Pagamento</th>
                 <th>Valor Pago Cliente</th>
                 <th>Valor Maquininha</th>
@@ -258,7 +284,7 @@ while ($rows_rendimento = mysqli_fetch_assoc($caixa_rendimento)) {
         </thead>
         <tbody>
             <?php
-                    $index = 0;
+                    $index = 1;
                     while ($rows_vendaspgto = mysqli_fetch_assoc($vendaspgto_re)) { 
                     ?>
             <tr>
@@ -277,6 +303,9 @@ while ($rows_rendimento = mysqli_fetch_assoc($caixa_rendimento)) {
                     }else{
                         $rendimento = $rows_vendaspgto['Rendimento'];
                         ?> 
+                                <td > <?php echo $index ?></td>
+                                <td > <?php echo $rows_vendaspgto['id_pedido'] ?></td>
+                                <td > <?php echo $rows_vendaspgto['cliente'] ?></td>
                                 <td > <?php echo $rows_vendaspgto['pgto'] ?></td>
                                 <td >R$ <?php echo number_format($rows_vendaspgto['valor'], 2); ?></td>
                                 <td >R$ <?php echo number_format($rows_vendaspgto['valor_maquina'], 2); ?></td>
