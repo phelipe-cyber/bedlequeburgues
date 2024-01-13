@@ -77,19 +77,23 @@ $venda = $total;
 		// $R = $total - $resultado;
         $Valor_format = number_format($resultado, 2);
 
-	}else{
+	}elseif( $pgto == 'Cartão Credito' ){
+			
+		// print_r( "Valor da venda R$ ". $_POST['total']);
+		// echo "<br>";
+		$total = $_POST['valor_pago'];
+		$pctm = 4.99;
+		$valor_descontado = $total - ($total * $pctm / 100);
+		$Valor_format = number_format($valor_descontado, 2);
+			
+	}elseif( $pgto == 'Voucher' ){
 
-		
-		if( $pgto == 'Cartão Credito' ){
-			
-			// print_r( "Valor da venda R$ ". $_POST['total']);
-			// echo "<br>";
-			$total = $_POST['valor_pago'];
-			$pctm = 4.99;
-			$valor_descontado = $total - ($total * $pctm / 100);
-			$Valor_format = number_format($valor_descontado, 2);
-			
-		}
+		$total = $_POST['valor_pago'];
+		$pctm = 3.19;
+		$valor_descontado = $total - ($total * $pctm / 100);
+		$Valor_format = number_format($valor_descontado, 2);
+
+	}
 		
 		// $Valor_format = $Valor_format = $venda;
 	}
@@ -373,5 +377,5 @@ if ($total > 0) {
   
 </div> -->
 
-<?php } } ?>
+<?php } ?>
 

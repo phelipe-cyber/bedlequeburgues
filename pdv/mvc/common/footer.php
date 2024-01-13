@@ -5,6 +5,12 @@
 
       </div>
       <!-- End of Main Content -->
+      <?php
+        session_start();
+        date_default_timezone_set('America/Sao_Paulo');
+        $ano = date('Y');
+
+      ?>
 
       <!-- Footer -->
       <footer class="sticky-footer bg-white">
@@ -12,7 +18,7 @@
           <div class="copyright text-center my-auto">
             <span>Copyright &copy; </span>
             
-              <a href="" class="text-decoration-none">Bedlek Burgue's 2023</a>
+              <a href="" class="text-decoration-none">Bedlek Burgue's <?php echo $ano ?></a>
             
           </div>
         </div>
