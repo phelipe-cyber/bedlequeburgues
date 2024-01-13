@@ -6,6 +6,7 @@ $hora_pedido = date('H:i');
 
 include_once ("conexao.php");
 
+
 if( $_POST['pedido'] <> ""){
  
   $numeropedido = $_POST['pedido'];
@@ -79,6 +80,7 @@ if( $_POST['pedido'] <> ""){
   exit();
 }else{
 
+  
   $result_usuarios = ("SELECT MAX(numeropedido) as 'Pedido'FROM `pedido`ORDER BY numeropedido DESC limit 1 ");
   $recebidos = mysqli_query($conn, $result_usuarios);
 
@@ -108,6 +110,7 @@ if( $_POST['pedido'] <> ""){
   $tipo = ($_POST['tipo']);
   $hashpagina = $_POST['hashpagina'];
   $troco = $_POST['troco'];
+  $frete_ifood = $_POST['frete_ifood'];
 
   $sql_previa = "SELECT * FROM `pedido_previa` where quantidade <> '' and hashpagina = '$hashpagina' order by id ASC";
   $pedido_previa = mysqli_query($conn, $sql_previa);
@@ -120,7 +123,6 @@ if( $_POST['pedido'] <> ""){
     $preco_venda = $rows_previa['valor'];
     $observacoes = $rows_previa['observacao'];
     $id_produto = $rows_previa['id_produto'];
-    $frete_ifood = $_POST['frete_ifood'];
 
     if ($pgto == 'Fiado'){
       $insert_table_fiado = "INSERT INTO pedido_fiado (id, numeropedido, delivery,cliente, idmesa, produto, quantidade, hora_pedido, valor, observacao,troco, pgto, usuario, `data` ,gorjeta, `status`) 
@@ -129,7 +131,7 @@ if( $_POST['pedido'] <> ""){
     }
     
     $insert_table = "INSERT INTO pedido (numeropedido, delivery,cliente, idmesa, produto, quantidade, hora_pedido, valor, observacao, troco, pgto, usuario, `data` , gorjeta, status, frete_ifood ) VALUES
-    ('$numeropedido','$tipo','$cliente', '$id_mesa', '$pedido', '$quantidade', '$hora_pedido', '$preco_venda', '$observacoes', '$troco','$pgto','$user','$data_hora' ,'' , 1, $frete_ifood )";
+    ('$numeropedido','$tipo','$cliente', '$id_mesa', '$pedido', '$quantidade', '$hora_pedido', '$preco_venda', '$observacoes', '$troco','$pgto','$user','$data_hora' ,'' , 1, '$frete_ifood' )";
   $adiciona_pedido = mysqli_query($conn, $insert_table);
 
   $insert_table = "UPDATE mesas SET status = '2', nome = '$cliente' , id_pedido = '$numeropedido' WHERE id_mesa = $id_mesa";
