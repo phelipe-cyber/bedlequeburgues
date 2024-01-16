@@ -36,8 +36,8 @@ $vendaspgto = "SELECT
                         `vendas`
                         left join clientes c on c.id = `vendas`.cliente 
                         WHERE
-                        DATE_FORMAT(STR_TO_DATE(`data`, '%d/%m/%Y'), '%Y-%m-%d') >= '2024-01-12'
-                        and DATE_FORMAT(STR_TO_DATE(`data`, '%d/%m/%Y'), '%Y-%m-%d') <= '2024-01-13'
+                        DATE_FORMAT(STR_TO_DATE(`data`, '%d/%m/%Y'), '%Y-%m-%d') >= '$dtinicioFormatada'
+                        and DATE_FORMAT(STR_TO_DATE(`data`, '%d/%m/%Y'), '%Y-%m-%d') <= '$dtfimFormatada'
                         ORDER by
                         DATE_FORMAT(STR_TO_DATE(`data`, '%d/%m/%Y'), '%Y-%m-%d'),
                         pgto ASC";
