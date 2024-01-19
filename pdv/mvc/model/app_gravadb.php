@@ -73,7 +73,7 @@ $pgto = ($_POST['pgto']);
 $tipo = ($_POST['tipo']);
 $hashpagina = $_POST['app_hash'];
 
-  $sql_previa = "SELECT * FROM `pedido_previa` where quantidade <> '' and hashpagina = '$hashpagina' GROUP BY id_produto order by id ASC";
+  $sql_previa = "SELECT * FROM `pedido_previa` where quantidade <> '' and hashpagina = '$hashpagina' order by id ASC";
     $pedido_previa = mysqli_query($conn, $sql_previa);
 
  while ($rows_previa = mysqli_fetch_assoc($pedido_previa)) {
@@ -87,8 +87,8 @@ $hashpagina = $_POST['app_hash'];
   $id_produto = $rows_previa['id_produto'];
 
   
-  $insert_table = "INSERT INTO pedido (numeropedido, delivery,cliente, idmesa, produto, quantidade, hora_pedido, valor, observacao, troco, pgto, usuario, `data` , gorjeta, status ) VALUES
-  ('$numeropedido','Local','$cliente', '$id_mesa', '$pedido', '$quantidade', '$hora_pedido', '$preco_venda', '$observacoes', '$troco','$pgto','$user','$data_hora' ,'' , 1 )";
+  $insert_table = "INSERT INTO pedido (numeropedido, delivery,cliente, idmesa, produto, quantidade, hora_pedido, valor, observacao, troco, pgto, usuario, `data` , gorjeta, status, frete_ifood ) VALUES
+  ('$numeropedido','$tipo','$cliente', '$id_mesa', '$pedido', '$quantidade', '$hora_pedido', '$preco_venda', '$observacoes', '$troco','$pgto','$user','$data_hora' ,'' , 1, '$frete_ifood' )";
 
 $adiciona_pedido = mysqli_query($conn, $insert_table);
 
@@ -131,7 +131,7 @@ if( $estoque_atual == "" ){
 	$pgto = $_POST['pgto'];
 	$tipo = $_POST['tipo'];
 	
-	 $sql_previa = "SELECT * FROM `pedido_previa` where quantidade <> '' and hashpagina = '$hashpagina' GROUP BY id_produto order by id ASC";
+	 $sql_previa = "SELECT * FROM `pedido_previa` where quantidade <> '' and hashpagina = '$hashpagina' order by id ASC";
 		$pedido_previa = mysqli_query($conn, $sql_previa);
 	
 	 while ($rows_previa = mysqli_fetch_assoc($pedido_previa)) {
@@ -143,9 +143,9 @@ if( $estoque_atual == "" ){
 	  $id_produto = $rows_previa['id_produto'];
 	
 	
-	   $insert_table = "INSERT INTO pedido (numeropedido, delivery,cliente, idmesa, produto, quantidade, hora_pedido, valor, observacao, troco, pgto ,usuario, `data`, gorjeta, status) VALUES
-	  ('$numeropedido','Local','$cliente', '$id_mesa', '$pedido', '$quantidade', '$hora_pedido', '$preco_venda', '$observacoes','$troco','$pgto','$user', '$data_hora','', 1 )";
-	 
+	  $insert_table = "INSERT INTO pedido (numeropedido, delivery,cliente, idmesa, produto, quantidade, hora_pedido, valor, observacao, troco, pgto, usuario, `data` , gorjeta, status, frete_ifood ) VALUES
+	  ('$numeropedido','$tipo','$cliente', '$id_mesa', '$pedido', '$quantidade', '$hora_pedido', '$preco_venda', '$observacoes', '$troco','$pgto','$user','$data_hora' ,'' , 1, '$frete_ifood' )";
+  
 	  $adiciona_pedido = mysqli_query($conn, $insert_table);
 	  
 	  $insert_table = "UPDATE mesas SET status = '2', nome = '$cliente', id_pedido = '$numeropedido' WHERE id_mesa = $id_mesa";

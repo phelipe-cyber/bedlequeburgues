@@ -60,7 +60,7 @@ session_start();
 
     $produtos = mysqli_query($conn, $tab_produtos);
         
-    $selectSQL = ("SELECT * FROM `pedido_previa` where quantidade <> '' GROUP BY id_produto order by id ASC ");
+    $selectSQL = ("SELECT * FROM `pedido_previa` where quantidade <> '' order by id ASC ");
     
     $recebidos = mysqli_query($conn, $selectSQL);
     $index = 1;
@@ -249,7 +249,7 @@ session_start();
                                                 valor = document.getElementById(
                                                         "detalhes[<?php echo $index ?>][preco_venda]")
                                                     .value
-                                                    total = Q * valor;
+                                                    total = valor;
 
                                                 pedido = document.getElementById(
                                                         "detalhes[<?php echo $index ?>][pedido]")
@@ -275,10 +275,11 @@ session_start();
                                                 var vData = {
                                                     id: id,
                                                     pedido: pedido,
-                                                    Quantidade: Quantidade,
+                                                    Quantidade: 1,
                                                     valor: total,
                                                     obs: obs,
-                                                    hashpagina: hashpagina
+                                                    hashpagina: hashpagina,
+                                                    botao: 'mais'
                                                 }; 
 
                                                 console.log(vData);
@@ -505,7 +506,7 @@ session_start();
 
 setInterval(function() {
     atualiza();
-}, 100); // A CADA 1 SEGUNDO RODA A FUNÇÃO atualiza
+}, 1000); // A CADA 1 SEGUNDO RODA A FUNÇÃO atualiza
 
 });
 </script> 
