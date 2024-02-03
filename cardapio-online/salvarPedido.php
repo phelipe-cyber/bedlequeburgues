@@ -9,6 +9,7 @@ $valores = $_POST['pedido'];
 $dadoscliennte = $_POST['dadoscliennte'];
 $telefone = $_POST['telefone'];
 $tipoEntrega = $_POST['tipoEntrega'];
+$troco = $_POST['troco'];
 
 // print_r($_POST);
 // die();
@@ -100,8 +101,8 @@ if ($resultado_telefone->num_rows == 0 || $tipoEntrega == 'Retirar' ) {
             $preco_venda = $frete;
             $quantidade = '1';
     
-            $insert_table_frete = "INSERT INTO pedido (numeropedido, delivery,cliente, idmesa, produto, quantidade, hora_pedido, valor, observacao, pgto, usuario, `data` , gorjeta, status ) VALUES
-            ('$numeropedido','$tipoEntrega','$id_cliente', '$id_mesa', '$pedido', '$quantidade', '$hora_pedido', '$preco_venda', '$observacoes', '$pgto','$user','$data_hora' ,'' , 2 )";
+            $insert_table_frete = "INSERT INTO pedido (numeropedido, delivery,cliente, idmesa, produto, quantidade, hora_pedido, valor, observacao, troco, pgto, usuario, `data` , gorjeta, status ) VALUES
+            ('$numeropedido','$tipoEntrega','$id_cliente', '$id_mesa', '$pedido', '$quantidade', '$hora_pedido', '$preco_venda', '$observacoes', '$troco','$pgto','$user','$data_hora' ,'' , 2 )";
           
            $adiciona_pedido_frete = mysqli_query($conn, $insert_table_frete);
         

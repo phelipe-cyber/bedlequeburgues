@@ -2,8 +2,8 @@
 
 // include_once "http://pdv.sistemaph.com.br/pdv/";
 
-header("Location: /pdv/");
-
+// header("Location: /pdv/");
+header("Location: /cardapio-online/");
 
 ?>
 
