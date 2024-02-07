@@ -112,6 +112,269 @@ $(document).ready(function() {
 
 </script>
 
+<div class="col-6">
+		<button type="button" class="btn btn-xs btn-success" data-toggle="modal" data-target="#myModalcad">Cadastrar Novo Cliente</button>
+</div>
+
+<div class="modal fade bd-example-modal-xl" id="myModalcad" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog modal-xl" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title text-center" id="myModalLabel"> Cadastrar Um Novo Cliente </h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<!-- FIM DO CABEÇALHO DO MODAL DE CADASTRO -->
+
+			</div>
+			<div class="modal-body">
+			<div id="enderecoResultado" style="display: none;" ></div>
+				<!-- CRIA O FORMULÁRIO PARA CADASTRAR E ENVIAR PELO METODO POST PARA O SCRIPT "cadastrar_clientes.php" -->
+				<form method="POST" action="mvc/model/cadastrar_cliente.php">
+					<div id="cep_select" class="row">
+
+						<div class="form-group col-md-2">
+							<label required for="recipient-name" class="col-form-label">CEP:</label>
+							<input id="cep" name="cep" type="text" class="form-control" maxlength="09" oninput="initMap()" >
+						</div>
+					</div>
+
+					<div id="erro_cep" style="display: none;">
+						<div class="alert alert-danger">
+							<a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+							<div id="mensagem_erro">Select</div>
+						</div>
+					</div>
+
+					<div id="spiner" style="display: none;">
+						<div class="text-center">
+							<div class="spinner-border" role="status">
+								<span class="sr-only">Loading...</span>
+							</div>
+						</div>
+					</div>
+
+					<script>
+						
+						// $(document).ready(function() {
+							// $("#cep_select").on('oninput', function(event) {
+								function initMap(){
+										
+									const inputElement = document.getElementById("cep").value;
+									
+									const rawCEP = inputElement.trim().replace(/\D/g, ''); // Remove caracteres não numéricos
+
+									if( rawCEP.length == 8 ){
+									
+									document.getElementById("spiner").style = 'display:block;'
+									document.getElementById("enderecoResultado").style ='display:none'
+									// Formatação para número de CEP no Brasil (exemplo: 12345-678)
+									const formattedCEP = rawCEP.replace(/(\d{5})(\d{3})/, '$1-$2');
+									document.getElementById("cep").value = formattedCEP;
+									const geocoder = new google.maps.Geocoder();
+
+									document.getElementById("endereco").value = "";									
+									document.getElementById("cidade").value = "";
+									document.getElementById("bairro").value = "";
+									document.getElementById("estado").value = "";
+
+									geocoder.geocode({ 'address': rawCEP }, function (results, status) {
+										if (status === 'OK') {
+											document.getElementById("spiner").style = 'display:none;';
+											console.log(results);
+											const lat = results[0].geometry.location.lat();
+											const lng = results[0].geometry.location.lng();
+
+											let bairro, cidade, estado, endereco;
+											for (const component of results[0].address_components) {
+                                           if (component.types.includes("sublocality_level_1")) {
+                                                 bairro = component.long_name;
+                                          }
+                                           if (component.types.includes("administrative_area_level_2")) {
+                                                cidade = component.long_name;
+                                           }
+                                           if (component.types.includes("route")) {
+                                                end = component.long_name;
+                                           }
+                                           if (component.types.includes("administrative_area_level_1")) {
+                                                estado = component.long_name;
+                                           }
+										};
+
+											document.getElementById("endereco").value = end;
+											document.getElementById("cidade").value = cidade;
+											document.getElementById("bairro").value = bairro;
+											document.getElementById("estado").value = estado;
+
+											document.getElementById("lat").value = lat;
+											document.getElementById("long").value = lng;
+
+										} else {
+											document.getElementById("spiner").style = 'display:none;';
+											document.getElementById("enderecoResultado").style = 'display:block'
+											document.getElementById("enderecoResultado").textContent = `Não foi possível encontrar as coordenadas e o endereço para o CEP: ${formattedCEP} informado.`;
+										}
+									});
+
+									
+								};
+
+							};
+						// });
+					</script>
+
+					<div class="row">
+
+						<div class="form-group col-md-4">
+							<label for="recipient-name" class="col-form-label">Nome do Cliente:</label>
+							<input required name="nome" type="text" class="form-control">
+						</div>
+
+						<div class="form-group col-md-6">
+							<label for="message-text" class="col-form-label">Endereço:</label>
+							<input  id="endereco" name="endereco" type="text" class="form-control">
+						</div>
+
+						<div class="form-group col-md-2">
+							<label for="message-text" class="col-form-label">Número:</label>
+							<input required id="number" name="number" type="text" class="form-control">
+						</div>
+						<div class="form-group col-md-4">
+							<label for="recipient-name" class="col-form-label">Bairro:</label>
+							<input  id="bairro" name="bairro" type="text" class="form-control">
+						</div>
+						<div class="form-group col-md-4">
+							<label for="recipient-name" class="col-form-label">Cidade:</label>
+							<input  id="cidade" name="cidade" type="text" class="form-control">
+						</div>
+						<div class="form-group col-md-2">
+							<label for="recipient-name" class="col-form-label">Estado:</label>
+							<input  id="estado" name="estado" type="text" class="form-control">
+						</div>
+						<div class="form-group col-md-4">
+							<label for="recipient-name" class="col-form-label">Complemento:</label>
+							<input  name="complemento" type="text" class="form-control">
+						</div>
+
+						<div class="form-group col-md-4">
+							<label for="recipient-name" class="col-form-label">Ponto de Referência:</label>
+							<input name="pontoreferencia" type="text" class="form-control" id="compra">
+						</div>
+						<div class="form-group col-md-2">
+							<label for="recipient-name" class="col-form-label">Telefone #1:</label>
+							<input required onkeyup="mascaraFone(event)" name="tel1" type="text" class="form-control" id="telefone">
+						</div>
+						<div class="form-group col-md-2">
+							<label for="recipient-name" class="col-form-label">Telefone #2:</label>
+							<input onkeyup="mascaraFone_2(event)" name="tel2" type="text" class="form-control" id="telefone_2">
+						</div>
+						<div class="form-group col-md-4">
+							<label for="recipient-name" class="col-form-label">E-Mail</label>
+							<input name="email" type="text" class="form-control">
+						</div>
+						<div class="form-group col-md-2">
+							<label for="recipient-name" class="col-form-label">CPF/CNPJ:</label>
+							<input name="cpfcnpj" type="text" class="form-control">
+						</div>
+						<div class="form-group col-md-2">
+							<label for="recipient-name" class="col-form-label">RG:</label>
+							<input name="rg" type="text" class="form-control">
+						</div>
+						<div class="form-group col-md-4">
+							<label for="message-text" class="col-form-label">Condomínio:</label>
+							<input name="condominio" type="text" class="form-control"></input>
+						</div>
+						<div class="form-group col-md-2">
+							<label for="message-text" class="col-form-label">Bloco/Edifício:</label>
+							<input name="blocoedificio" type="text" class="form-control"></input>
+						</div>
+						<div class="form-group col-md-2">
+							<label for="message-text" class="col-form-label">Apartamento:</label>
+							<input name="apartamento" type="text" class="form-control"></input>
+						</div>
+						
+						<div class="form-group col-md-4">
+							<label for="message-text" class="col-form-label">Latitude:</label>
+							<input id="lat"  name="lat" class="form-control"></input>
+						</div>
+
+						<div class="form-group col-md-4">
+							<label for="message-text" class="col-form-label">Lontitude:</label>
+							<input id="long" name="long" class="form-control"></input>
+						</div>
+
+						<div class="form-group col-md-12">
+							<label for="message-text" class="col-form-label">Local de Entrega:</label>
+							<input name="localentrega" type="text" class="form-control"></input>
+						</div>
+						<div class="form-group col-md-12">
+							<label for="message-text" class="col-form-label">Observações:</label>
+							<textarea name="observacoes" class="form-control"></textarea>
+						</div>
+
+					</div>
+
+					<div class="modal-footer">
+
+						<button type="submit" class="btn btn-success">Cadastrar</button>
+					</div>
+
+				</form>
+
+			</div>
+		</div>
+		<!-- FIM DO CORPO DA MENSAGEM DO MODAL DE CADASTRO -->
+	</div>
+</div>
+
+<script>
+	function mascaraFone(event) {
+    var valor = document.getElementById("telefone").attributes[0].ownerElement['value'];
+    var retorno = valor.replace(/\D/g, "");
+    retorno = retorno.replace(/^0/, "");
+    if (retorno.length > 10) {
+      retorno = retorno.replace(/^(\d\d)(\d{5})(\d{4}).*/, "($1) $2-$3");
+    } else if (retorno.length > 5) {
+      if (retorno.length == 6 && event.code == "Backspace") { 
+        // necessário pois senão o "-" fica sempre voltando ao dar backspace
+        return; 
+      } 
+      retorno = retorno.replace(/^(\d\d)(\d{4})(\d{0,4}).*/, "($1) $2-$3");
+    } else if (retorno.length > 2) {
+      retorno = retorno.replace(/^(\d\d)(\d{0,5})/, "($1) $2");
+    } else {
+      if (retorno.length != 0) {
+        retorno = retorno.replace(/^(\d*)/, "($1");
+      }
+    }
+    document.getElementById("telefone").attributes[0].ownerElement['value'] = retorno;
+    
+  }
+</script>
+
+<script>
+	function mascaraFone_2(event) {
+    var valor = document.getElementById("telefone_2").attributes[0].ownerElement['value'];
+    var retorno = valor.replace(/\D/g, "");
+    retorno = retorno.replace(/^0/, "");
+    if (retorno.length > 10) {
+      retorno = retorno.replace(/^(\d\d)(\d{5})(\d{4}).*/, "($1) $2-$3");
+    } else if (retorno.length > 5) {
+      if (retorno.length == 6 && event.code == "Backspace") { 
+        // necessário pois senão o "-" fica sempre voltando ao dar backspace
+        return; 
+      } 
+      retorno = retorno.replace(/^(\d\d)(\d{4})(\d{0,4}).*/, "($1) $2-$3");
+    } else if (retorno.length > 2) {
+      retorno = retorno.replace(/^(\d\d)(\d{0,5})/, "($1) $2");
+    } else {
+      if (retorno.length != 0) {
+        retorno = retorno.replace(/^(\d*)/, "($1");
+      }
+    }
+    document.getElementById("telefone_2").attributes[0].ownerElement['value'] = retorno;
+    
+  }
+</script>
+
 
             <form id="Form" action="mvc/model/ad_pedido_balcao.php" method="POST">
                     <div class="row" style="padding: 10px;" >
@@ -183,8 +446,12 @@ $(document).ready(function() {
                                     },
                                     error: function(err) {
                                         $('#frete').html(html);
+                                        document.getElementById('spinner').style='display:none;';
+
                                     },
                                     });
+                                }else{
+                                    document.getElementById('spinner').style='display:none;';
                                 }
                         })
                     });
@@ -241,21 +508,23 @@ $(document).ready(function() {
                 </div>
                 
                 <div class="row">
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-3">
                         <label for="message-text" class="col-form-label">Troco:</label>
                         <input value="" name="troco" id="troco" type="text" class="form-control">
                     </div>
 
-                    <div class="form-group col-md-6" id="frete_ifood_display" style="display: none;">
+                    <div class="form-group col-md-3" id="frete_ifood_display" style="display: none;">
                         <label for="message-text" class="col-form-label">Frete iFood:</label>
                         <input value="" name="frete_ifood" id="frete_ifood" type="text" class="form-control">
                     </div>
                     
-                    <div class="form-group col-md-6" style="display: inherit;">
-                        <input class="btn btn-outline-success" type="submit" name="enviar" value="Finalizar Pedido">
+                    <div class="col-md-6">
+                        <div class="" style="display: inherit;">
+                            <button type="submit" class="btn btn-xs btn-info" >Finalizar Pedido</button>
+                        </div>
                     </div>
+                
 			    </div>
-
                 
                 <?php
     }
@@ -339,7 +608,7 @@ $(document).ready(function() {
 
                                                 $("#mais<?php echo $rows_produtos['id'] ?>").click(function() {
                                                     document.getElementById('spinner').style='display:flex;';
-                                                    
+                                                    $('html, body').animate({scrollTop:0}, 'slow'); //slow, medium, fast
                                                     var opcoesPagamento = document.getElementsByName('pgto');
                                                     var algumSelecionado = false;
 
@@ -446,7 +715,7 @@ $(document).ready(function() {
                                             $(document).ready(function() {
                                                 $("#menos<?php echo $rows_produtos['id'] ?>").click(function() {
                                                     document.getElementById('spinner').style='display:flex;';
-
+                                                    $('html, body').animate({scrollTop:0}, 'slow'); //slow, medium, fast
                                                     Quantidade = document.getElementById(
                                                             "detalhes[<?php echo $rows_produtos['id'] ?>][quantidade]")
                                                         .value
@@ -607,6 +876,4 @@ $(document).ready(function() {
 <div class="col-4" id="mensagem" style="visibility: visible"><?php if (isset($_SESSION['msg'])) {echo $_SESSION['msg'];  unset($_SESSION['msg']); }?></div>
 
 </div> -->
-
 <h1 class="col-xl-6 col-md-6 mb-4" id="div" > </h1>
-

@@ -640,17 +640,17 @@ $clientes = mysqli_query($conn, $tab_clientes);
 
 
 <script>
-$(document).ready(function() {
-    $('#dtBasicExample').DataTable({
-        "paging": true, // false to disable pagination (or any other option)
-        "ordering": true, // false to disable sorting (or any other option)
-        "searching": true,
-        "language": {
-            "url": "https://cdn.datatables.net/plug-ins/1.12.1/i18n/pt-BR.json"
-        }
-    });
-    $('.dataTables_length').addClass('bs-select');
-});
+	$(document).ready(function() {
+		$('#dtBasicExample').DataTable({
+			"paging": true, // false to disable pagination (or any other option)
+			"ordering": true, // false to disable sorting (or any other option)
+			"searching": true,
+			"language": {
+				"url": "https://cdn.datatables.net/plug-ins/1.12.1/i18n/pt-BR.json"
+			}
+		});
+		$('.dataTables_length').addClass('bs-select');
+	});
 </script>
 
 <script type="text/javascript">
