@@ -34,9 +34,9 @@ $valor_pago = $_POST['valor_pago'];
 
 $valor_pago = str_replace(",",".", $valor_pago);
 
- $total = $total + $gorjeta + $acrecimo;
+$total = $total + $gorjeta + $acrecimo;
 
-$venda = $total;
+$venda = $valor_pago;
 
 // $total = $total - $valor_pago;
 
