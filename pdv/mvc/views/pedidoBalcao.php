@@ -31,12 +31,14 @@ $cliente = $_POST['cliente'];
 </script>
 <!-- MDB core JavaScript -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.2/js/mdb.min.js"></script>
-<!-- <script type="text/javascript" src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script> -->
-<!-- <script type="text/javascript" src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script> -->
 
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.12.1/datatables.min.css" />
 
 <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.12.1/datatables.min.js"></script>
+
+<script>
+    // window.location.reload(true);
+</script>
 
 <div class="d-flex justify-content-center">
             <div id="spinner" class="spinner-border text-primary" role="status" style="display: none;">
@@ -452,6 +454,7 @@ $(document).ready(function() {
                                     });
                                 }else{
                                     document.getElementById('spinner').style='display:none;';
+                                    document.getElementById('frete').style='display:none';
                                 }
                         })
                     });
