@@ -170,7 +170,7 @@ if ($total > 0) {
 
 	if( $pgto == 'Fiado' ){
 
-		$tab_mesas = "UPDATE mesas SET status = '1', nome = '', id_pedido = 0 WHERE id_mesa = $idmesa";
+		$tab_mesas = "UPDATE mesas SET status = '1', nome = '', id_pedido = 0 WHERE id_pedido = '$id' ";
 		$mesas = mysqli_query($conn, $tab_mesas);
 
 		$alterar_table = "UPDATE `pedido` SET `status` = '4', `pgto` = '$pgto' WHERE `numeropedido` = '$id' ";
@@ -182,7 +182,7 @@ if ($total > 0) {
 		
 	}else{
 
-		$tab_mesas = "UPDATE mesas SET status = '1', nome = '', id_pedido = 0 WHERE id_mesa = $idmesa";
+		$tab_mesas = "UPDATE mesas SET status = '1', nome = '', id_pedido = 0 WHERE id_pedido = '$id' ";
 		$mesas = mysqli_query($conn, $tab_mesas);
 	
 		$insert_table = "INSERT INTO vendas ( id_pedido, valor, valor_maquina, cliente, data, rendimento, pgto) VALUES ( '$id', '$venda', '$Valor_format', '$cliente', '$data', 'Mesa', '$pgto')";
@@ -239,7 +239,7 @@ if ($total > 0) {
 
 	if( $pgto == 'Fiado' ){
 
-		$tab_mesas = "UPDATE mesas SET status = '1', nome = '', id_pedido = 0 WHERE id_mesa = $idmesa";
+		$tab_mesas = "UPDATE mesas SET status = '1', nome = '', id_pedido = 0 WHERE id_pedido = '$id' ";
 		$mesas = mysqli_query($conn, $tab_mesas);
 
 		$alterar_table = "UPDATE `pedido` SET `status` = '4', `pgto` = '$pgto' WHERE `numeropedido` = '$id' ";
@@ -251,7 +251,7 @@ if ($total > 0) {
 		
 	}else{
 
-		$tab_mesas = "UPDATE mesas SET status = '1', nome = '', id_pedido = 0 WHERE id_mesa = $idmesa";
+		$tab_mesas = "UPDATE mesas SET status = '1', nome = '', id_pedido = 0 WHERE id_pedido = '$id' ";
 		$mesas = mysqli_query($conn, $tab_mesas);
 	
 		$insert_table = "INSERT INTO vendas ( id_pedido, valor, valor_maquina, cliente, data, rendimento, pgto) VALUES ( '$id', '$venda', '$Valor_format', '$cliente', '$data', 'Mesa', '$pgto')";

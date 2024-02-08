@@ -82,8 +82,8 @@
 
         <form method="POST" action="?view=adicionar_pedido">
 
-          <input name="id" type="hidden" id="id" value="<?php echo $rows_mesas['id_mesa']; ?>">
-
+          <input name="id" type="hidden" id="id" value="<?php echo $rows_mesas['id_pedido']; ?>">
+        
         <button type="submit" class="btn  btn-outline-light" style="text-align: center;" data-toggle="modal"> Abrir <?php echo $rows_mesas['id_mesa']; ?></button>
         </form>
 

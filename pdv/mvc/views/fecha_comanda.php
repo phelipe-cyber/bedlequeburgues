@@ -3,6 +3,8 @@
 
 	$id = $_POST['id'];
 
+	$id_pedido = $_POST['id_pedido'];
+
 	$num = $_POST['num'];
 
 	$total = $_POST['total'];

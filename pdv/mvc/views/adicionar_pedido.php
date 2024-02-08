@@ -2,14 +2,14 @@
 include "./mvc/model/conexao.php";
 
 $id = $_POST['id'];
+$id_pedido = $_POST['id_pedido'];
 
-
-$tab_pedidos = "SELECT * FROM pedido WHERE idmesa = $id";
+$tab_pedidos = "SELECT * FROM pedido WHERE numeropedido = $id";
 
 $pedidos = mysqli_query($conn, $tab_pedidos);
 
 
-$tab_mesas = "SELECT * FROM mesas WHERE id_mesa = $id";
+$tab_mesas = "SELECT * FROM mesas WHERE id_pedido = $id";
 
 $mesas = mysqli_query($conn, $tab_mesas);
 
@@ -101,6 +101,7 @@ if ($status == 2 || $status == 3) { ?>
 					<th>
 						<form method="POST" action="?view=fecha_comanda">
 							<input name="id" type="hidden" value="<?php echo $id; ?>">
+							<input name="id_pedido" type="hidden" value="<?php echo $id_pedido; ?>">
 							<input name="num" type="hidden" value="<?php echo $num; ?>">
 							<input name="total" type="hidden" value="<?php echo $total; ?>">
 							<button type="submit" class="btn btn-outline-danger">Fechar Mesa</button>
