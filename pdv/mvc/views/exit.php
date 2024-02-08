@@ -132,11 +132,11 @@ while ($rows_rendimento = mysqli_fetch_assoc($caixa_rendimento)) {
     <form action="?view=exit" method="POST">
         <div class="row" style="text-align-last: center;" >
         <div class= "col-3" >
-            <p>Data inicio: <input required name="dtinicio" type="text" id="datepicker"></p>
+            <p>Data inicio: <input autocomplete="off" required name="dtinicio" type="text" id="datepicker"></p>
             </div>
             
             <div class= "col-3" >
-                <p>Data fim: <input required name="dtfim" type="text" id="datepicker2"></p>
+                <p>Data fim: <input autocomplete="off" required name="dtfim" type="text" id="datepicker2"></p>
             </div>
 
             <div class= "col-7" >
