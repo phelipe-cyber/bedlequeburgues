@@ -653,8 +653,8 @@ if (isset($escolha)) {
 		?>
 
 			<h2 class="text-center" style="color: green; height: 50px;"><b>Saldo Vendas: R$ <?php echo number_format($total1, 2); ?></b></h2>
-			<h2 class="text-center" style="color: green; height: 50px;"><b>Valor Total Venda Maquina: R$ <?php echo number_format($total3, 2); ?></b></h2>
-			<h2 class="text-center" style="color: green; height: 50px;"><b>Saldo Atual C/ Desconto Maquina: R$ <?php echo number_format($saldo, 2); ?></b></h2>
+			<h2 class="text-center" style="color: green; height: 50px;"><b>Valor Total Venda Maquinha: R$ <?php echo number_format($total3, 2); ?></b></h2>
+			<h2 class="text-center" style="color: green; height: 50px;"><b>Saldo Atual C/ Desconto Maquinha: R$ <?php echo number_format($saldo, 2); ?></b></h2>
 			<?php
 				if( $total2 == 0 ){
 				}else{
