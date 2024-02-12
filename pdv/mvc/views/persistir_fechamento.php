@@ -30,16 +30,6 @@ $acrecimo = str_replace(",",".", $acrecimo);
 
 $acrecimo = number_format($acrecimo, 2);
 
-$valor_pago = $_POST['valor_pago'];
-
-$valor_pago = str_replace(",",".", $valor_pago);
-
-$total = $total + $gorjeta + $acrecimo;
-
-$venda = $valor_pago;
-
-// $total = $total - $valor_pago;
-
  $pgto = $_POST['pgto'];
  $frete_ifood = $_POST['frete_ifood'];
 
@@ -67,7 +57,7 @@ $venda = $valor_pago;
 	if($pgto == "Cartão Debito" ){
 		
 		$total = $_POST['valor_pago'];
-		$porcentagem = 1.99;
+		$porcentagem = 2.39;
 		$resultado = $total - ($total * $porcentagem / 100);
 		// $R = $total - $resultado;
         $Valor_format = number_format($resultado, 2);
@@ -118,7 +108,6 @@ $venda = $valor_pago;
 		
 	}
 		
-		// $Valor_format = $Valor_format = $venda;
 	}
 	
 	// echo $Valor_format;
@@ -185,7 +174,7 @@ if ($total > 0) {
 		$tab_mesas = "UPDATE mesas SET status = '1', nome = '', id_pedido = 0 WHERE id_pedido = '$id' ";
 		$mesas = mysqli_query($conn, $tab_mesas);
 	
-		$insert_table = "INSERT INTO vendas ( id_pedido, valor, valor_maquina, cliente, data, rendimento, pgto) VALUES ( '$id', '$venda', '$Valor_format', '$cliente', '$data', 'Mesa', '$pgto')";
+		$insert_table = "INSERT INTO vendas ( id_pedido, valor, valor_maquina, cliente, data, rendimento, pgto) VALUES ( '$id', '$total', '$Valor_format', '$cliente', '$data', 'Mesa', '$pgto')";
 		$produtos_editados = mysqli_query($conn, $insert_table);
 
 		$alterar_table = "UPDATE `pedido` SET `status` = '4', `pgto` = '$pgto' WHERE `numeropedido` = '$id' ";
@@ -254,7 +243,7 @@ if ($total > 0) {
 		$tab_mesas = "UPDATE mesas SET status = '1', nome = '', id_pedido = 0 WHERE id_pedido = '$id' ";
 		$mesas = mysqli_query($conn, $tab_mesas);
 	
-		$insert_table = "INSERT INTO vendas ( id_pedido, valor, valor_maquina, cliente, data, rendimento, pgto) VALUES ( '$id', '$venda', '$Valor_format', '$cliente', '$data', 'Mesa', '$pgto')";
+		$insert_table = "INSERT INTO vendas ( id_pedido, valor, valor_maquina, cliente, data, rendimento, pgto) VALUES ( '$id', '$total', '$Valor_format', '$cliente', '$data', 'Mesa', '$pgto')";
 		$produtos_editados = mysqli_query($conn, $insert_table);
 
 		$alterar_table = "UPDATE `pedido` SET `status` = '4', `pgto` = '$pgto' WHERE `numeropedido` = '$id' ";
