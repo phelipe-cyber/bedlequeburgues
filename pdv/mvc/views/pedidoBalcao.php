@@ -99,7 +99,6 @@ if ($mesa == 'delivery') {
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 <script>
-    
 // In your Javascript (external .js resource or <script> tag)
 $(document).ready(function() {
     $('.js-example-basic-single').select2({
@@ -699,7 +698,7 @@ $(document).ready(function() {
                                                         console.log(html);
                                                         document.getElementById("detalhes[<?php echo $rows_produtos['id'] ?>][observacoes]").value = '';
                                                         document.getElementById('spinner').style='display:none;';
-
+                                                        atualizar_previa();
                                                         },
 
                                                         error: function(err) {
@@ -781,6 +780,7 @@ $(document).ready(function() {
                                                         success: function(html) {
                                                         console.log(html);
                                                         document.getElementById('spinner').style='display:none;';
+                                                        atualizar_previa();
 
                                                         },
 
@@ -862,16 +862,9 @@ $(document).ready(function() {
    ?>
 
 <script>
-    $(function() {
-    var atualiza = function() {
-        $("#div").load("./mvc/views/pedidoprevia.php");
+    function atualizar_previa() {
+            $("#div").load("./mvc/views/pedidoprevia.php");
     };
-
-    setInterval(function() {
-    atualiza();
-    }, 1000); // A CADA 1 SEGUNDO RODA A FUNÇÃO atualiza
-
-    });
 </script> 
 <!-- <div class="row">
 

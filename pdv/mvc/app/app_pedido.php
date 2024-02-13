@@ -60,7 +60,7 @@ session_start();
 
     $produtos = mysqli_query($conn, $tab_produtos);
         
-    $selectSQL = ("SELECT * FROM `pedido_previa` where quantidade <> '' order by id ASC ");
+    $selectSQL = ("SELECT * FROM `pedido_previa` where quantidade <> '' and hashpagina = '$app_hashpagina' order by id ASC ");
     
     $recebidos = mysqli_query($conn, $selectSQL);
     $index = 1;
@@ -295,6 +295,8 @@ session_start();
                                                     },
                                                     success: function(html) {
                                                        console.log(html);
+                                                       atualizar_previa();
+
 
                                                     },
 
@@ -375,6 +377,7 @@ session_start();
                                                     },
                                                     success: function(html) {
                                                        console.log(html);
+                                                       atualizar_previa();
 
                                                     },
 
@@ -499,17 +502,11 @@ session_start();
 </div>
 
 <script>
-    $(function() {
-        var atualiza = function() {
+    function atualizar_previa() {
             $("#div").load("app_previa.php");
-            };
-
-setInterval(function() {
-    atualiza();
-}, 1000); // A CADA 1 SEGUNDO RODA A FUNÇÃO atualiza
-
-});
+    };
 </script> 
+
 
 </body>
 </html>

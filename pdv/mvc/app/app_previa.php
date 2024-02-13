@@ -4,9 +4,7 @@ session_start();
 // include "./mvc/model/conexao.php";
 $app_hashpagina = $_SESSION['app_hashpagina'];
 
-// print_r($_SESSION);
-// exit();
-
+print_r($_SESSION);
 // print_r($_POST);
 ?>
 <!-- <h1 class="" id="div" > </h1> -->
@@ -31,7 +29,7 @@ $app_hashpagina = $_SESSION['app_hashpagina'];
 include_once "../model/conexao.php";
     
     
-    $selectSQL = ("SELECT * FROM `pedido_previa` where quantidade <> '' and hashpagina = '$app_hashpagina' order by id ASC ");
+echo    $selectSQL = ("SELECT * FROM `pedido_previa` where quantidade <> '' and hashpagina = '$app_hashpagina' order by id ASC ");
     
     $recebidos = mysqli_query($conn, $selectSQL);
     $index = 1;

@@ -228,7 +228,7 @@
 <div class="mb-12 text-center" style=" height: 15%; color: #45863f;" ><h1><b>Mesa Vazia</b></h1></div>
 
 
-	<div class="col-12 " style="">
+	<div class="col-12 ">
 
 		<!-- <form method="GET" action="app_categoria.php"> -->
 		<form method="GET" action="app_pedido.php">
