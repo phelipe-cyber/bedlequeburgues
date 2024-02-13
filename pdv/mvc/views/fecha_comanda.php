@@ -93,7 +93,7 @@
 
   				<div id="valor_pago_style" class="form-group col-md-6" style="display: block;" >
   					<label for="recipient-name" class="col-xl-12 text-center" style="font-size: 25px; background: green; color: white; ">Valor Pago</label>
-  					<input autofocus required name="valor_pago" id="valor_pago" style="font-size: 25px" class="col-xl-12 col-md-6 mb-4 text-center" type="text" name="pagamento" value="">
+  					<input autofocus required name="valor_pago_cliente" id="valor_pago" style="font-size: 25px" class="col-xl-12 col-md-6 mb-4 text-center" type="text" value="">
   				</div>
 
   				<script>

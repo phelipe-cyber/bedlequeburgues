@@ -15,10 +15,12 @@ $id = $_POST['id'];//id da mesa
 $data = date('d/m/Y');
 
 $total = $_POST['valor_pago'];
-
 $total = str_replace(",",".", $total);
-
 $total = number_format($total, 2);
+
+$valor_pago_cliente = $_POST['valor_pago_cliente'];
+$valor_pago_cliente = str_replace(",",".", $valor_pago_cliente);
+$valor_pago_cliente = number_format($valor_pago_cliente, 2);
 
 $gorjeta = $_POST['gorjeta'];
 
@@ -30,8 +32,9 @@ $acrecimo = str_replace(",",".", $acrecimo);
 
 $acrecimo = number_format($acrecimo, 2);
 
- $pgto = $_POST['pgto'];
- $frete_ifood = $_POST['frete_ifood'];
+$pgto = $_POST['pgto'];
+
+$frete_ifood = $_POST['frete_ifood'];
 
  ?>
 
@@ -174,7 +177,7 @@ if ($total > 0) {
 		$tab_mesas = "UPDATE mesas SET status = '1', nome = '', id_pedido = 0 WHERE id_pedido = '$id' ";
 		$mesas = mysqli_query($conn, $tab_mesas);
 	
-		$insert_table = "INSERT INTO vendas ( id_pedido, valor, valor_maquina, cliente, data, rendimento, pgto) VALUES ( '$id', '$total', '$Valor_format', '$cliente', '$data', 'Mesa', '$pgto')";
+		$insert_table = "INSERT INTO vendas ( id_pedido, valor, valor_maquina, cliente, data, rendimento, pgto) VALUES ( '$id', '$valor_pago_cliente', '$Valor_format', '$cliente', '$data', 'Mesa', '$pgto')";
 		$produtos_editados = mysqli_query($conn, $insert_table);
 
 		$alterar_table = "UPDATE `pedido` SET `status` = '4', `pgto` = '$pgto' WHERE `numeropedido` = '$id' ";
@@ -243,7 +246,7 @@ if ($total > 0) {
 		$tab_mesas = "UPDATE mesas SET status = '1', nome = '', id_pedido = 0 WHERE id_pedido = '$id' ";
 		$mesas = mysqli_query($conn, $tab_mesas);
 	
-		$insert_table = "INSERT INTO vendas ( id_pedido, valor, valor_maquina, cliente, data, rendimento, pgto) VALUES ( '$id', '$total', '$Valor_format', '$cliente', '$data', 'Mesa', '$pgto')";
+		$insert_table = "INSERT INTO vendas ( id_pedido, valor, valor_maquina, cliente, data, rendimento, pgto) VALUES ( '$id', '$valor_pago_cliente', '$Valor_format', '$cliente', '$data', 'Mesa', '$pgto')";
 		$produtos_editados = mysqli_query($conn, $insert_table);
 
 		$alterar_table = "UPDATE `pedido` SET `status` = '4', `pgto` = '$pgto' WHERE `numeropedido` = '$id' ";
