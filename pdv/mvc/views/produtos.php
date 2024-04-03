@@ -147,7 +147,7 @@ $produto = mysqli_query($conn, $tab_produto);
                 <th>Produtos</th>
                 <th>Quantidade Saída</th>
                 <th>Valor</th>
-                <th>Data Saída</th>
+                <!-- <th>Data Saída</th> -->
             </tr>
         </thead>
         <tbody>
@@ -161,7 +161,7 @@ $produto = mysqli_query($conn, $tab_produto);
                             <td > <?php echo $rows_produto['produto'] ?></td>
                             <td > <?php echo $rows_produto['qtde'] ?></td>
                             <td > <?php echo $rows_produto['novo_valor'] ?></td>
-                            <td > <?php echo $rows_produto['data'] ?></td>
+                            <!-- <td > <?php echo $rows_produto['data'] ?></td> -->
                 <?php } ?>
             </tr>
         </tbody>
