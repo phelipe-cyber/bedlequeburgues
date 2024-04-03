@@ -33,7 +33,8 @@ echo "<br>";
 $tab_produto = "SELECT
  produto,
  SUM(quantidade) as qtde,
- DATE_FORMAT(`data`, '%d/%m/%Y') AS data
+ DATE_FORMAT(`data`, '%d/%m/%Y') AS data,
+ SUM(CAST(REPLACE(TRIM(valor), ',', '.') AS DECIMAL(10,2))) AS novo_valor
 FROM
  pedido
 WHERE
@@ -145,6 +146,7 @@ $produto = mysqli_query($conn, $tab_produto);
             <tr>
                 <th>Produtos</th>
                 <th>Quantidade Saída</th>
+                <th>Valor</th>
                 <th>Data Saída</th>
             </tr>
         </thead>
@@ -158,6 +160,7 @@ $produto = mysqli_query($conn, $tab_produto);
                         ?>
                             <td > <?php echo $rows_produto['produto'] ?></td>
                             <td > <?php echo $rows_produto['qtde'] ?></td>
+                            <td > <?php echo $rows_produto['novo_valor'] ?></td>
                             <td > <?php echo $rows_produto['data'] ?></td>
                 <?php } ?>
             </tr>
